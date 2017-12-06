@@ -859,4 +859,3 @@ export interface ChannelServiceOption
 }
 
 export * from "./ChannelService"
-export * from "./AsyncChannelService"

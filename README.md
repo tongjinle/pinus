@@ -1,3 +1,9 @@
+## 支持Promise异步机制的pomelo版本
+
+安装办法：
+npm install async-pomelo --save
+
+
 ## Pomelo -- a fast, scalable game server framework for node.js
 
 Pomelo is a fast, scalable game server framework for [node.js](http://nodejs.org).
