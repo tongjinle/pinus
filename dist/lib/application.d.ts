@@ -20,6 +20,7 @@ import { MasterComponent } from './components/master';
 import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
+import { ObjectType } from './interfaces/define';
 export declare type ConfigureCallback = () => void;
 export declare class Application {
     loaded: any[];
@@ -56,6 +57,8 @@ export declare class Application {
     clusterSeq: {};
     state: number;
     base: string;
+    startId: string;
+    type: string;
     stopTimer: any;
     /**
      * Initialize the server.
@@ -166,7 +169,10 @@ export declare class Application {
      * @return {Object}     app instance for chain invoke
      * @memberOf Application
      */
-    load(name: any, component: any, opts?: any): this;
+    load<T extends IComponent>(component: ObjectType<T>, opts?: any): T;
+    load<T extends IComponent>(name: string, component: ObjectType<T>, opts?: any): T;
+    load<T extends IComponent>(component: T, opts?: any): T;
+    load<T extends IComponent>(name: string, component: T, opts?: any): T;
     /**
      * Load Configure json file to settings.(support different enviroment directory & compatible for old path)
      *

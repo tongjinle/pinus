@@ -8,6 +8,7 @@ const fs = require("fs");
 const Constants = require("./constants");
 const starter = require("../master/starter");
 const pomelo_logger_1 = require("pomelo-logger");
+const pomelo_1 = require("../pomelo");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
 /**
  * Initialize application configuration.
@@ -50,33 +51,32 @@ exports.startByType = startByType;
  * Load default components for application.
  */
 function loadDefaultComponents(app) {
-    var pomelo = require('../pomelo');
     // load system default components
     if (app.serverType === Constants.RESERVED.MASTER) {
-        app.load(pomelo.master, app.get('masterConfig'));
+        app.load(pomelo_1.pomelo.components.master, app.get('masterConfig'));
     }
     else {
-        app.load(pomelo.proxy, app.get('proxyConfig'));
+        app.load(pomelo_1.pomelo.components.proxy, app.get('proxyConfig'));
         if (app.getCurServer().port) {
-            app.load(pomelo.remote, app.get('remoteConfig'));
+            app.load(pomelo_1.pomelo.components.remote, app.get('remoteConfig'));
         }
         if (app.isFrontend()) {
-            app.load(pomelo.connection, app.get('connectionConfig'));
-            app.load(pomelo.connector, app.get('connectorConfig'));
-            app.load(pomelo.session, app.get('sessionConfig'));
+            app.load(pomelo_1.pomelo.components.connection, app.get('connectionConfig'));
+            app.load(pomelo_1.pomelo.components.connector, app.get('connectorConfig'));
+            app.load(pomelo_1.pomelo.components.session, app.get('sessionConfig'));
             // compatible for schedulerConfig
             if (app.get('schedulerConfig')) {
-                app.load(pomelo.pushScheduler, app.get('schedulerConfig'));
+                app.load(pomelo_1.pomelo.components.pushScheduler, app.get('schedulerConfig'));
             }
             else {
-                app.load(pomelo.pushScheduler, app.get('pushSchedulerConfig'));
+                app.load(pomelo_1.pomelo.components.pushScheduler, app.get('pushSchedulerConfig'));
             }
         }
-        app.load(pomelo.backendSession, app.get('backendSessionConfig'));
-        app.load(pomelo.channel, app.get('channelConfig'));
-        app.load(pomelo.server, app.get('serverConfig'));
+        app.load(pomelo_1.pomelo.components.backendSession, app.get('backendSessionConfig'));
+        app.load(pomelo_1.pomelo.components.channel, app.get('channelConfig'));
+        app.load(pomelo_1.pomelo.components.server, app.get('serverConfig'));
     }
-    app.load(pomelo.monitor, app.get('monitorConfig'));
+    app.load(pomelo_1.pomelo.components.monitor, app.get('monitorConfig'));
 }
 exports.loadDefaultComponents = loadDefaultComponents;
 ;

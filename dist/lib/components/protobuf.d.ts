@@ -2,7 +2,6 @@
 import { Protobuf } from 'pomelo-protobuf';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-export default function (app: any, opts: any): ProtobufComponent;
 export declare class ProtobufComponent implements IComponent {
     app: Application;
     watchers: {};

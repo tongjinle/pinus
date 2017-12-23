@@ -2,16 +2,6 @@ import { RpcClient } from 'pomelo-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 /**
- * Component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                      opts.router: (optional) rpc message route function, route(routeParam, msg, cb),
- *                      opts.mailBoxFactory: (optional) mail box factory instance.
- * @return {Object}     component instance
- */
-export default function (app: any, opts: any): ProxyComponent;
-/**
  * Proxy component class
  *
  * @param {Object} app  current application context

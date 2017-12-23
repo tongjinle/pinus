@@ -19,6 +19,7 @@ import { SIOConnector } from './connectors/sioconnector';
 import { DirectService } from './pushSchedulers/direct';
 import { BufferService } from './pushSchedulers/buffer';
 import { ChannelService } from './common/service/channelService';
+
 import { ConnectionComponent } from './components/connection';
 import { ConnectorComponent } from './components/connector';
 import { DictionaryComponent } from './components/dictionary';
@@ -29,16 +30,20 @@ import { ProxyComponent } from './components/proxy';
 import { PushSchedulerComponent } from './components/pushScheduler';
 import { RemoteComponent } from './components/remote';
 import { ServerComponent } from './components/server';
-import { SessionComponent } from './components/session';
+import {SessionComponent } from './components/session';
+
+
 import { RpcToobusyFilter } from './filters/rpc/toobusy';
 import { RpcLogFilter } from './filters/rpc/rpcLog';
 import { ToobusyFilter } from './filters/handler/toobusy';
 import { TimeFilter } from './filters/handler/time';
 import { SerialFilter } from './filters/handler/serial';
 import { TimeoutFilter } from './filters/handler/timeout';
-var Package = require('../package');
+var Package = require('../../package');
 
 import {default as events} from './util/events';
+import { BackendSessionComponent } from './components/backendSession';
+import { ChannelComponent } from './components/channel';
 /**
  * Expose `createApplication()`.
  *
@@ -64,19 +69,19 @@ export class Pomelo
      */
     components = new class
     {
-        get backendSession() { return load<BackendSession>('./components/backendSession'); }
-        get channel() { return load<ChannelService>('./components/channel'); }
-        get connection() { return load<ConnectionComponent>('./components/connection'); }
-        get connector() { return load<ConnectorComponent>('./components/connector'); }
-        get dictionary() { return load<DictionaryComponent>('./components/dictionary'); }
-        get master() { return load<MasterComponent>('./components/master'); }
-        get monitor() { return load<MonitorComponent>('./components/monitor'); }
-        get protobuf() { return load<ProtobufComponent>('./components/protobuf'); }
-        get proxy() { return load<ProxyComponent>('./components/proxy'); }
-        get pushScheduler() { return load<PushSchedulerComponent>('./components/pushScheduler'); }
-        get remote() { return load<RemoteComponent>('./components/remote'); }
-        get server() { return load<ServerComponent>('./components/server'); }
-        get session() { return load<SessionComponent>('./components/session'); }
+        get backendSession() { return BackendSessionComponent; }
+        get channel() { return ChannelComponent; }
+        get connection() { return ConnectionComponent; }
+        get connector() { return ConnectorComponent; }
+        get dictionary() { return DictionaryComponent; }
+        get master() { return MasterComponent; }
+        get monitor() { return MonitorComponent; }
+        get protobuf() { return ProtobufComponent; }
+        get proxy() { return ProxyComponent; }
+        get pushScheduler() { return PushSchedulerComponent; }
+        get remote() { return RemoteComponent; }
+        get server() { return ServerComponent; }
+        get session() { return SessionComponent; }
     };
 
     /**
@@ -84,10 +89,10 @@ export class Pomelo
      */
     filters = new class
     {
-        get serial() { return load<SerialFilter>('./filters/handler/serial'); }
-        get time() { return load<TimeFilter>('./filters/handler/time'); }
-        get timeout() { return load<TimeoutFilter>('./filters/handler/serial'); }
-        get toobusy() { return load<ToobusyFilter>('./filters/handler/toobusy'); }
+        get serial() { return SerialFilter; }
+        get time() { return TimeFilter; }
+        get timeout() { return TimeoutFilter; }
+        get toobusy() { return ToobusyFilter; }
     };
 
     /**
@@ -95,8 +100,8 @@ export class Pomelo
      */
     rpcFilters = new class
     {
-        get rpcLog() { return load<RpcLogFilter>('./filters/handler/rpcLog'); }
-        get toobusy() { return load<RpcToobusyFilter>('./filters/handler/toobusy'); }
+        get rpcLog() { return RpcLogFilter; }
+        get toobusy() { return RpcToobusyFilter; }
     };
 
 
@@ -105,10 +110,10 @@ export class Pomelo
      */
     connectors = new class
     {
-        get sioconnector() { return load<SIOConnector>('./connectors/sioconnector'); }
-        get hybridconnector() { return load<HybridConnector>('./connectors/hybridconnector'); }
-        get udpconnector() { return load<UDPConnector>('./connectors/udpconnector'); }
-        get mqttconnector() { return load<MQTTConnector>('./connectors/mqttconnector'); }
+        get sioconnector() { return SIOConnector; }
+        get hybridconnector() { return HybridConnector; }
+        get udpconnector() { return UDPConnector; }
+        get mqttconnector() { return MQTTConnector; }
     };
 
     /**
@@ -116,8 +121,8 @@ export class Pomelo
      */
     pushSchedulers = new class
     {
-        get direct() { return load<DirectService>('./pushSchedulers/direct'); }
-        get buffer() { return load<BufferService>('./pushSchedulers/buffer'); }
+        get direct() { return DirectService; }
+        get buffer() { return BufferService; }
     };
 
     constructor()
@@ -146,16 +151,6 @@ export class Pomelo
     {
         return this._app;
     }
-}
-
-function load<T>(path : string) : T
- {
-     var m = require(path);
-     if(!isFunction(m.default))
-     {
-         throw new Error(path + ' is not a component, component must export default function');
-     }
-    return m.default();
 }
 
 export var pomelo = new Pomelo();

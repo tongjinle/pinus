@@ -5,17 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const master_1 = require("../master/master");
 /**
- * Component factory function
- *
- * @param  {Object} app  current application context
- * @return {Object}      component instances
- */
-function default_1(app, opts) {
-    return new MasterComponent(app, opts);
-}
-exports.default = default_1;
-;
-/**
 * Master component class
 *
 * @param {Object} app  current application context

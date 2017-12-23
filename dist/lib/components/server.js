@@ -5,17 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const server_1 = require("../server/server");
 /**
- * Component factory function
- *
- * @param {Object} app  current application context
- * @return {Object}     component instance
- */
-function default_1(app, opts) {
-    return new ServerComponent(app, opts);
-}
-exports.default = default_1;
-;
-/**
  * Server component class
  *
  * @param {Object} app  current application context

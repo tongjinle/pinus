@@ -5,17 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Load and start monitor client.
  */
 const monitor_1 = require("../monitor/monitor");
-/**
- * Component factory function
- *
- * @param  {Object} app  current application context
- * @return {Object}      component instances
- */
-function default_1(app, opts) {
-    return new MonitorComponent(app, opts);
-}
-exports.default = default_1;
-;
 class MonitorComponent {
     constructor(app, opts) {
         this.name = '__monitor__';

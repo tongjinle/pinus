@@ -1,15 +1,16 @@
+import { Application } from '../application';
 /**
  * Initialize application configuration.
  */
-export declare function defaultConfiguration(app: any): void;
+export declare function defaultConfiguration(app: Application): void;
 /**
  * Start servers by type.
  */
-export declare function startByType(app: any, cb: any): void;
+export declare function startByType(app: Application, cb: any): void;
 /**
  * Load default components for application.
  */
-export declare function loadDefaultComponents(app: any): void;
+export declare function loadDefaultComponents(app: Application): void;
 /**
  * Stop components.
  *

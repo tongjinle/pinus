@@ -8,10 +8,6 @@ import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
-export default function (app, opts)
-{
-    return new PushSchedulerComponent(app, opts);
-};
 
 export class PushSchedulerComponent implements IComponent
 {

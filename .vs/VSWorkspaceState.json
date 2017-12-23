@@ -1,9 +1,18 @@
 {
   "ExpandedNodes": [
     "",
+    "\\bin",
     "\\lib",
-    "\\lib\\util"
+    "\\lib\\connectors",
+    "\\lib\\connectors\\commands",
+    "\\lib\\connectors\\common",
+    "\\lib\\connectors\\hybrid",
+    "\\lib\\connectors\\mqtt",
+    "\\lib\\filters",
+    "\\lib\\filters\\handler",
+    "\\lib\\filters\\rpc",
+    "\\lib\\pushSchedulers"
   ],
-  "SelectedNode": "\\lib\\util\\log.ts",
+  "SelectedNode": "\\lib\\application.ts",
   "PreviewInSolutionExplorer": false
 }

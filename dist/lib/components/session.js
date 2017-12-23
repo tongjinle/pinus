@@ -1,13 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sessionService_1 = require("../common/service/sessionService");
-function default_1(app, opts) {
-    var cmp = new SessionComponent(app, opts);
-    app.set('sessionService', cmp);
-    return cmp;
-}
-exports.default = default_1;
-;
 /**
  * Session component. Manage sessions.
  *
@@ -37,6 +30,7 @@ class SessionComponent {
                 }
             }
         }
+        app.set('sessionService', this);
     }
     ;
 }

@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const channelService_1 = require("../common/service/channelService");
-function default_1(app, opts) {
-    var service = new channelService_1.ChannelService(app, opts);
-    app.set('channelService', service);
-    service.name = '__channel__';
-    return service;
+class ChannelComponent {
+    constructor(app, opts) {
+        this.name = '__channel__';
+        var service = new channelService_1.ChannelService(app, opts);
+        app.set('channelService', service);
+        return service;
+    }
+    ;
 }
-exports.default = default_1;
-;
+exports.ChannelComponent = ChannelComponent;
 //# sourceMappingURL=channel.js.map

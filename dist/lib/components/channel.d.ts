@@ -1,2 +1,6 @@
-import { ChannelService } from '../common/service/channelService';
-export default function (app: any, opts: any): ChannelService;
+import { IComponent } from '../interfaces/Component';
+import { Application } from '../application';
+export declare class ChannelComponent implements IComponent {
+    constructor(app: Application, opts: any);
+    name: string;
+}

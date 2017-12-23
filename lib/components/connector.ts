@@ -8,11 +8,8 @@ import { Application } from '../application';
 import { ConnectionComponent } from './connection';
 import { IComponent } from '../interfaces/Component';
 import { PushSchedulerComponent } from './pushScheduler';
+import { SIOConnector } from '../connectors/sioconnector';
 
-export default function (app, opts)
-{
-    return new ConnectorComponent(app, opts);
-};
 
 /**
  * Connector component. Receive client requests and attach session with socket.
@@ -210,14 +207,13 @@ var getConnector = function (app, opts)
     }
 
     var curServer = app.getCurServer();
-    return connector(curServer.clientPort, curServer.host, opts);
+    return new connector(curServer.clientPort, curServer.host, opts);
 };
 
 var getDefaultConnector = function (app, opts)
 {
-    var DefaultConnector = require('../connectors/sioconnector');
     var curServer = app.getCurServer();
-    return new DefaultConnector(curServer.clientPort, curServer.host, opts);
+    return new SIOConnector(curServer.clientPort, curServer.host, opts);
 };
 
 var hostFilter = function (cb, socket)

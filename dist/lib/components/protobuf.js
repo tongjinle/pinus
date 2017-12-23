@@ -7,11 +7,6 @@ const Constants = require("../util/constants");
 const crypto = require("crypto");
 const pomelo_logger_1 = require("pomelo-logger");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-function default_1(app, opts) {
-    return new ProtobufComponent(app, opts);
-}
-exports.default = default_1;
-;
 class ProtobufComponent {
     constructor(app, opts) {
         this.watchers = {};

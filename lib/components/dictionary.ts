@@ -7,11 +7,6 @@ import * as crypto from 'crypto';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 
-export default function(app, opts) {
-    return new DictionaryComponent(app, opts);
-};
-
-
 export class DictionaryComponent implements IComponent
 {
     app: Application;

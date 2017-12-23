@@ -1,14 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const connectionService_1 = require("../common/service/connectionService");
-/**
- * Connection component for statistics connection status of frontend servers
- */
-function default_1(app) {
-    return new ConnectionComponent(app);
-}
-exports.default = default_1;
-;
 class ConnectionComponent {
     constructor(app) {
         this.name = '__connection__';

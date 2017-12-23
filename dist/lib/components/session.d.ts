@@ -1,7 +1,6 @@
 import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-export default function (app: Application, opts: any): SessionComponent;
 /**
  * Session component. Manage sessions.
  *
@@ -11,6 +10,6 @@ export default function (app: Application, opts: any): SessionComponent;
 export declare class SessionComponent implements IComponent {
     app: Application;
     service: SessionService;
-    constructor(app: any, opts: any);
+    constructor(app: Application, opts: any);
     name: string;
 }

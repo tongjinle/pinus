@@ -7,27 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const pathUtil = require("../util/pathUtil");
 const pomelo_rpc_1 = require("pomelo-rpc");
-/**
- * Remote component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                       opts.acceptorFactory {Object}: acceptorFactory.create(opts, cb)
- * @return {Object}     remote component instances
- */
-function default_1(app, opts) {
-    opts = opts || {};
-    // cacheMsg is deprecated, just for compatibility here.
-    opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
-    opts.interval = opts.interval || 30;
-    if (app.enabled('rpcDebugLog')) {
-        opts.rpcDebugLog = true;
-        opts.rpcLogger = require('pomelo-logger').getLogger('rpc-debug', __filename);
-    }
-    return new RemoteComponent(app, opts);
-}
-exports.default = default_1;
-;
+const pomelo_logger_1 = require("pomelo-logger");
 /**
  * Remote component class
  *
@@ -39,6 +19,14 @@ class RemoteComponent {
         this.app = app;
         this.opts = opts;
         this.name = '__remote__';
+        opts = opts || {};
+        // cacheMsg is deprecated, just for compatibility here.
+        opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
+        opts.interval = opts.interval || 30;
+        if (app.enabled('rpcDebugLog')) {
+            opts.rpcDebugLog = true;
+            opts.rpcLogger = pomelo_logger_1.getLogger('rpc-debug', __filename);
+        }
     }
     ;
     /**

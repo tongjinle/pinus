@@ -6,11 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DefaultScheduler = require("../pushSchedulers/direct");
 const pomelo_logger_1 = require("pomelo-logger");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-function default_1(app, opts) {
-    return new PushSchedulerComponent(app, opts);
-}
-exports.default = default_1;
-;
 class PushSchedulerComponent {
     constructor(app, opts) {
         this.app = app;

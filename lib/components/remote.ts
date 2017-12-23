@@ -7,29 +7,7 @@ import * as pathUtil from '../util/pathUtil';
 import { createServer , Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-
-/**
- * Remote component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                       opts.acceptorFactory {Object}: acceptorFactory.create(opts, cb)
- * @return {Object}     remote component instances
- */
-export default function (app, opts)
-{
-    opts = opts || {};
-
-    // cacheMsg is deprecated, just for compatibility here.
-    opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
-    opts.interval = opts.interval || 30;
-    if (app.enabled('rpcDebugLog'))
-    {
-        opts.rpcDebugLog = true;
-        opts.rpcLogger = require('pomelo-logger').getLogger('rpc-debug', __filename);
-    }
-    return new RemoteComponent(app, opts);
-};
+import { getLogger } from 'pomelo-logger';
 
 /**
  * Remote component class
@@ -42,6 +20,16 @@ export class RemoteComponent  implements IComponent
 
     constructor(private app: Application, private opts: any)
     {
+        opts = opts || {};
+
+        // cacheMsg is deprecated, just for compatibility here.
+        opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
+        opts.interval = opts.interval || 30;
+        if (app.enabled('rpcDebugLog'))
+        {
+            opts.rpcDebugLog = true;
+            opts.rpcLogger = getLogger('rpc-debug', __filename);
+        }
     };
 
     name = '__remote__';

@@ -6,12 +6,13 @@ import * as fs from 'fs';
 import * as Constants from './constants';
 import * as starter from '../master/starter';
 import { getLogger } from 'pomelo-logger';import { Application } from '../application';
+import { pomelo } from '../pomelo';
  var logger = getLogger('pomelo', __filename);
 
 /**
  * Initialize application configuration.
  */
-export function defaultConfiguration(app)
+export function defaultConfiguration(app : Application)
 {
     var args = parseArgs(process.argv);
     setupEnv(app, args);
@@ -25,7 +26,7 @@ export function defaultConfiguration(app)
 /**
  * Start servers by type.
  */
-export function startByType(app, cb)
+export function startByType(app : Application, cb)
 {
     if (!!app.startId)
     {
@@ -51,39 +52,38 @@ export function startByType(app, cb)
 /**
  * Load default components for application.
  */
-export function loadDefaultComponents(app)
+export function loadDefaultComponents(app : Application)
 {
-    var pomelo = require('../pomelo');
     // load system default components
     if (app.serverType === Constants.RESERVED.MASTER)
     {
-        app.load(pomelo.master, app.get('masterConfig'));
+        app.load(pomelo.components.master, app.get('masterConfig'));
     } else
     {
-        app.load(pomelo.proxy, app.get('proxyConfig'));
+        app.load(pomelo.components.proxy, app.get('proxyConfig'));
         if (app.getCurServer().port)
         {
-            app.load(pomelo.remote, app.get('remoteConfig'));
+            app.load(pomelo.components.remote, app.get('remoteConfig'));
         }
         if (app.isFrontend())
         {
-            app.load(pomelo.connection, app.get('connectionConfig'));
-            app.load(pomelo.connector, app.get('connectorConfig'));
-            app.load(pomelo.session, app.get('sessionConfig'));
+            app.load(pomelo.components.connection, app.get('connectionConfig'));
+            app.load(pomelo.components.connector, app.get('connectorConfig'));
+            app.load(pomelo.components.session, app.get('sessionConfig'));
             // compatible for schedulerConfig
             if (app.get('schedulerConfig'))
             {
-                app.load(pomelo.pushScheduler, app.get('schedulerConfig'));
+                app.load(pomelo.components.pushScheduler, app.get('schedulerConfig'));
             } else
             {
-                app.load(pomelo.pushScheduler, app.get('pushSchedulerConfig'));
+                app.load(pomelo.components.pushScheduler, app.get('pushSchedulerConfig'));
             }
         }
-        app.load(pomelo.backendSession, app.get('backendSessionConfig'));
-        app.load(pomelo.channel, app.get('channelConfig'));
-        app.load(pomelo.server, app.get('serverConfig'));
+        app.load(pomelo.components.backendSession, app.get('backendSessionConfig'));
+        app.load(pomelo.components.channel, app.get('channelConfig'));
+        app.load(pomelo.components.server, app.get('serverConfig'));
     }
-    app.load(pomelo.monitor, app.get('monitorConfig'));
+    app.load(pomelo.components.monitor, app.get('monitorConfig'));
 };
 
 /**

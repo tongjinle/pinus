@@ -1,6 +1,5 @@
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-export default function (app: any, opts: any): ConnectorComponent;
 /**
  * Connector component. Receive client requests and attach session with socket.
  *

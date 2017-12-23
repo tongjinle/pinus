@@ -6,9 +6,33 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const application_1 = require("./application");
-const util_1 = require("util");
-var Package = require('../package');
+const hybridconnector_1 = require("./connectors/hybridconnector");
+const udpconnector_1 = require("./connectors/udpconnector");
+const mqttconnector_1 = require("./connectors/mqttconnector");
+const sioconnector_1 = require("./connectors/sioconnector");
+const direct_1 = require("./pushSchedulers/direct");
+const buffer_1 = require("./pushSchedulers/buffer");
+const connection_1 = require("./components/connection");
+const connector_1 = require("./components/connector");
+const dictionary_1 = require("./components/dictionary");
+const master_1 = require("./components/master");
+const monitor_1 = require("./components/monitor");
+const protobuf_1 = require("./components/protobuf");
+const proxy_1 = require("./components/proxy");
+const pushScheduler_1 = require("./components/pushScheduler");
+const remote_1 = require("./components/remote");
+const server_1 = require("./components/server");
+const session_1 = require("./components/session");
+const toobusy_1 = require("./filters/rpc/toobusy");
+const rpcLog_1 = require("./filters/rpc/rpcLog");
+const toobusy_2 = require("./filters/handler/toobusy");
+const time_1 = require("./filters/handler/time");
+const serial_1 = require("./filters/handler/serial");
+const timeout_1 = require("./filters/handler/timeout");
+var Package = require('../../package');
 const events_1 = require("./util/events");
+const backendSession_1 = require("./components/backendSession");
+const channel_1 = require("./components/channel");
 /**
  * Expose `createApplication()`.
  *
@@ -28,51 +52,51 @@ class Pomelo {
          * auto loaded components
          */
         this.components = new class {
-            get backendSession() { return load('./components/backendSession'); }
-            get channel() { return load('./components/channel'); }
-            get connection() { return load('./components/connection'); }
-            get connector() { return load('./components/connector'); }
-            get dictionary() { return load('./components/dictionary'); }
-            get master() { return load('./components/master'); }
-            get monitor() { return load('./components/monitor'); }
-            get protobuf() { return load('./components/protobuf'); }
-            get proxy() { return load('./components/proxy'); }
-            get pushScheduler() { return load('./components/pushScheduler'); }
-            get remote() { return load('./components/remote'); }
-            get server() { return load('./components/server'); }
-            get session() { return load('./components/session'); }
+            get backendSession() { return backendSession_1.BackendSessionComponent; }
+            get channel() { return channel_1.ChannelComponent; }
+            get connection() { return connection_1.ConnectionComponent; }
+            get connector() { return connector_1.ConnectorComponent; }
+            get dictionary() { return dictionary_1.DictionaryComponent; }
+            get master() { return master_1.MasterComponent; }
+            get monitor() { return monitor_1.MonitorComponent; }
+            get protobuf() { return protobuf_1.ProtobufComponent; }
+            get proxy() { return proxy_1.ProxyComponent; }
+            get pushScheduler() { return pushScheduler_1.PushSchedulerComponent; }
+            get remote() { return remote_1.RemoteComponent; }
+            get server() { return server_1.ServerComponent; }
+            get session() { return session_1.SessionComponent; }
         };
         /**
          * auto loaded filters
          */
         this.filters = new class {
-            get serial() { return load('./filters/handler/serial'); }
-            get time() { return load('./filters/handler/time'); }
-            get timeout() { return load('./filters/handler/serial'); }
-            get toobusy() { return load('./filters/handler/toobusy'); }
+            get serial() { return serial_1.SerialFilter; }
+            get time() { return time_1.TimeFilter; }
+            get timeout() { return timeout_1.TimeoutFilter; }
+            get toobusy() { return toobusy_2.ToobusyFilter; }
         };
         /**
          * auto loaded rpc filters
          */
         this.rpcFilters = new class {
-            get rpcLog() { return load('./filters/handler/rpcLog'); }
-            get toobusy() { return load('./filters/handler/toobusy'); }
+            get rpcLog() { return rpcLog_1.RpcLogFilter; }
+            get toobusy() { return toobusy_1.RpcToobusyFilter; }
         };
         /**
          * connectors
          */
         this.connectors = new class {
-            get sioconnector() { return load('./connectors/sioconnector'); }
-            get hybridconnector() { return load('./connectors/hybridconnector'); }
-            get udpconnector() { return load('./connectors/udpconnector'); }
-            get mqttconnector() { return load('./connectors/mqttconnector'); }
+            get sioconnector() { return sioconnector_1.SIOConnector; }
+            get hybridconnector() { return hybridconnector_1.HybridConnector; }
+            get udpconnector() { return udpconnector_1.UDPConnector; }
+            get mqttconnector() { return mqttconnector_1.MQTTConnector; }
         };
         /**
          * pushSchedulers
          */
         this.pushSchedulers = new class {
-            get direct() { return load('./pushSchedulers/direct'); }
-            get buffer() { return load('./pushSchedulers/buffer'); }
+            get direct() { return direct_1.DirectService; }
+            get buffer() { return buffer_1.BufferService; }
         };
     }
     /**
@@ -97,12 +121,5 @@ class Pomelo {
     }
 }
 exports.Pomelo = Pomelo;
-function load(path) {
-    var m = require(path);
-    if (!util_1.isFunction(m.default)) {
-        throw new Error(path + ' is not a component, component must export default function');
-    }
-    return m.default();
-}
 exports.pomelo = new Pomelo();
 //# sourceMappingURL=pomelo.js.map

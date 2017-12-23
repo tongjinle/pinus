@@ -4,13 +4,6 @@
  */
 import { Monitor } from '../monitor/monitor';
 import { IComponent } from '../interfaces/Component';
-/**
- * Component factory function
- *
- * @param  {Object} app  current application context
- * @return {Object}      component instances
- */
-export default function (app: any, opts: any): MonitorComponent;
 export declare class MonitorComponent implements IComponent {
     monitor: Monitor;
     constructor(app: any, opts: any);

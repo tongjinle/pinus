@@ -1,12 +1,13 @@
-var cp = require('child_process');
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
-var util = require('util');
-var utils = require('../util/utils');
-var Constants = require('../util/constants');
+import * as cp from 'child_process';
+import { getLogger } from 'pomelo-logger';
+ var logger = getLogger('pomelo', __filename);
+import * as util from 'util';
+import * as utils from '../util/utils';
+import * as Constants from '../util/constants';
 var env = Constants.RESERVED.ENV_DEV;
-var os = require('os');
+import * as os from 'os';
 var cpus = {};
-var pomelo = require('../pomelo');
+import {pomelo} from '../pomelo';
 
 /**
  * Run all servers

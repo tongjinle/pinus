@@ -4,13 +4,6 @@
 import { MasterServer } from '../master/master';
 import { IComponent } from '../interfaces/Component';
 /**
- * Component factory function
- *
- * @param  {Object} app  current application context
- * @return {Object}      component instances
- */
-export default function (app: any, opts: any): MasterComponent;
-/**
 * Master component class
 *
 * @param {Object} app  current application context

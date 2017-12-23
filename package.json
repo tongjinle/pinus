@@ -1,6 +1,6 @@
 {
   "name": "pomelo",
-  "version": "3.0.6",
+  "version": "3.1.4",
   "homepage": "https://github.com/NetEase/pomelo",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "mkdirp": "0.3.3",
     "mqtt": "0.3.9",
     "node-bignumber": "1.2.1",
-    "pomelo-admin": "1.0.3",
+    "pomelo-admin": "1.0.4",
     "pomelo-loader": "1.0.1",
     "pomelo-logger": "1.0.3",
     "pomelo-protobuf": "1.0.0",

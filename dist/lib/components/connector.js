@@ -7,11 +7,7 @@ const pomelo_1 = require("../pomelo");
 const rsa = require("node-bignumber");
 const events_1 = require("../util/events");
 const utils = require("../util/utils");
-function default_1(app, opts) {
-    return new ConnectorComponent(app, opts);
-}
-exports.default = default_1;
-;
+const sioconnector_1 = require("../connectors/sioconnector");
 /**
  * Connector component. Receive client requests and attach session with socket.
  *
@@ -150,12 +146,11 @@ var getConnector = function (app, opts) {
         return connector;
     }
     var curServer = app.getCurServer();
-    return connector(curServer.clientPort, curServer.host, opts);
+    return new connector(curServer.clientPort, curServer.host, opts);
 };
 var getDefaultConnector = function (app, opts) {
-    var DefaultConnector = require('../connectors/sioconnector');
     var curServer = app.getCurServer();
-    return new DefaultConnector(curServer.clientPort, curServer.host, opts);
+    return new sioconnector_1.SIOConnector(curServer.clientPort, curServer.host, opts);
 };
 var hostFilter = function (cb, socket) {
     if (!this.useHostFilter) {

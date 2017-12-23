@@ -19,6 +19,7 @@ const appManager = require("./common/manager/appManager");
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
+const util_1 = require("util");
 /**
  * Application states
  */
@@ -209,26 +210,14 @@ class Application {
         this.rpcAfter(filter);
     }
     ;
-    /**
-     * Load component
-     *
-     * @param  {String} name    (optional) name of the component
-     * @param  {Object} component component instance or factory function of the component
-     * @param  {[type]} opts    (optional) construct parameters for the factory function
-     * @return {Object}     app instance for chain invoke
-     * @memberOf Application
-     */
     load(name, component, opts) {
         if (typeof name !== 'string') {
             opts = component;
             component = name;
             name = null;
-            if (typeof component.name === 'string') {
-                name = component.name;
-            }
         }
-        if (typeof component === 'function') {
-            component = component(this, opts);
+        if (util_1.isFunction(component)) {
+            component = new component(this, opts);
         }
         if (!name && typeof component.name === 'string') {
             name = component.name;
@@ -243,7 +232,7 @@ class Application {
             // components with a name would get by name throught app.components later.
             this.components[name] = component;
         }
-        return this;
+        return component;
     }
     ;
     /**

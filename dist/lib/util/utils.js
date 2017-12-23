@@ -258,7 +258,7 @@ function checkPort(server, cb) {
 exports.checkPort = checkPort;
 ;
 function isLocal(host) {
-    var app = require('../pomelo').app;
+    var app = pomelo_1.pomelo.app;
     if (!app) {
         return host === '127.0.0.1' || host === 'localhost' || host === '0.0.0.0' || inLocal(host);
     }

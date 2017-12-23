@@ -2,15 +2,6 @@ import { Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 /**
- * Remote component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                       opts.acceptorFactory {Object}: acceptorFactory.create(opts, cb)
- * @return {Object}     remote component instances
- */
-export default function (app: any, opts: any): RemoteComponent;
-/**
  * Remote component class
  *
  * @param {Object} app  current application context

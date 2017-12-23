@@ -2,11 +2,6 @@ import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 
-export default function(app : Application, opts) {
-  var cmp = new SessionComponent(app, opts);
-  app.set('sessionService', cmp);
-  return cmp;
-};
 
 /**
  * Session component. Manage sessions.
@@ -18,7 +13,7 @@ export class SessionComponent implements IComponent
 {
     app: Application;
     service: SessionService;
-    constructor(app, opts)
+    constructor(app: Application, opts)
     {
         opts = opts || {};
         this.app = app;
@@ -47,6 +42,8 @@ export class SessionComponent implements IComponent
                 }
             }
         }
+        
+        app.set('sessionService', this);
     };
 
     name = '__session__';

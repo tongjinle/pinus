@@ -5,16 +5,6 @@ import { Server , create as createServer } from '../server/server';
 import { IComponent } from '../interfaces/Component';
 
 /**
- * Component factory function
- *
- * @param {Object} app  current application context
- * @return {Object}     component instance
- */
-export default function(app, opts) {
-	return new ServerComponent(app, opts);
-};
-
-/**
  * Server component class
  *
  * @param {Object} app  current application context

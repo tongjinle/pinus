@@ -13,32 +13,6 @@ const Constants = require("../util/constants");
 const pomelo_logger_1 = require("pomelo-logger");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
 /**
- * Component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                      opts.router: (optional) rpc message route function, route(routeParam, msg, cb),
- *                      opts.mailBoxFactory: (optional) mail box factory instance.
- * @return {Object}     component instance
- */
-function default_1(app, opts) {
-    opts = opts || {};
-    // proxy default config
-    // cacheMsg is deprecated, just for compatibility here.
-    opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
-    opts.interval = opts.interval || 30;
-    opts.router = genRouteFun();
-    opts.context = app;
-    opts.routeContext = app;
-    if (app.enabled('rpcDebugLog')) {
-        opts.rpcDebugLog = true;
-        opts.rpcLogger = require('pomelo-logger').getLogger('rpc-debug', __filename);
-    }
-    return new ProxyComponent(app, opts);
-}
-exports.default = default_1;
-;
-/**
  * Proxy component class
  *
  * @param {Object} app  current application context
@@ -47,6 +21,18 @@ exports.default = default_1;
 class ProxyComponent {
     constructor(app, opts) {
         this.name = '__proxy__';
+        opts = opts || {};
+        // proxy default config
+        // cacheMsg is deprecated, just for compatibility here.
+        opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
+        opts.interval = opts.interval || 30;
+        opts.router = genRouteFun();
+        opts.context = app;
+        opts.routeContext = app;
+        if (app.enabled('rpcDebugLog')) {
+            opts.rpcDebugLog = true;
+            opts.rpcLogger = pomelo_logger_1.getLogger('rpc-debug', __filename);
+        }
         this.app = app;
         this.opts = opts;
         this.client = genRpcClient(this.app, opts);
@@ -89,27 +75,16 @@ class ProxyComponent {
     afterStart(cb) {
         var self = this;
         Object.defineProperty(this.app, 'rpc', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
             get: function () {
                 return self.client.proxies.user;
             }
         });
         Object.defineProperty(this.app, 'sysrpc', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
             get: function () {
                 return self.client.proxies.sys;
             }
         });
-        Object.defineProperty(this.app, 'rpcInvoke', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value: this.client.rpcInvoke.bind(this.client)
-        });
+        this.app.rpcInvoke = this.client.rpcInvoke.bind(this.client);
         this.client.start(cb);
     }
     ;

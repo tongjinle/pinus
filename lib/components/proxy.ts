@@ -13,33 +13,6 @@ import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
-/**
- * Component factory function
- *
- * @param {Object} app  current application context
- * @param {Object} opts construct parameters
- *                      opts.router: (optional) rpc message route function, route(routeParam, msg, cb),
- *                      opts.mailBoxFactory: (optional) mail box factory instance.
- * @return {Object}     component instance
- */
-export default function (app, opts)
-{
-    opts = opts || {};
-    // proxy default config
-    // cacheMsg is deprecated, just for compatibility here.
-    opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
-    opts.interval = opts.interval || 30;
-    opts.router = genRouteFun();
-    opts.context = app;
-    opts.routeContext = app;
-    if (app.enabled('rpcDebugLog'))
-    {
-        opts.rpcDebugLog = true;
-        opts.rpcLogger = require('pomelo-logger').getLogger('rpc-debug', __filename);
-    }
-
-    return new ProxyComponent(app, opts);
-};
 
 /**
  * Proxy component class
@@ -54,6 +27,20 @@ export class ProxyComponent implements IComponent
     client: RpcClient;
     constructor(app, opts)
     {
+        opts = opts || {};
+        // proxy default config
+        // cacheMsg is deprecated, just for compatibility here.
+        opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
+        opts.interval = opts.interval || 30;
+        opts.router = genRouteFun();
+        opts.context = app;
+        opts.routeContext = app;
+        if (app.enabled('rpcDebugLog'))
+        {
+            opts.rpcDebugLog = true;
+            opts.rpcLogger = getLogger('rpc-debug', __filename);
+        }
+
         this.app = app;
         this.opts = opts;
         this.client = genRpcClient(this.app, opts);
@@ -106,9 +93,6 @@ export class ProxyComponent implements IComponent
         var self = this;
 
         Object.defineProperty(this.app, 'rpc', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
             get : function ()
             {
                 return self.client.proxies.user;
@@ -116,20 +100,12 @@ export class ProxyComponent implements IComponent
         });
 
         Object.defineProperty(this.app, 'sysrpc', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
             get : function ()
             {
                 return self.client.proxies.sys;
             }
         });
-        Object.defineProperty(this.app, 'rpcInvoke', {
-            enumerable: true,
-            writable: true,
-            configurable: true,
-            value : this.client.rpcInvoke.bind(this.client)
-        });
+        this.app.rpcInvoke =  this.client.rpcInvoke.bind(this.client);
 
         this.client.start(cb);
     };

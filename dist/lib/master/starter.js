@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var cp = require('child_process');
+const cp = require("child_process");
 const pomelo_logger_1 = require("pomelo-logger");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-var util = require('util');
-var utils = require('../util/utils');
-var Constants = require('../util/constants');
+const util = require("util");
+const utils = require("../util/utils");
+const Constants = require("../util/constants");
 var env = Constants.RESERVED.ENV_DEV;
-var os = require('os');
+const os = require("os");
 var cpus = {};
-var pomelo = require('../pomelo');
+const pomelo_1 = require("../pomelo");
 /**
  * Run all servers
  *
@@ -165,7 +165,7 @@ exports.kill = kill;
 function sshrun(cmd, host, cb) {
     var args = [];
     args.push(host);
-    var ssh_params = pomelo.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
+    var ssh_params = pomelo_1.pomelo.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
     if (!!ssh_params && Array.isArray(ssh_params)) {
         args = args.concat(ssh_params);
     }

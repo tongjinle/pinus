@@ -1,8 +1,14 @@
 import { ChannelService } from '../common/service/channelService';
+import { IComponent } from '../interfaces/Component';
+import { Application } from '../application';
 
-export default function(app, opts) {
-  var service = new ChannelService(app, opts);
-  app.set('channelService', service);
-  service.name = '__channel__';
-  return service;
-};
+export class ChannelComponent implements IComponent
+{
+  constructor(app: Application, opts)
+  {
+    var service = new ChannelService(app, opts);
+    app.set('channelService', service);
+    return service;
+  };
+  name = '__channel__';
+}

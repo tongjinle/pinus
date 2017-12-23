@@ -6,11 +6,6 @@ const utils = require("../util/utils");
 const Loader = require("pomelo-loader");
 const pathUtil = require("../util/pathUtil");
 const crypto = require("crypto");
-function default_1(app, opts) {
-    return new DictionaryComponent(app, opts);
-}
-exports.default = default_1;
-;
 class DictionaryComponent {
     constructor(app, opts) {
         this.dict = {};

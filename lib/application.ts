@@ -32,6 +32,8 @@ import { MasterComponent } from './components/master';
 import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
+import { ObjectType } from './interfaces/define';
+import { isFunction } from 'util';
 
 
 export type ConfigureCallback =  ()=>void;
@@ -88,6 +90,8 @@ export class Application
     state: number;
     base : string;
 
+    startId : string;
+    type : string;
     stopTimer : any;
 
     /**
@@ -278,22 +282,24 @@ export class Application
      * @return {Object}     app instance for chain invoke
      * @memberOf Application
      */
-    load(name, component, opts ?: any)
+    load<T extends IComponent>(component : ObjectType<T>, opts ?: any) : T
+    load<T extends IComponent>(name : string, component : ObjectType<T>, opts ?: any) : T
+    
+    load<T extends IComponent>(component : T, opts ?: any) : T
+    load<T extends IComponent>(name : string, component : T, opts ?: any) : T
+
+    load<T extends IComponent>(name : string | ObjectType<T>, component ?: ObjectType<T> | any | T, opts ?: any) : T
     {
         if (typeof name !== 'string')
         {
             opts = component;
             component = name;
             name = null;
-            if (typeof component.name === 'string')
-            {
-                name = component.name;
-            }
         }
 
-        if (typeof component === 'function')
+        if(isFunction(component))
         {
-            component = component(this, opts);
+            component = new component(this, opts);
         }
 
         if (!name && typeof component.name === 'string')
@@ -301,7 +307,7 @@ export class Application
             name = component.name;
         }
 
-        if (name && this.components[name])
+        if (name && this.components[name as string])
         {
             // ignore duplicat component
             logger.warn('ignore duplicate component: %j', name);
@@ -312,10 +318,10 @@ export class Application
         if (name)
         {
             // components with a name would get by name throught app.components later.
-            this.components[name] = component;
+            this.components[name as string] = component;
         }
 
-        return this;
+        return component;
     };
 
     /**

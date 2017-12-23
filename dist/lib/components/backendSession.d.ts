@@ -1,2 +1,6 @@
-import { BackendSessionService } from '../common/service/backendSessionService';
-export default function (app: any): BackendSessionService;
+import { IComponent } from '../interfaces/Component';
+import { Application } from '../application';
+export declare class BackendSessionComponent implements IComponent {
+    constructor(app: Application);
+    name: string;
+}
