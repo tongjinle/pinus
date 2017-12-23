@@ -1,4 +1,4 @@
-import { Package , protocol } from 'pomelo-protocol';
+import { Package , Protocol } from 'pomelo-protocol';
 import { getLogger } from 'pomelo-logger';
 var logger = getLogger('pomelo', __filename);
 
@@ -17,7 +17,7 @@ var handleHandshake = function (socket, pkg)
     }
     try
     {
-        socket.emit('handshake', JSON.parse(protocol.strdecode(pkg.body)));
+        socket.emit('handshake', JSON.parse(Protocol.strdecode(pkg.body)));
     } catch (ex)
     {
         socket.emit('handshake', {});

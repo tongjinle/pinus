@@ -13,7 +13,7 @@ var handleHandshake = function (socket, pkg) {
         return;
     }
     try {
-        socket.emit('handshake', JSON.parse(pomelo_protocol_1.protocol.strdecode(pkg.body)));
+        socket.emit('handshake', JSON.parse(pomelo_protocol_1.Protocol.strdecode(pkg.body)));
     }
     catch (ex) {
         socket.emit('handshake', {});
