@@ -4,19 +4,16 @@ import { default as events } from '../util/events';
 import * as Constants from '../util/constants';
 import * as util from 'util';
 import { Application } from '../application';
+import { IModule } from 'pomelo-admin';
 
-module.exports = function (opts, consoleService)
-{
-    return new MonitorWatcherModule(opts, consoleService);
-};
 
-export var moduleId = Constants.KEYWORDS.MONITOR_WATCHER;
-
-export class MonitorWatcherModule
+export class MonitorWatcherModule implements IModule
 {
     app: Application;
     service: any;
     id: string;
+
+    static moduleId = Constants.KEYWORDS.MONITOR_WATCHER;
 
     constructor(opts, consoleService)
     {

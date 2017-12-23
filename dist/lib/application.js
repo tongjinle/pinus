@@ -543,14 +543,6 @@ class Application {
         return this;
     }
     ;
-    /**
-     * Register admin modules. Admin modules is the extends point of the monitor system.
-     *
-     * @param {String} module (optional) module id or provoided by module.moduleId
-     * @param {Object} module module object or factory function for module
-     * @param {Object} opts construct parameter for module
-     * @memberOf Application
-     */
     registerAdmin(moduleId, module, opts) {
         var modules = this.get(Constants.KEYWORDS.MODULE);
         if (!modules) {
@@ -561,7 +553,9 @@ class Application {
             opts = module;
             module = moduleId;
             if (module) {
-                moduleId = module.moduleId;
+                moduleId = (module.moduleId);
+                if (!moduleId)
+                    moduleId = module.constructor.name;
             }
         }
         if (!moduleId) {

@@ -12,12 +12,6 @@ const utils = require("../util/utils");
 const Constants = require("../util/constants");
 const starter = require("../master/starter");
 const child_process_1 = require("child_process");
-function default_1(opts) {
-    return new ConsoleModule(opts);
-}
-exports.default = default_1;
-;
-exports.moduleId = '__console__';
 class ConsoleModule {
     constructor(opts) {
         opts = opts || {};
@@ -117,6 +111,7 @@ class ConsoleModule {
     }
     ;
 }
+ConsoleModule.moduleId = '__console__';
 exports.ConsoleModule = ConsoleModule;
 var kill = function (app, agent, msg, cb) {
     var sid, record;

@@ -10,18 +10,16 @@ import * as Constants from '../util/constants';
 import * as starter from '../master/starter';
 import { exec } from 'child_process';
 import { Application } from '../application';
+import { IModule } from 'pomelo-admin';
 
-export default function (opts)
-{
-    return new ConsoleModule(opts);
-};
 
-export var moduleId = '__console__';
-
-export class ConsoleModule
+export class ConsoleModule implements IModule
 {
     app: Application;
     starter: any;
+
+    static moduleId = '__console__';
+
     constructor(opts)
     {
         opts = opts || {};

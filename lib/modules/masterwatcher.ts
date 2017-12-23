@@ -3,19 +3,17 @@ import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
 import { Watchdog} from '../master/watchdog';
 import { Application } from '../application';
+import { IModule } from 'pomelo-admin';
 
-export default function(opts, consoleService) {
-    return new MasterWatcherModule(opts, consoleService);
-};
 
-export var moduleId = Constants.KEYWORDS.MASTER_WATCHER;
-
-export class MasterWatcherModule
+export class MasterWatcherModule implements IModule
 {
     app: Application;
     service: any;
     id: string;
     watchdog: Watchdog
+
+    static moduleId = Constants.KEYWORDS.MASTER_WATCHER;
 
 
     constructor(opts, consoleService)

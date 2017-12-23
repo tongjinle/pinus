@@ -5,10 +5,6 @@ var logger = pomelo_logger_1.getLogger('pomelo', __filename);
 const utils = require("../util/utils");
 const events_1 = require("../util/events");
 const Constants = require("../util/constants");
-module.exports = function (opts, consoleService) {
-    return new MonitorWatcherModule(opts, consoleService);
-};
-exports.moduleId = Constants.KEYWORDS.MONITOR_WATCHER;
 class MonitorWatcherModule {
     constructor(opts, consoleService) {
         this.app = opts.app;
@@ -34,6 +30,7 @@ class MonitorWatcherModule {
     }
     ;
 }
+MonitorWatcherModule.moduleId = Constants.KEYWORDS.MONITOR_WATCHER;
 exports.MonitorWatcherModule = MonitorWatcherModule;
 // ----------------- monitor start method -------------------------
 var subscribeRequest = function (self, agent, id, cb) {

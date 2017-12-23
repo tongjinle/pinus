@@ -21,6 +21,7 @@ import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
+import { IModule, IModuleFactory } from 'pomelo-admin';
 export declare type ConfigureCallback = () => void;
 export declare class Application {
     loaded: any[];
@@ -336,7 +337,10 @@ export declare class Application {
      * @param {Object} opts construct parameter for module
      * @memberOf Application
      */
-    registerAdmin(moduleId: any, module: any, opts: any): void;
+    registerAdmin(module: IModule, opts?: any): any;
+    registerAdmin(moduleId: string, module?: IModule, opts?: any): any;
+    registerAdmin(module: IModuleFactory, opts?: any): any;
+    registerAdmin(moduleId: string, module?: IModuleFactory, opts?: any): any;
     /**
      * Use plugin.
      *

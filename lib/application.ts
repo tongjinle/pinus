@@ -34,6 +34,7 @@ import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
 import { isFunction } from 'util';
+import { IModule, IModuleFactory } from 'pomelo-admin';
 
 
 export type ConfigureCallback =  ()=>void;
@@ -722,7 +723,14 @@ export class Application
      * @param {Object} opts construct parameter for module
      * @memberOf Application
      */
-    registerAdmin(moduleId, module, opts)
+    registerAdmin(module : IModule, opts ?: any)
+    registerAdmin(moduleId : string, module ?: IModule, opts ?: any)
+
+    
+    registerAdmin(module : IModuleFactory, opts ?: any)
+    registerAdmin(moduleId : string, module ?: IModuleFactory, opts ?: any)
+
+    registerAdmin(moduleId : string | IModule | IModuleFactory, module ?: IModule | IModuleFactory, opts ?: any)
     {
         var modules = this.get(Constants.KEYWORDS.MODULE);
         if (!modules)
@@ -737,7 +745,9 @@ export class Application
             module = moduleId;
             if (module)
             {
-                moduleId = module.moduleId;
+                moduleId = ((module as IModuleFactory).moduleId);
+                if(!moduleId)
+                    moduleId = (module as IModule).constructor.name;
             }
         }
 
@@ -746,7 +756,7 @@ export class Application
             return;
         }
 
-        modules[moduleId] = {
+        modules[moduleId as string] = {
             moduleId: moduleId,
             module: module,
             opts: opts

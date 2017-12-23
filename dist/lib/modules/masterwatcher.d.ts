@@ -1,12 +1,12 @@
 import { Watchdog } from '../master/watchdog';
 import { Application } from '../application';
-export default function (opts: any, consoleService: any): MasterWatcherModule;
-export declare var moduleId: string;
-export declare class MasterWatcherModule {
+import { IModule } from 'pomelo-admin';
+export declare class MasterWatcherModule implements IModule {
     app: Application;
     service: any;
     id: string;
     watchdog: Watchdog;
+    static moduleId: string;
     constructor(opts: any, consoleService: any);
     onServerAdd(record: any): void;
     onServerReconnect(record: any): void;

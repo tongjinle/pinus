@@ -7,6 +7,9 @@ const Constants = require("./constants");
 const pathUtil = require("./pathUtil");
 const starter = require("../master/starter");
 const pomelo_logger_1 = require("pomelo-logger");
+const masterwatcher_1 = require("../modules/masterwatcher");
+const monitorwatcher_1 = require("../modules/monitorwatcher");
+const console_1 = require("../modules/console");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
 /**
  * Load admin modules
@@ -25,7 +28,7 @@ function loadModules(self, consoleService) {
     for (var i = 0, l = modules.length; i < l; i++) {
         record = modules[i];
         if (typeof record.module === 'function') {
-            module = record.module(record.opts, consoleService);
+            module = new record.module(record.opts, consoleService);
         }
         else {
             module = record.module;
@@ -56,14 +59,14 @@ exports.startModules = startModules;
 function registerDefaultModules(isMaster, app, closeWatcher) {
     if (!closeWatcher) {
         if (isMaster) {
-            app.registerAdmin(require('../modules/masterwatcher'), { app: app });
+            app.registerAdmin(masterwatcher_1.MasterWatcherModule, { app: app });
         }
         else {
-            app.registerAdmin(require('../modules/monitorwatcher'), { app: app });
+            app.registerAdmin(monitorwatcher_1.MonitorWatcherModule, { app: app });
         }
     }
     app.registerAdmin(admin.modules.watchServer, { app: app });
-    app.registerAdmin(require('../modules/console'), { app: app, starter: starter });
+    app.registerAdmin(console_1.ConsoleModule, { app: app, starter: starter });
     if (app.enabled('systemMonitor')) {
         if (os.platform() !== Constants.PLATFORM.WIN) {
             app.registerAdmin(admin.modules.systemInfo);

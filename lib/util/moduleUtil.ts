@@ -4,12 +4,17 @@ import * as utils from './utils';
 import * as Constants from './constants';
 import * as pathUtil from './pathUtil';
 import * as starter from '../master/starter';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pomelo-logger';import { Application } from '../application';
+import { ConsoleService, IModule } from 'pomelo-admin';
+import { MasterWatcherModule } from '../modules/masterwatcher';
+import { MonitorWatcherModule } from '../modules/monitorwatcher';
+import { ConsoleModule } from '../modules/console';
+ var logger = getLogger('pomelo', __filename);
 
 /**
  * Load admin modules
  */
-export function loadModules(self, consoleService)
+export function loadModules(self : {app : Application , modules : Array<any>}, consoleService : ConsoleService)
 {
     // load app register modules
     var _modules = self.app.get(Constants.KEYWORDS.MODULE);
@@ -31,7 +36,7 @@ export function loadModules(self, consoleService)
         record = modules[i];
         if (typeof record.module === 'function')
         {
-            module = record.module(record.opts, consoleService);
+            module = new record.module(record.opts, consoleService);
         } else
         {
             module = record.module;
@@ -64,20 +69,20 @@ export function startModules(modules, cb)
 /**
  * Append the default system admin modules
  */
-export function registerDefaultModules(isMaster, app, closeWatcher)
+export function registerDefaultModules(isMaster, app : Application, closeWatcher)
 {
     if (!closeWatcher)
     {
         if (isMaster)
         {
-            app.registerAdmin(require('../modules/masterwatcher'), { app: app });
+            app.registerAdmin(MasterWatcherModule, { app: app });
         } else
         {
-            app.registerAdmin(require('../modules/monitorwatcher'), { app: app });
+            app.registerAdmin(MonitorWatcherModule, { app: app });
         }
     }
     app.registerAdmin(admin.modules.watchServer, { app: app });
-    app.registerAdmin(require('../modules/console'), { app: app, starter: starter });
+    app.registerAdmin(ConsoleModule, { app: app, starter: starter });
     if (app.enabled('systemMonitor'))
     {
         if (os.platform() !== Constants.PLATFORM.WIN)
