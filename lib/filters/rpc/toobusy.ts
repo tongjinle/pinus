@@ -10,10 +10,10 @@ var DEFAULT_MAXLAG = 70;
 
 export default function (maxLag)
 {
-    return new ToobusyFilter(maxLag || DEFAULT_MAXLAG);
+    return new RpcToobusyFilter(maxLag || DEFAULT_MAXLAG);
 };
 
-export class ToobusyFilter
+export class RpcToobusyFilter
 {
     constructor(maxLag)
     {

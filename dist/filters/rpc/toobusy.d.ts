@@ -1,5 +1,5 @@
-export default function (maxLag: any): ToobusyFilter;
-export declare class ToobusyFilter {
+export default function (maxLag: any): RpcToobusyFilter;
+export declare class RpcToobusyFilter {
     constructor(maxLag: any);
     name: string;
     /**

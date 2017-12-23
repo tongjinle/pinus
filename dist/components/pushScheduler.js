@@ -7,11 +7,11 @@ const DefaultScheduler = require("../pushSchedulers/direct");
 const pomelo_logger_1 = require("pomelo-logger");
 var logger = pomelo_logger_1.getLogger('pomelo', __filename);
 function default_1(app, opts) {
-    return new PushScheduler(app, opts);
+    return new PushSchedulerComponent(app, opts);
 }
 exports.default = default_1;
 ;
-class PushScheduler {
+class PushSchedulerComponent {
     constructor(app, opts) {
         this.app = app;
         this.name = '__pushScheduler__';
@@ -105,7 +105,7 @@ class PushScheduler {
     }
     ;
 }
-exports.PushScheduler = PushScheduler;
+exports.PushSchedulerComponent = PushSchedulerComponent;
 var getScheduler = function (pushSchedulerComp, app, opts) {
     var scheduler = opts.scheduler || DefaultScheduler;
     if (typeof scheduler === 'function') {

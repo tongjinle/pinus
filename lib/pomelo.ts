@@ -10,6 +10,32 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Application } from './application';
+import { isFunction } from 'util';
+import { BackendSession } from './common/service/backendSessionService';
+import { HybridConnector } from './connectors/hybridconnector';
+import { UDPConnector } from './connectors/udpconnector';
+import { MQTTConnector } from './connectors/mqttconnector';
+import { SIOConnector } from './connectors/sioconnector';
+import { DirectService } from './pushSchedulers/direct';
+import { BufferService } from './pushSchedulers/buffer';
+import { ChannelService } from './common/service/channelService';
+import { ConnectionComponent } from './components/connection';
+import { ConnectorComponent } from './components/connector';
+import { DictionaryComponent } from './components/dictionary';
+import { MasterComponent } from './components/master';
+import { MonitorComponent } from './components/monitor';
+import { ProtobufComponent } from './components/protobuf';
+import { ProxyComponent } from './components/proxy';
+import { PushSchedulerComponent } from './components/pushScheduler';
+import { RemoteComponent } from './components/remote';
+import { ServerComponent } from './components/server';
+import { SessionComponent } from './components/session';
+import { RpcToobusyFilter } from './filters/rpc/toobusy';
+import { RpcLogFilter } from './filters/rpc/rpcLog';
+import { ToobusyFilter } from './filters/handler/toobusy';
+import { TimeFilter } from './filters/handler/time';
+import { SerialFilter } from './filters/handler/serial';
+import { TimeoutFilter } from './filters/handler/timeout';
 var Package = require('../package');
 
 /**
@@ -35,17 +61,42 @@ export class Pomelo
     /**
      * auto loaded components
      */
-    components = {};
+    components = new class
+    {
+        get backendSession() { return load<BackendSession>('./components/backendSession'); }
+        get channel() { return load<ChannelService>('./components/channel'); }
+        get connection() { return load<ConnectionComponent>('./components/connection'); }
+        get connector() { return load<ConnectorComponent>('./components/connector'); }
+        get dictionary() { return load<DictionaryComponent>('./components/dictionary'); }
+        get master() { return load<MasterComponent>('./components/master'); }
+        get monitor() { return load<MonitorComponent>('./components/monitor'); }
+        get protobuf() { return load<ProtobufComponent>('./components/protobuf'); }
+        get proxy() { return load<ProxyComponent>('./components/proxy'); }
+        get pushScheduler() { return load<PushSchedulerComponent>('./components/pushScheduler'); }
+        get remote() { return load<RemoteComponent>('./components/remote'); }
+        get server() { return load<ServerComponent>('./components/server'); }
+        get session() { return load<SessionComponent>('./components/session'); }
+    };
 
     /**
      * auto loaded filters
      */
-    filters = {};
+    filters = new class
+    {
+        get serial() { return load<SerialFilter>('./filters/handler/serial'); }
+        get time() { return load<TimeFilter>('./filters/handler/time'); }
+        get timeout() { return load<TimeoutFilter>('./filters/handler/serial'); }
+        get toobusy() { return load<ToobusyFilter>('./filters/handler/toobusy'); }
+    };
 
     /**
      * auto loaded rpc filters
      */
-    rpcFilters = {};
+    rpcFilters = new class
+    {
+        get rpcLog() { return load<RpcLogFilter>('./filters/handler/rpcLog'); }
+        get toobusy() { return load<RpcToobusyFilter>('./filters/handler/toobusy'); }
+    };
 
 
     /**
@@ -53,10 +104,10 @@ export class Pomelo
      */
     connectors = new class
     {
-        get sioconnector() { return load('./connectors/sioconnector'); }
-        get hybridconnector() { return load('./connectors/hybridconnector'); }
-        get udpconnector() { return load('./connectors/udpconnector'); }
-        get mqttconnector() { return load('./connectors/mqttconnector'); }
+        get sioconnector() { return load<SIOConnector>('./connectors/sioconnector'); }
+        get hybridconnector() { return load<HybridConnector>('./connectors/hybridconnector'); }
+        get udpconnector() { return load<UDPConnector>('./connectors/udpconnector'); }
+        get mqttconnector() { return load<MQTTConnector>('./connectors/mqttconnector'); }
     };
 
     /**
@@ -64,54 +115,12 @@ export class Pomelo
      */
     pushSchedulers = new class
     {
-        get direct() { return load('./pushSchedulers/direct'); }
-        get buffer() { return load('./pushSchedulers/buffer'); }
+        get direct() { return load<DirectService>('./pushSchedulers/direct'); }
+        get buffer() { return load<BufferService>('./pushSchedulers/buffer'); }
     };
 
     constructor()
     {
-
-        /**
-         * Auto-load bundled components with getters.
-         */
-        fs.readdirSync(__dirname + '/components').forEach(function (filename)
-        {
-            if (!/\.js$/.test(filename))
-            {
-                return;
-            }
-            var name = path.basename(filename, '.js');
-            var _load = load.bind(null, './components/', name);
-
-            this.components.__defineGetter__(name, _load);
-            this.__defineGetter__(name, _load);
-        });
-
-        fs.readdirSync(__dirname + '/filters/handler').forEach(function (filename)
-        {
-            if (!/\.js$/.test(filename))
-            {
-                return;
-            }
-            var name = path.basename(filename, '.js');
-            var _load = load.bind(null, './filters/handler/', name);
-
-            this.filters.__defineGetter__(name, _load);
-            this.__defineGetter__(name, _load);
-        });
-
-        fs.readdirSync(__dirname + '/filters/rpc').forEach(function (filename)
-        {
-            if (!/\.js$/.test(filename))
-            {
-                return;
-            }
-            var name = path.basename(filename, '.js');
-            var _load = load.bind(null, './filters/rpc/', name);
-
-            this.rpcFilters.__defineGetter__(name, _load);
-        });
-
     }
 
     /**
@@ -138,11 +147,14 @@ export class Pomelo
     }
 }
 
-function load(path, name ?: string) {
-  if (name) {
-    return require(path + name);
-  }
-  return require(path);
+function load<T>(path : string) : T
+ {
+     var m = require(path);
+     if(!isFunction(m.default))
+     {
+         throw new Error(path + ' is not a component, component must export default function');
+     }
+    return m.default();
 }
 
 export var pomelo = new Pomelo();

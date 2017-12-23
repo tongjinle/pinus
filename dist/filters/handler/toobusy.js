@@ -9,11 +9,11 @@ var conLogger = pomelo_logger_1.getLogger('con-log', __filename);
 var toobusy = null;
 var DEFAULT_MAXLAG = 70;
 function default_1(maxLag) {
-    return new ToobusyFilterHandler(maxLag || DEFAULT_MAXLAG);
+    return new ToobusyFilter(maxLag || DEFAULT_MAXLAG);
 }
 exports.default = default_1;
 ;
-class ToobusyFilterHandler {
+class ToobusyFilter {
     constructor(maxLag) {
         try {
             toobusy = require('toobusy');
@@ -38,5 +38,5 @@ class ToobusyFilterHandler {
     }
     ;
 }
-exports.ToobusyFilterHandler = ToobusyFilterHandler;
+exports.ToobusyFilter = ToobusyFilter;
 //# sourceMappingURL=toobusy.js.map

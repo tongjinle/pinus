@@ -1,6 +1,6 @@
 import { Application } from '../application';
-export default function (app: any, opts: any): PushScheduler;
-export declare class PushScheduler {
+export default function (app: any, opts: any): PushSchedulerComponent;
+export declare class PushSchedulerComponent {
     private app;
     scheduler: any;
     constructor(app: Application, opts: any);

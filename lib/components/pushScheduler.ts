@@ -9,10 +9,10 @@ var logger = getLogger('pomelo', __filename);
 
 export default function (app, opts)
 {
-    return new PushScheduler(app, opts);
+    return new PushSchedulerComponent(app, opts);
 };
 
-export class PushScheduler
+export class PushSchedulerComponent
 {
     scheduler : any;
     constructor(private app : Application, opts)

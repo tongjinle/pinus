@@ -9,11 +9,11 @@ var rpcLogger = pomelo_logger_1.getLogger('rpc-log', __filename);
 var toobusy = null;
 var DEFAULT_MAXLAG = 70;
 function default_1(maxLag) {
-    return new ToobusyFilter(maxLag || DEFAULT_MAXLAG);
+    return new RpcToobusyFilter(maxLag || DEFAULT_MAXLAG);
 }
 exports.default = default_1;
 ;
-class ToobusyFilter {
+class RpcToobusyFilter {
     constructor(maxLag) {
         this.name = 'toobusy';
         try {
@@ -43,5 +43,5 @@ class ToobusyFilter {
     }
     ;
 }
-exports.ToobusyFilter = ToobusyFilter;
+exports.RpcToobusyFilter = RpcToobusyFilter;
 //# sourceMappingURL=toobusy.js.map

@@ -11,10 +11,10 @@ var DEFAULT_MAXLAG = 70;
 
 export default function (maxLag)
 {
-    return new ToobusyFilterHandler(maxLag || DEFAULT_MAXLAG);
+    return new ToobusyFilter(maxLag || DEFAULT_MAXLAG);
 };
 
-export class ToobusyFilterHandler
+export class ToobusyFilter
 {
     constructor(maxLag)
     {

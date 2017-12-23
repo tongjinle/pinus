@@ -10,6 +10,7 @@ export default function(app, opts) {
     return new DictionaryComponent(app, opts);
 };
 
+
 export class DictionaryComponent
 {
     app: Application;
