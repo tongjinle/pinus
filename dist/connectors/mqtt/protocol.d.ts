@@ -1,0 +1,36 @@
+export declare var types: {
+    0: string;
+    1: string;
+    2: string;
+    3: string;
+    4: string;
+    5: string;
+    6: string;
+    7: string;
+    8: string;
+    9: string;
+    10: string;
+    11: string;
+    12: string;
+    13: string;
+    14: string;
+    15: string;
+};
+export declare var codes: {
+    [key: string]: number;
+};
+export declare var CMD_SHIFT: number;
+export declare var CMD_MASK: number;
+export declare var DUP_MASK: number;
+export declare var QOS_MASK: number;
+export declare var QOS_SHIFT: number;
+export declare var RETAIN_MASK: number;
+export declare var LENGTH_MASK: number;
+export declare var LENGTH_FIN_MASK: number;
+export declare var USERNAME_MASK: number;
+export declare var PASSWORD_MASK: number;
+export declare var WILL_RETAIN_MASK: number;
+export declare var WILL_QOS_MASK: number;
+export declare var WILL_QOS_SHIFT: number;
+export declare var WILL_FLAG_MASK: number;
+export declare var CLEAN_SESSION_MASK: number;
