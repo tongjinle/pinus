@@ -24,7 +24,7 @@ export declare class MasterComponent {
      * @param  {Function} cb
      * @return {Void}
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Component lifecycle function
      *
@@ -32,5 +32,5 @@ export declare class MasterComponent {
      * @param  {Function}  cb
      * @return {Void}
      */
-    stop: (force: any, cb: any) => void;
+    stop(force: any, cb: any): void;
 }

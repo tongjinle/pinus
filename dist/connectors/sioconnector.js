@@ -15,85 +15,6 @@ var curId = 1;
 class SIOConnector extends events_1.EventEmitter {
     constructor(port, host, opts) {
         super();
-        /**
-         * Start connector to listen the specified port
-         */
-        this.start = function (cb) {
-            var self = this;
-            // issue https://github.com/NetEase/pomelo-cn/issues/174
-            var opts = {};
-            if (!!this.opts) {
-                opts = this.opts;
-            }
-            else {
-                opts = {
-                    transports: [
-                        'websocket', 'polling-xhr', 'polling-jsonp', 'polling'
-                    ]
-                };
-            }
-            var sio = require('socket.io')(httpServer, opts);
-            var port = this.port;
-            httpServer.listen(port, function () {
-                console.log('sio Server listening at port %d', port);
-            });
-            sio.set('path', '/socket.io');
-            sio.set('transports', this.opts.transports);
-            sio.set('close timeout', this.closeTimeout);
-            sio.set('heartbeat timeout', this.heartbeatTimeout);
-            sio.set('heartbeat interval', this.heartbeatInterval);
-            sio.set('heartbeats', this.heartbeats);
-            sio.set('log level', 1);
-            sio.on('connection', function (socket) {
-                // this.wsocket.sockets.on('connection', function (socket) {
-                var siosocket = new siosocket_1.SioSocket(curId++, socket);
-                self.emit('connection', siosocket);
-                siosocket.on('closing', function (reason) {
-                    siosocket.send({ route: 'onKick', reason: reason });
-                });
-            });
-            process.nextTick(cb);
-        };
-        /**
-         * Stop connector
-         */
-        this.stop = function (force, cb) {
-            this.wsocket.server.close();
-            process.nextTick(cb);
-        };
-        this.encode = function (reqId, route, msg) {
-            if (reqId) {
-                return composeResponse(reqId, route, msg);
-            }
-            else {
-                return composePush(route, msg);
-            }
-        };
-        /**
-         * Decode client message package.
-         *
-         * Package format:
-         *   message id: 4bytes big-endian integer
-         *   route length: 1byte
-         *   route: route length bytes
-         *   body: the rest bytes
-         *
-         * @param  {String} data socket.io package from client
-         * @return {Object}      message object
-         */
-        this.decode = function (msg) {
-            var index = 0;
-            var id = parseIntField(msg, index, PKG_ID_BYTES);
-            index += PKG_ID_BYTES;
-            var routeLen = parseIntField(msg, index, PKG_ROUTE_LENGTH_BYTES);
-            var route = msg.substr(PKG_HEAD_BYTES, routeLen);
-            var body = msg.substr(PKG_HEAD_BYTES + routeLen);
-            return {
-                id: id,
-                route: route,
-                body: JSON.parse(body)
-            };
-        };
         this.port = port;
         this.host = host;
         this.opts = opts;
@@ -101,6 +22,89 @@ class SIOConnector extends events_1.EventEmitter {
         this.closeTimeout = opts.closeTimeout || 60;
         this.heartbeatTimeout = opts.heartbeatTimeout || 60;
         this.heartbeatInterval = opts.heartbeatInterval || 25;
+    }
+    ;
+    /**
+     * Start connector to listen the specified port
+     */
+    start(cb) {
+        var self = this;
+        // issue https://github.com/NetEase/pomelo-cn/issues/174
+        var opts = {};
+        if (!!this.opts) {
+            opts = this.opts;
+        }
+        else {
+            opts = {
+                transports: [
+                    'websocket', 'polling-xhr', 'polling-jsonp', 'polling'
+                ]
+            };
+        }
+        var sio = require('socket.io')(httpServer, opts);
+        var port = this.port;
+        httpServer.listen(port, function () {
+            console.log('sio Server listening at port %d', port);
+        });
+        sio.set('path', '/socket.io');
+        sio.set('transports', this.opts.transports);
+        sio.set('close timeout', this.closeTimeout);
+        sio.set('heartbeat timeout', this.heartbeatTimeout);
+        sio.set('heartbeat interval', this.heartbeatInterval);
+        sio.set('heartbeats', this.heartbeats);
+        sio.set('log level', 1);
+        sio.on('connection', function (socket) {
+            // this.wsocket.sockets.on('connection', function (socket) {
+            var siosocket = new siosocket_1.SioSocket(curId++, socket);
+            self.emit('connection', siosocket);
+            siosocket.on('closing', function (reason) {
+                siosocket.send({ route: 'onKick', reason: reason });
+            });
+        });
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Stop connector
+     */
+    stop(force, cb) {
+        this.wsocket.server.close();
+        process.nextTick(cb);
+    }
+    ;
+    encode(reqId, route, msg) {
+        if (reqId) {
+            return composeResponse(reqId, route, msg);
+        }
+        else {
+            return composePush(route, msg);
+        }
+    }
+    ;
+    /**
+     * Decode client message package.
+     *
+     * Package format:
+     *   message id: 4bytes big-endian integer
+     *   route length: 1byte
+     *   route: route length bytes
+     *   body: the rest bytes
+     *
+     * @param  {String} data socket.io package from client
+     * @return {Object}      message object
+     */
+    decode(msg) {
+        var index = 0;
+        var id = parseIntField(msg, index, PKG_ID_BYTES);
+        index += PKG_ID_BYTES;
+        var routeLen = parseIntField(msg, index, PKG_ROUTE_LENGTH_BYTES);
+        var route = msg.substr(PKG_HEAD_BYTES, routeLen);
+        var body = msg.substr(PKG_HEAD_BYTES + routeLen);
+        return {
+            id: id,
+            route: route,
+            body: JSON.parse(body)
+        };
     }
     ;
 }

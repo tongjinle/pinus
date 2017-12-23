@@ -23,26 +23,28 @@ exports.default = default_1;
 class MasterComponent {
     constructor(app, opts) {
         this.name = '__master__';
-        /**
-         * Component lifecycle function
-         *
-         * @param  {Function} cb
-         * @return {Void}
-         */
-        this.start = function (cb) {
-            this.master.start(cb);
-        };
-        /**
-         * Component lifecycle function
-         *
-         * @param  {Boolean}   force whether stop the component immediately
-         * @param  {Function}  cb
-         * @return {Void}
-         */
-        this.stop = function (force, cb) {
-            this.master.stop(cb);
-        };
         this.master = new master_1.MasterServer(app, opts);
+    }
+    ;
+    /**
+     * Component lifecycle function
+     *
+     * @param  {Function} cb
+     * @return {Void}
+     */
+    start(cb) {
+        this.master.start(cb);
+    }
+    ;
+    /**
+     * Component lifecycle function
+     *
+     * @param  {Boolean}   force whether stop the component immediately
+     * @param  {Function}  cb
+     * @return {Void}
+     */
+    stop(force, cb) {
+        this.master.stop(cb);
     }
     ;
 }

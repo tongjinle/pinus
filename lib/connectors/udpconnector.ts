@@ -3,7 +3,7 @@ import * as util from 'util';
 import * as dgram from "dgram";
 import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
-import * as UdpSocket from './udpsocket';
+import {UdpSocket} from './udpsocket';
 import * as Kick from './commands/kick';
 import { HandshakeCommand } from './commands/handshake';
 import { HeartbeatCommand } from './commands/heartbeat';
@@ -42,7 +42,7 @@ export class UDPConnector extends EventEmitter
         this.port = port;
     };
 
-    start = function (cb)
+    start(cb)
     {
         var self = this;
         this.tcpServer = net.createServer();
@@ -98,7 +98,7 @@ export class UDPConnector extends EventEmitter
 
     encode = coder.encode;
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.socket.close();
         process.nextTick(cb);

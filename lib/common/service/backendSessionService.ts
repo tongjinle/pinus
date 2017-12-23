@@ -30,7 +30,7 @@ export class BackendSessionService
         this.app = app;
     };
 
-    create = function (opts)
+    create(opts)
     {
         if (!opts)
         {
@@ -48,7 +48,7 @@ export class BackendSessionService
      *
      * @memberOf BackendSessionService
      */
-    get = function (frontendId, sid, cb)
+    get(frontendId, sid, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -67,7 +67,7 @@ export class BackendSessionService
      *
      * @memberOf BackendSessionService
      */
-    getByUid = function (frontendId, uid, cb)
+    getByUid(frontendId, uid, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -86,7 +86,7 @@ export class BackendSessionService
      *
      * @memberOf BackendSessionService
      */
-    kickBySid = function (frontendId, sid, reason, cb)
+    kickBySid(frontendId, sid, reason, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -112,7 +112,7 @@ export class BackendSessionService
      *
      * @memberOf BackendSessionService
      */
-    kickByUid = function (frontendId, uid, reason, cb)
+    kickByUid(frontendId, uid, reason, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -140,7 +140,7 @@ export class BackendSessionService
      * @memberOf BackendSessionService
      * @api private
      */
-    bind = function (frontendId, sid, uid, cb)
+    bind(frontendId, sid, uid, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -161,7 +161,7 @@ export class BackendSessionService
      * @memberOf BackendSessionService
      * @api private
      */
-    unbind = function (frontendId, sid, uid, cb)
+    unbind(frontendId, sid, uid, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -182,7 +182,7 @@ export class BackendSessionService
      * @memberOf BackendSessionService
      * @api private
      */
-    push = function (frontendId, sid, key, value, cb)
+    push(frontendId, sid, key, value, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -202,7 +202,7 @@ export class BackendSessionService
      * @memberOf BackendSessionService
      * @api private
      */
-    pushAll = function (frontendId, sid, settings, cb)
+    pushAll(frontendId, sid, settings, cb)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -240,6 +240,10 @@ var rpcInvoke = function(app, sid, namespace, service, method, args, cb) {
  */
 export class BackendSession
 {
+    id: number;
+    frontendId: string;
+    uid: string;
+    settings: any;
     __sessionService__: BackendSessionService;
     constructor(opts, service: BackendSessionService)
     {
@@ -259,7 +263,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    bind = function (uid, cb)
+    bind(uid, cb)
     {
         var self = this;
         this.__sessionService__.bind(this.frontendId, this.id, uid, function (err)
@@ -281,7 +285,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    unbind = function (uid, cb)
+    unbind(uid, cb)
     {
         var self = this;
         this.__sessionService__.unbind(this.frontendId, this.id, uid, function (err)
@@ -300,7 +304,7 @@ export class BackendSession
      * @param {String} key   key
      * @param {Object} value value
      */
-    set = function (key, value)
+    set(key, value)
     {
         this.settings[key] = value;
     };
@@ -311,7 +315,7 @@ export class BackendSession
      * @param  {String} key key
      * @return {Object}     value
      */
-    get = function (key)
+    get(key)
     {
         return this.settings[key];
     };
@@ -322,7 +326,7 @@ export class BackendSession
      * @param  {String}   key key
      * @param  {Function} cb  callback function
      */
-    push = function (key, cb)
+    push(key, cb)
     {
         this.__sessionService__.push(this.frontendId, this.id, key, this.get(key), cb);
     };
@@ -332,7 +336,7 @@ export class BackendSession
      *
      * @param  {Function} cb callback function
      */
-    pushAll = function (cb)
+    pushAll(cb)
     {
         this.__sessionService__.pushAll(this.frontendId, this.id, this.settings, cb);
     };
@@ -347,7 +351,7 @@ export class BackendSession
      *
      * @api private
      */
-    export = function ()
+    export()
     {
         var res = {};
         EXPORTED_FIELDS.forEach(function (field)

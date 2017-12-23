@@ -26,17 +26,17 @@ export class MonitorComponent
     };
 
     name = '__monitor__';
-    start = function (cb)
+    start(cb)
     {
         this.monitor.start(cb);
     };
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.monitor.stop(cb);
     };
 
-    reconnect = function (masterInfo)
+    reconnect(masterInfo)
     {
         this.monitor.reconnect(masterInfo);
     };

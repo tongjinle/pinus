@@ -15,86 +15,6 @@ var ST_CLOSED = 3;
 class HybridSocket extends events_1.EventEmitter {
     constructor(id, socket) {
         super();
-        /**
-         * Send raw byte data.
-         *
-         * @api private
-         */
-        this.sendRaw = function (msg) {
-            if (this.state !== ST_WORKING) {
-                return;
-            }
-            var self = this;
-            this.socket.send(msg, { binary: true }, function (err) {
-                if (!!err) {
-                    logger.error('websocket send binary data failed: %j', err.stack);
-                    return;
-                }
-            });
-        };
-        /**
-         * Send byte data package to client.
-         *
-         * @param  {Buffer} msg byte data
-         */
-        this.send = function (msg) {
-            if (msg instanceof String) {
-                msg = new Buffer(msg);
-            }
-            else if (!(msg instanceof Buffer)) {
-                msg = new Buffer(JSON.stringify(msg));
-            }
-            this.sendRaw(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msg));
-        };
-        /**
-         * Send byte data packages to client in batch.
-         *
-         * @param  {Buffer} msgs byte data
-         */
-        this.sendBatch = function (msgs) {
-            var rs = [];
-            for (var i = 0; i < msgs.length; i++) {
-                var src = pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msgs[i]);
-                rs.push(src);
-            }
-            this.sendRaw(Buffer.concat(rs));
-        };
-        /**
-         * Send message to client no matter whether handshake.
-         *
-         * @api private
-         */
-        this.sendForce = function (msg) {
-            if (this.state === ST_CLOSED) {
-                return;
-            }
-            this.socket.send(msg, { binary: true });
-        };
-        /**
-         * Response handshake request
-         *
-         * @api private
-         */
-        this.handshakeResponse = function (resp) {
-            if (this.state !== ST_INITED) {
-                return;
-            }
-            this.socket.send(resp, { binary: true });
-            this.state = ST_WAIT_ACK;
-        };
-        /**
-         * Close the connection.
-         *
-         * @api private
-         */
-        this.disconnect = function () {
-            if (this.state === ST_CLOSED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-            this.socket.emit('close');
-            this.socket.close();
-        };
         this.id = id;
         this.socket = socket;
         if (!socket._socket) {
@@ -120,6 +40,92 @@ class HybridSocket extends events_1.EventEmitter {
         });
         this.state = ST_INITED;
         // TODO: any other events?
+    }
+    ;
+    /**
+     * Send raw byte data.
+     *
+     * @api private
+     */
+    sendRaw(msg) {
+        if (this.state !== ST_WORKING) {
+            return;
+        }
+        var self = this;
+        this.socket.send(msg, { binary: true }, function (err) {
+            if (!!err) {
+                logger.error('websocket send binary data failed: %j', err.stack);
+                return;
+            }
+        });
+    }
+    ;
+    /**
+     * Send byte data package to client.
+     *
+     * @param  {Buffer} msg byte data
+     */
+    send(msg) {
+        if (msg instanceof String) {
+            msg = new Buffer(msg);
+        }
+        else if (!(msg instanceof Buffer)) {
+            msg = new Buffer(JSON.stringify(msg));
+        }
+        this.sendRaw(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msg));
+    }
+    ;
+    /**
+     * Send byte data packages to client in batch.
+     *
+     * @param  {Buffer} msgs byte data
+     */
+    sendBatch(msgs) {
+        var rs = [];
+        for (var i = 0; i < msgs.length; i++) {
+            var src = pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msgs[i]);
+            rs.push(src);
+        }
+        this.sendRaw(Buffer.concat(rs));
+    }
+    ;
+    /**
+     * Send message to client no matter whether handshake.
+     *
+     * @api private
+     */
+    sendForce(msg) {
+        if (this.state === ST_CLOSED) {
+            return;
+        }
+        this.socket.send(msg, { binary: true });
+    }
+    ;
+    /**
+     * Response handshake request
+     *
+     * @api private
+     */
+    handshakeResponse(resp) {
+        if (this.state !== ST_INITED) {
+            return;
+        }
+        this.socket.send(resp, { binary: true });
+        this.state = ST_WAIT_ACK;
+    }
+    ;
+    /**
+     * Close the connection.
+     *
+     * @api private
+     */
+    disconnect() {
+        if (this.state === ST_CLOSED) {
+            return;
+        }
+        this.state = ST_CLOSED;
+        this.socket.emit('close');
+        this.socket.close();
     }
     ;
 }

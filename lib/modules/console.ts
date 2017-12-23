@@ -29,7 +29,7 @@ export class ConsoleModule
         this.starter = opts.starter;
     };
 
-    monitorHandler = function (agent, msg, cb)
+    monitorHandler(agent, msg, cb)
     {
         var serverId = agent.id;
         switch (msg.signal)
@@ -95,7 +95,7 @@ export class ConsoleModule
         }
     };
 
-    clientHandler = function (agent, msg, cb)
+    clientHandler(agent, msg, cb)
     {
         var app = this.app;
         switch (msg.signal)

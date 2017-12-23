@@ -45,22 +45,22 @@ export class ProtobufComponent
 
     name = '__protobuf__';
 
-    encode = function (key, msg)
+    encode(key, msg)
     {
         return this.protobuf.encode(key, msg);
     };
 
-    encode2Bytes = function (key, msg)
+    encode2Bytes(key, msg)
     {
         return this.protobuf.encode2Bytes(key, msg);
     };
 
-    decode = function (key, msg)
+    decode(key, msg)
     {
         return this.protobuf.decode(key, msg);
     };
 
-    getProtos = function ()
+    getProtos()
     {
         return {
             server: this.serverProtos,
@@ -69,12 +69,12 @@ export class ProtobufComponent
         };
     };
 
-    getVersion = function ()
+    getVersion()
     {
         return this.version;
     };
 
-    setProtos = function (type, path)
+    setProtos(type, path)
     {
         if (!fs.existsSync(path))
         {
@@ -103,7 +103,7 @@ export class ProtobufComponent
         this.watchers[type] = watcher;
     };
 
-    onUpdate = function (type, path, event)
+    onUpdate(type, path, event)
     {
         if (event !== 'change')
         {
@@ -137,7 +137,7 @@ export class ProtobufComponent
         });
     };
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         for (var type in this.watchers)
         {

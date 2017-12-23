@@ -48,7 +48,7 @@ export class MQTTSocket extends EventEmitter
     };
 
 
-    send = function (msg)
+    send(msg)
     {
         if (this.state !== ST_INITED)
         {
@@ -64,7 +64,7 @@ export class MQTTSocket extends EventEmitter
         }
     };
 
-    sendBatch = function (msgs)
+    sendBatch(msgs)
     {
         for (var i = 0, l = msgs.length; i < l; i++)
         {
@@ -72,7 +72,7 @@ export class MQTTSocket extends EventEmitter
         }
     };
 
-    disconnect = function ()
+    disconnect()
     {
         if (this.state === ST_CLOSED)
         {

@@ -35,7 +35,7 @@ export class DictionaryComponent
         }
     };
 
-    start = function (cb)
+    start(cb)
     {
         var servers = this.app.get('servers');
         var routes = [];
@@ -96,17 +96,17 @@ export class DictionaryComponent
         utils.invokeCallback(cb);
     };
 
-    getDict = function ()
+    getDict()
     {
         return this.dict;
     };
 
-    getAbbrs = function ()
+    getAbbrs()
     {
         return this.abbrs;
     };
 
-    getVersion = function ()
+    getVersion()
     {
         return this.version;
     };

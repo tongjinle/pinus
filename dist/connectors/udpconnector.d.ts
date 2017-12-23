@@ -13,8 +13,8 @@ export declare class UDPConnector extends EventEmitter {
     host: string;
     port: number;
     constructor(port: any, host: any, opts: any);
-    start: (cb: any) => void;
+    start(cb: any): void;
     decode: (msg: any) => any;
     encode: (reqId: any, route: any, msg: any) => any;
-    stop: (force: any, cb: any) => void;
+    stop(force: any, cb: any): void;
 }

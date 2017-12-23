@@ -9,6 +9,7 @@ var EXPORTED_SESSION_FIELDS = ['id', 'frontendId', 'uid', 'settings'];
 var ST_INITED = 0;
 var ST_CLOSED = 1;
 
+
 /**
  * Session service maintains the internal session for each client connection.
  *
@@ -24,7 +25,7 @@ export class SessionService
 {
     singleSession: Session;
     sessions: { [sid: number]: Session };
-    uidMap: { [uid: string]: Session };
+    uidMap: { [uid: string]: Session[] };
 
     constructor(opts)
     {
@@ -46,7 +47,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    create = function (sid, frontendId, socket)
+    create(sid, frontendId, socket)
     {
         var session = new Session(sid, frontendId, socket, this);
         this.sessions[session.id] = session;
@@ -60,7 +61,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    bind = function (sid, uid, cb)
+    bind(sid, uid, cb)
     {
         var session = this.sessions[sid];
 
@@ -131,7 +132,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    unbind = function (sid, uid, cb)
+    unbind(sid, uid, cb)
     {
         var session = this.sessions[sid];
 
@@ -188,7 +189,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    get = function (sid)
+    get(sid)
     {
         return this.sessions[sid];
     };
@@ -202,7 +203,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    getByUid = function (uid)
+    getByUid(uid)
     {
         return this.uidMap[uid];
     };
@@ -215,7 +216,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    remove = function (sid)
+    remove(sid)
     {
         var session = this.sessions[sid];
         if (session)
@@ -249,7 +250,7 @@ export class SessionService
      *
      * @api private
      */
-    import = function (sid, key, value, cb)
+    import(sid, key, value, cb)
     {
         var session = this.sessions[sid];
         if (!session)
@@ -267,7 +268,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    importAll = function (sid, settings, cb)
+    importAll(sid, settings, cb)
     {
         var session = this.sessions[sid];
         if (!session)
@@ -291,7 +292,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    kick = function (uid, reason, cb)
+    kick(uid, reason, cb)
     {
         // compatible for old kick(uid, cb);
         if (typeof reason === 'function')
@@ -337,7 +338,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    kickBySessionId = function (sid, reason, cb)
+    kickBySessionId(sid, reason, cb)
     {
         if (typeof reason === 'function')
         {
@@ -372,7 +373,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    getClientAddressBySessionId = function (sid)
+    getClientAddressBySessionId(sid)
     {
         var session = this.get(sid);
         if (session)
@@ -394,7 +395,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    sendMessage = function (sid, msg)
+    sendMessage(sid, msg)
     {
         var session = this.sessions[sid];
 
@@ -416,7 +417,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    sendMessageByUid = function (uid, msg)
+    sendMessageByUid(uid, msg)
     {
         var sessions = this.uidMap[uid];
 
@@ -439,7 +440,7 @@ export class SessionService
      * @param  {Function} cb callback function to fetch session
      * @api private
      */
-    forEachSession = function (cb)
+    forEachSession(cb)
     {
         for (var sid in this.sessions)
         {
@@ -453,7 +454,7 @@ export class SessionService
      * @param  {Function} cb callback function to fetch session
      * @api private
      */
-    forEachBindedSession = function (cb)
+    forEachBindedSession(cb)
     {
         var i, l, sessions;
         for (var uid in this.uidMap)
@@ -470,7 +471,7 @@ export class SessionService
      * Get sessions' quantity in specified server.
      *
      */
-    getSessionsCount = function ()
+    getSessionsCount()
     {
         return utils.size(this.sessions);
     };
@@ -505,7 +506,7 @@ export class Session extends EventEmitter
     uid: string;
     settings: any;
 
-    private __socket__: any;
+    __socket__: any;
     private __sessionService__: SessionService;
     private __state__: number;
 
@@ -528,7 +529,7 @@ export class Session extends EventEmitter
     /*
      * Export current session as frontend session.
      */
-    toFrontendSession = function ()
+    toFrontendSession()
     {
         return new FrontendSession(this);
     };
@@ -539,7 +540,7 @@ export class Session extends EventEmitter
      * @param {Number} uid User id
      * @api public
      */
-    bind = function (uid)
+    bind(uid)
     {
         this.uid = uid;
         this.emit('bind', uid);
@@ -551,7 +552,7 @@ export class Session extends EventEmitter
      * @param {Number} uid User id
      * @api private
      */
-    unbind = function (uid)
+    unbind(uid)
     {
         this.uid = null;
         this.emit('unbind', uid);
@@ -564,7 +565,7 @@ export class Session extends EventEmitter
      * @param {Object} value session value
      * @api public
      */
-    set = function (key, value)
+    set(key, value)
     {
         if (utils.isObject(key))
         {
@@ -584,7 +585,7 @@ export class Session extends EventEmitter
      * @param {String} key session key
      * @api public
      */
-    remove = function (key)
+    remove(key)
     {
         delete this[key];
     };
@@ -596,7 +597,7 @@ export class Session extends EventEmitter
      * @return {Object} value associated with session key
      * @api public
      */
-    get = function (key)
+    get(key)
     {
         return this.settings[key];
     };
@@ -606,7 +607,7 @@ export class Session extends EventEmitter
      *
      * @param  {Object} msg final message sent to client
      */
-    send = function (msg)
+    send(msg)
     {
         this.__socket__.send(msg);
     };
@@ -616,7 +617,7 @@ export class Session extends EventEmitter
      *
      * @param  {Array} msgs list of message
      */
-    sendBatch = function (msgs)
+    sendBatch(msgs)
     {
         this.__socket__.sendBatch(msgs);
     };
@@ -626,7 +627,7 @@ export class Session extends EventEmitter
      *
      * @api public
      */
-    closed = function (reason)
+    closed(reason)
     {
         logger.debug('session on [%s] is closed with session id: %s', this.frontendId, this.id);
         if (this.__state__ === ST_CLOSED)
@@ -653,8 +654,12 @@ export class Session extends EventEmitter
  */
 export class FrontendSession extends EventEmitter
 {
+    id:number;
+    uid:string;
+    frontendId:string;
     settings: any;
     private __session__: Session;
+    private __sessionService__ : SessionService;
 
     constructor(session)
     {
@@ -666,7 +671,7 @@ export class FrontendSession extends EventEmitter
     };
 
 
-    bind = function (uid, cb)
+    bind(uid, cb)
     {
         var self = this;
         this.__sessionService__.bind(this.id, uid, function (err)
@@ -679,7 +684,7 @@ export class FrontendSession extends EventEmitter
         });
     };
 
-    unbind = function (uid, cb)
+    unbind(uid, cb)
     {
         var self = this;
         this.__sessionService__.unbind(this.id, uid, function (err)
@@ -692,22 +697,22 @@ export class FrontendSession extends EventEmitter
         });
     };
 
-    set = function (key, value)
+    set(key, value)
     {
         this.settings[key] = value;
     };
 
-    get = function (key)
+    get(key)
     {
         return this.settings[key];
     };
 
-    push = function (key, cb)
+    push(key, cb)
     {
         this.__sessionService__.import(this.id, key, this.get(key), cb);
     };
 
-    pushAll = function (cb)
+    pushAll(cb)
     {
         this.__sessionService__.importAll(this.id, this.settings, cb);
     };
@@ -729,7 +734,7 @@ export class FrontendSession extends EventEmitter
      *
      * @api private
      */
-    export = function ()
+    export()
     {
         var res = {};
         clone(this, res, EXPORTED_SESSION_FIELDS);

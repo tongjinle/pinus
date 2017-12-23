@@ -11,14 +11,14 @@ export declare class PushScheduler {
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart: (cb: any) => void;
+    afterStart(cb: any): void;
     /**
      * Component lifecycle callback
      *
      * @param {Function} cb
      * @return {Void}
      */
-    stop: (force: any, cb: any) => void;
+    stop(force: any, cb: any): void;
     /**
      * Schedule how the message to send.
      *
@@ -29,5 +29,5 @@ export declare class PushScheduler {
      * @param  {Object}   opts  options
      * @param  {Function} cb
      */
-    schedule: (reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any) => void;
+    schedule(reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any): void;
 }

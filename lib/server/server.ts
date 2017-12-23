@@ -56,7 +56,7 @@ export class Server extends EventEmitter
     /**
      * Server lifecycle callback
      */
-    start = function ()
+    start()
     {
         if (this.state > ST_INITED)
         {
@@ -71,7 +71,7 @@ export class Server extends EventEmitter
         this.state = ST_STARTED;
     };
 
-    afterStart = function ()
+    afterStart()
     {
         scheduleCrons(this, this.crons);
     };
@@ -79,7 +79,7 @@ export class Server extends EventEmitter
     /**
      * Stop server
      */
-    stop = function ()
+    stop()
     {
         this.state = ST_STOPED;
     };
@@ -91,7 +91,7 @@ export class Server extends EventEmitter
      * @param  {Object} session session object
      * @param  {Callback} callback function 
      */
-    globalHandle = function (msg, session, cb)
+    globalHandle(msg, session, cb)
     {
         if (this.state !== ST_STARTED)
         {
@@ -138,7 +138,7 @@ export class Server extends EventEmitter
     /**
      * Handle request
      */
-    handle = function (msg, session, cb)
+    handle(msg, session, cb)
     {
         if (this.state !== ST_STARTED)
         {
@@ -155,7 +155,7 @@ export class Server extends EventEmitter
      *
      * @param {Array} crons would be added in application
      */
-    addCrons = function (crons)
+    addCrons(crons)
     {
         this.cronHandlers = loadCronHandlers(this.app);
         for (var i = 0, l = crons.length; i < l; i++)
@@ -171,7 +171,7 @@ export class Server extends EventEmitter
      *
      * @param {Array} crons would be removed in application
      */
-    removeCrons = function (crons)
+    removeCrons(crons)
     {
         for (var i = 0, l = crons.length; i < l; i++)
         {

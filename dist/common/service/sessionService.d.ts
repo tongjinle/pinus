@@ -17,7 +17,7 @@ export declare class SessionService {
         [sid: number]: Session;
     };
     uidMap: {
-        [uid: string]: Session;
+        [uid: string]: Session[];
     };
     constructor(opts: any);
     /**
@@ -32,21 +32,21 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    create: (sid: any, frontendId: any, socket: any) => Session;
+    create(sid: any, frontendId: any, socket: any): Session;
     /**
      * Bind the session with a user id.
      *
      * @memberOf SessionService
      * @api private
      */
-    bind: (sid: any, uid: any, cb: any) => void;
+    bind(sid: any, uid: any, cb: any): void;
     /**
      * Unbind a session with the user id.
      *
      * @memberOf SessionService
      * @api private
      */
-    unbind: (sid: any, uid: any, cb: any) => void;
+    unbind(sid: any, uid: any, cb: any): void;
     /**
      * Get session by id.
      *
@@ -56,7 +56,7 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    get: (sid: any) => any;
+    get(sid: any): Session;
     /**
      * Get sessions by userId.
      *
@@ -66,7 +66,7 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    getByUid: (uid: any) => any;
+    getByUid(uid: any): Session[];
     /**
      * Remove session by key.
      *
@@ -75,20 +75,20 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    remove: (sid: any) => void;
+    remove(sid: any): void;
     /**
      * Import the key/value into session.
      *
      * @api private
      */
-    import: (sid: any, key: any, value: any, cb: any) => void;
+    import(sid: any, key: any, value: any, cb: any): void;
     /**
      * Import new value for the existed session.
      *
      * @memberOf SessionService
      * @api private
      */
-    importAll: (sid: any, settings: any, cb: any) => void;
+    importAll(sid: any, settings: any, cb: any): void;
     /**
      * Kick all the session offline under the user id.
      *
@@ -97,7 +97,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    kick: (uid: any, reason: any, cb: any) => void;
+    kick(uid: any, reason: any, cb: any): void;
     /**
      * Kick a user offline by session id.
      *
@@ -106,7 +106,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    kickBySessionId: (sid: any, reason: any, cb: any) => void;
+    kickBySessionId(sid: any, reason: any, cb: any): void;
     /**
      * Get client remote address by session id.
      *
@@ -115,7 +115,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    getClientAddressBySessionId: (sid: any) => any;
+    getClientAddressBySessionId(sid: any): any;
     /**
      * Send message to the client by session id.
      *
@@ -125,7 +125,7 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    sendMessage: (sid: any, msg: any) => boolean;
+    sendMessage(sid: any, msg: any): boolean;
     /**
      * Send message to the client by user id.
      *
@@ -135,26 +135,26 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    sendMessageByUid: (uid: any, msg: any) => boolean;
+    sendMessageByUid(uid: any, msg: any): boolean;
     /**
      * Iterate all the session in the session service.
      *
      * @param  {Function} cb callback function to fetch session
      * @api private
      */
-    forEachSession: (cb: any) => void;
+    forEachSession(cb: any): void;
     /**
      * Iterate all the binded session in the session service.
      *
      * @param  {Function} cb callback function to fetch session
      * @api private
      */
-    forEachBindedSession: (cb: any) => void;
+    forEachBindedSession(cb: any): void;
     /**
      * Get sessions' quantity in specified server.
      *
      */
-    getSessionsCount: () => number;
+    getSessionsCount(): number;
     akick: Function;
     akickBySessionId: Function;
 }
@@ -172,25 +172,25 @@ export declare class Session extends EventEmitter {
     frontendId: string;
     uid: string;
     settings: any;
-    private __socket__;
+    __socket__: any;
     private __sessionService__;
     private __state__;
     constructor(sid: any, frontendId: any, socket: any, service: any);
-    toFrontendSession: () => FrontendSession;
+    toFrontendSession(): FrontendSession;
     /**
      * Bind the session with the the uid.
      *
      * @param {Number} uid User id
      * @api public
      */
-    bind: (uid: any) => void;
+    bind(uid: any): void;
     /**
      * Unbind the session with the the uid.
      *
      * @param {Number} uid User id
      * @api private
      */
-    unbind: (uid: any) => void;
+    unbind(uid: any): void;
     /**
      * Set values (one or many) for the session.
      *
@@ -198,14 +198,14 @@ export declare class Session extends EventEmitter {
      * @param {Object} value session value
      * @api public
      */
-    set: (key: any, value: any) => void;
+    set(key: any, value: any): void;
     /**
      * Remove value from the session.
      *
      * @param {String} key session key
      * @api public
      */
-    remove: (key: any) => void;
+    remove(key: any): void;
     /**
      * Get value from the session.
      *
@@ -213,39 +213,43 @@ export declare class Session extends EventEmitter {
      * @return {Object} value associated with session key
      * @api public
      */
-    get: (key: any) => any;
+    get(key: any): any;
     /**
      * Send message to the session.
      *
      * @param  {Object} msg final message sent to client
      */
-    send: (msg: any) => void;
+    send(msg: any): void;
     /**
      * Send message to the session in batch.
      *
      * @param  {Array} msgs list of message
      */
-    sendBatch: (msgs: any) => void;
+    sendBatch(msgs: any): void;
     /**
      * Closed callback for the session which would disconnect client in next tick.
      *
      * @api public
      */
-    closed: (reason: any) => void;
+    closed(reason: any): void;
 }
 /**
  * Frontend session for frontend server.
  */
 export declare class FrontendSession extends EventEmitter {
+    id: number;
+    uid: string;
+    frontendId: string;
     settings: any;
     private __session__;
+    private __sessionService__;
     constructor(session: any);
-    bind: (uid: any, cb: any) => void;
-    unbind: (uid: any, cb: any) => void;
-    set: (key: any, value: any) => void;
-    get: (key: any) => any;
-    push: (key: any, cb: any) => void;
-    pushAll: (cb: any) => void;
+    bind(uid: any, cb: any): void;
+    unbind(uid: any, cb: any): void;
+    set(key: any, value: any): void;
+    get(key: any): any;
+    push(key: any, cb: any): void;
+    pushAll(cb: any): void;
     on(event: string | symbol, listener: (...args: any[]) => void): this;
     abind: Function;
     aunbind: Function;
@@ -256,5 +260,5 @@ export declare class FrontendSession extends EventEmitter {
      *
      * @api private
      */
-    export: () => {};
+    export(): {};
 }

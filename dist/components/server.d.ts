@@ -24,14 +24,14 @@ export declare class ServerComponent {
      * @param {Function} cb
      * @return {Void}
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Component lifecycle callback
      *
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart: (cb: any) => void;
+    afterStart(cb: any): void;
     /**
      * Component lifecycle function
      *
@@ -39,13 +39,13 @@ export declare class ServerComponent {
      * @param {Function}  cb
      * @return {Void}
      */
-    stop: (force: any, cb: any) => void;
+    stop(force: any, cb: any): void;
     /**
      * Proxy server handle
      */
-    handle: (msg: any, session: any, cb: any) => void;
+    handle(msg: any, session: any, cb: any): void;
     /**
      * Proxy server global handle
      */
-    globalHandle: (msg: any, session: any, cb: any) => void;
+    globalHandle(msg: any, session: any, cb: any): void;
 }

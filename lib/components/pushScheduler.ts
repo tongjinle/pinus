@@ -29,7 +29,7 @@ export class PushScheduler
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart = function (cb)
+    afterStart(cb)
     {
         if (this.isSelectable)
         {
@@ -57,7 +57,7 @@ export class PushScheduler
      * @param {Function} cb
      * @return {Void}
      */
-    stop = function (force, cb)
+    stop(force, cb)
     {
         if (this.isSelectable)
         {
@@ -90,7 +90,7 @@ export class PushScheduler
      * @param  {Function} cb
      */
 
-    schedule = function (reqId, route, msg, recvs, opts, cb)
+    schedule(reqId, route, msg, recvs, opts, cb)
     {
         var self = this;
         if (self.isSelectable)

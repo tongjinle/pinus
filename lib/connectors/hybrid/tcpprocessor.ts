@@ -22,7 +22,7 @@ export class TCPProcessor extends EventEmitter
         this.closeMethod = closeMethod;
         this.state = ST_STARTED;
     };
-    add = function (socket, data)
+    add(socket, data)
     {
         if (this.state !== ST_STARTED)
         {
@@ -37,7 +37,7 @@ export class TCPProcessor extends EventEmitter
         socket.emit('data', data);
     };
 
-    close = function ()
+    close()
     {
         if (this.state !== ST_STARTED)
         {

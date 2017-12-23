@@ -17,10 +17,10 @@ export declare class UdpSocket extends EventEmitter {
      *
      * @param  {Buffer} msg byte data
      */
-    send: (msg: any) => void;
-    sendRaw: (msg: any) => void;
-    sendForce: (msg: any) => void;
-    handshakeResponse: (resp: any) => void;
-    sendBatch: (msgs: any) => void;
-    disconnect: () => void;
+    send(msg: any): void;
+    sendRaw(msg: any): void;
+    sendForce(msg: any): void;
+    handshakeResponse(resp: any): void;
+    sendBatch(msgs: any): void;
+    disconnect(): void;
 }

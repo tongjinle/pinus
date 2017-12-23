@@ -27,12 +27,12 @@ export class MonitorWatcherModule
         this.app.event.on(events.START_SERVER, finishStart.bind(null, this));
     };
 
-    start = function (cb)
+    start(cb)
     {
         subscribeRequest(this, this.service.agent, this.id, cb);
     };
 
-    monitorHandler = function (agent, msg, cb)
+    monitorHandler(agent, msg, cb)
     {
         if (!msg || !msg.action)
         {

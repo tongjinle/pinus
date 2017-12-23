@@ -13,26 +13,28 @@ var HEAD_SIZE = 4;
 class TCPProcessor extends events_1.EventEmitter {
     constructor(closeMethod) {
         super();
-        this.add = function (socket, data) {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            var tcpsocket = new tcpsocket_1.TcpSocket(socket, {
-                headSize: HEAD_SIZE,
-                headHandler: utils.headHandler,
-                closeMethod: this.closeMethod
-            });
-            this.emit('connection', tcpsocket);
-            socket.emit('data', data);
-        };
-        this.close = function () {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-        };
         this.closeMethod = closeMethod;
         this.state = ST_STARTED;
+    }
+    ;
+    add(socket, data) {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        var tcpsocket = new tcpsocket_1.TcpSocket(socket, {
+            headSize: HEAD_SIZE,
+            headHandler: utils.headHandler,
+            closeMethod: this.closeMethod
+        });
+        this.emit('connection', tcpsocket);
+        socket.emit('data', data);
+    }
+    ;
+    close() {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        this.state = ST_CLOSED;
     }
     ;
 }

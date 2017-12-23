@@ -15,17 +15,6 @@ exports.default = default_1;
 ;
 class ToobusyFilterHandler {
     constructor(maxLag) {
-        this.before = function (msg, session, next) {
-            if (!!toobusy && toobusy()) {
-                conLogger.warn('[toobusy] reject request msg: ' + msg);
-                var err = new Error('Server toobusy!');
-                err.code = 500;
-                next(err);
-            }
-            else {
-                next();
-            }
-        };
         try {
             toobusy = require('toobusy');
         }
@@ -33,6 +22,18 @@ class ToobusyFilterHandler {
         }
         if (!!toobusy) {
             toobusy.maxLag(maxLag);
+        }
+    }
+    ;
+    before(msg, session, next) {
+        if (!!toobusy && toobusy()) {
+            conLogger.warn('[toobusy] reject request msg: ' + msg);
+            var err = new Error('Server toobusy!');
+            err.code = 500;
+            next(err);
+        }
+        else {
+            next();
         }
     }
     ;

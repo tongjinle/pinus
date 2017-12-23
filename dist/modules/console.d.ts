@@ -5,6 +5,6 @@ export declare class ConsoleModule {
     app: Application;
     starter: any;
     constructor(opts: any);
-    monitorHandler: (agent: any, msg: any, cb: any) => void;
-    clientHandler: (agent: any, msg: any, cb: any) => void;
+    monitorHandler(agent: any, msg: any, cb: any): void;
+    clientHandler(agent: any, msg: any, cb: any): void;
 }

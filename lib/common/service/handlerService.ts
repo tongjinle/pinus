@@ -33,7 +33,7 @@ export class HandlerService
     /**
      * Handler the request.
      */
-    handle = function (routeRecord, msg, session, cb)
+    handle(routeRecord, msg, session, cb)
     {
         // the request should be processed by current server
         var handler = this.getHandler(routeRecord);
@@ -96,7 +96,7 @@ export class HandlerService
      * @param  {Object} routeRecord route record parsed from route string
      * @return {Object}             handler instance if any matchs or null for match fail
      */
-    getHandler = function (routeRecord)
+    getHandler(routeRecord)
     {
         var serverType = routeRecord.serverType;
         if (!this.handlerMap[serverType])

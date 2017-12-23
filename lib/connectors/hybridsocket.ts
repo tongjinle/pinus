@@ -65,7 +65,7 @@ export class HybridSocket extends EventEmitter
      *
      * @api private
      */
-    sendRaw = function (msg)
+    sendRaw(msg)
     {
         if (this.state !== ST_WORKING)
         {
@@ -88,7 +88,7 @@ export class HybridSocket extends EventEmitter
      *
      * @param  {Buffer} msg byte data
      */
-    send = function (msg)
+    send(msg)
     {
         if (msg instanceof String)
         {
@@ -105,7 +105,7 @@ export class HybridSocket extends EventEmitter
      *
      * @param  {Buffer} msgs byte data
      */
-    sendBatch = function (msgs)
+    sendBatch(msgs)
     {
         var rs = [];
         for (var i = 0; i < msgs.length; i++)
@@ -121,7 +121,7 @@ export class HybridSocket extends EventEmitter
      *
      * @api private
      */
-    sendForce = function (msg)
+    sendForce(msg)
     {
         if (this.state === ST_CLOSED)
         {
@@ -135,7 +135,7 @@ export class HybridSocket extends EventEmitter
      *
      * @api private
      */
-    handshakeResponse = function (resp)
+    handshakeResponse(resp)
     {
         if (this.state !== ST_INITED)
         {
@@ -151,7 +151,7 @@ export class HybridSocket extends EventEmitter
      *
      * @api private
      */
-    disconnect = function ()
+    disconnect()
     {
         if (this.state === ST_CLOSED)
         {

@@ -51,7 +51,7 @@ export class RemoteComponent
      * @param {Function} cb
      * @return {Void}
      */
-    start = function (cb)
+    start(cb)
     {
         this.opts.port = this.app.getCurServer().port;
         this.remote = genRemote(this.app, this.opts);
@@ -66,7 +66,7 @@ export class RemoteComponent
      * @param {Function}  cb
      * @return {Void}
      */
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.remote.stop(force);
         process.nextTick(cb);

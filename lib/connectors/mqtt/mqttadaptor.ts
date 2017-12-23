@@ -12,7 +12,7 @@ export class MqttAdaptor
         this.subscribeRoute = opts.subscribeRoute;
     };
 
-    onPublish = function (client, packet)
+    onPublish(client, packet)
     {
         var route = this.publishRoute;
 
@@ -41,7 +41,7 @@ export class MqttAdaptor
         }
     };
 
-    onSubscribe = function (client, packet)
+    onSubscribe(client, packet)
     {
         var route = this.subscribeRoute;
 
@@ -63,7 +63,7 @@ export class MqttAdaptor
         client.emit('message', req);
     };
 
-    onPubAck = function (client, packet)
+    onPubAck(client, packet)
     {
         var req = {
             id: packet.messageId,
@@ -90,7 +90,7 @@ export class MqttAdaptor
      *
      * otherwise packet is a illegal packet.
      */
-    publish = function (client, packet)
+    publish(client, packet)
     {
         var mid = packet.id;
         var subreq = this.subReqs[mid];

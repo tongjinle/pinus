@@ -21,153 +21,6 @@ var ST_DESTROYED = 1;
  */
 class ChannelService {
     constructor(app, opts) {
-        this.start = function (cb) {
-            restoreChannel(this, cb);
-        };
-        /**
-         * Create channel with name.
-         *
-         * @param {String} name channel's name
-         * @memberOf ChannelService
-         */
-        this.createChannel = function (name) {
-            if (this.channels[name]) {
-                return this.channels[name];
-            }
-            var c = new Channel(name, this);
-            addToStore(this, genKey(this), genKey(this, name));
-            this.channels[name] = c;
-            return c;
-        };
-        /**
-         * Get channel by name.
-         *
-         * @param {String} name channel's name
-         * @param {Boolean} create if true, create channel
-         * @return {Channel}
-         * @memberOf ChannelService
-         */
-        this.getChannel = function (name, create) {
-            var channel = this.channels[name];
-            if (!channel && !!create) {
-                channel = this.channels[name] = new Channel(name, this);
-                addToStore(this, genKey(this), genKey(this, name));
-            }
-            return channel;
-        };
-        /**
-         * Destroy channel by name.
-         *
-         * @param {String} name channel name
-         * @memberOf ChannelService
-         */
-        this.destroyChannel = function (name) {
-            delete this.channels[name];
-            removeFromStore(this, genKey(this), genKey(this, name));
-            removeAllFromStore(this, genKey(this, name));
-        };
-        /**
-         * Push message by uids.
-         * Group the uids by group. ignore any uid if sid not specified.
-         *
-         * @param {String} route message route
-         * @param {Object} msg message that would be sent to client
-         * @param {Array} uids the receiver info list, [{uid: userId, sid: frontendServerId}]
-         * @param {Object} opts user-defined push options, optional
-         * @param {Function} cb cb(err)
-         * @memberOf ChannelService
-         */
-        this.pushMessageByUids = function (route, msg, uids, opts, cb) {
-            if (typeof route !== 'string') {
-                cb = opts;
-                opts = uids;
-                uids = msg;
-                msg = route;
-                route = msg.route;
-            }
-            if (!cb && typeof opts === 'function') {
-                cb = opts;
-                opts = {};
-            }
-            if (!uids || uids.length === 0) {
-                utils.invokeCallback(cb, new Error('uids should not be empty'));
-                return;
-            }
-            var groups = {}, record;
-            for (var i = 0, l = uids.length; i < l; i++) {
-                record = uids[i];
-                add(record.uid, record.sid, groups);
-            }
-            sendMessageByGroup(this, route, msg, groups, opts, cb);
-        };
-        /**
-         * Broadcast message to all the connected clients.
-         *
-         * @param  {String}   stype      frontend server type string
-         * @param  {String}   route      route string
-         * @param  {Object}   msg        message
-         * @param  {Object}   opts       user-defined broadcast options, optional
-         *                               opts.binded: push to binded sessions or all the sessions
-         *                               opts.filterParam: parameters for broadcast filter.
-         * @param  {Function} cb         callback
-         * @memberOf ChannelService
-         */
-        this.broadcast = function (stype, route, msg, opts, cb) {
-            var app = this.app;
-            var namespace = 'sys';
-            var service = 'channelRemote';
-            var method = 'broadcast';
-            var servers = app.getServersByType(stype);
-            if (!servers || servers.length === 0) {
-                // server list is empty
-                utils.invokeCallback(cb);
-                return;
-            }
-            var count = servers.length;
-            var successFlag = false;
-            var latch = countDownLatch.createCountDownLatch(count, function () {
-                if (!successFlag) {
-                    utils.invokeCallback(cb, new Error('broadcast fails'));
-                    return;
-                }
-                utils.invokeCallback(cb, null);
-            });
-            var genCB = function (serverId) {
-                return function (err) {
-                    if (err) {
-                        logger.error('[broadcast] fail to push message to serverId: ' + serverId + ', err:' + err.stack);
-                        latch.done();
-                        return;
-                    }
-                    successFlag = true;
-                    latch.done();
-                };
-            };
-            var self = this;
-            var sendMessage = function (serverId) {
-                return (function () {
-                    if (serverId === app.serverId) {
-                        self.channelRemote[method](route, msg, opts, genCB());
-                    }
-                    else {
-                        app.rpcInvoke(serverId, {
-                            namespace: namespace, service: service,
-                            method: method, args: [route, msg, opts]
-                        }, genCB(serverId));
-                    }
-                }());
-            };
-            opts = { type: 'broadcast', userOptions: opts || {} };
-            // for compatiblity 
-            opts.isBroadcast = true;
-            if (opts.userOptions) {
-                opts.binded = opts.userOptions.binded;
-                opts.filterParam = opts.userOptions.filterParam;
-            }
-            for (var i = 0, l = count; i < l; i++) {
-                sendMessage(servers[i].id);
-            }
-        };
         this.apushMessageByUids = utils.promisify(this.pushMessageByUids.bind(this));
         this.abroadcast = utils.promisify(this.broadcast.bind(this));
         opts = opts || {};
@@ -177,6 +30,159 @@ class ChannelService {
         this.store = opts.store;
         this.broadcastFilter = opts.broadcastFilter;
         this.channelRemote = new channelRemote_1.ChannelRemote(app);
+    }
+    ;
+    start(cb) {
+        restoreChannel(this, cb);
+    }
+    ;
+    /**
+     * Create channel with name.
+     *
+     * @param {String} name channel's name
+     * @memberOf ChannelService
+     */
+    createChannel(name) {
+        if (this.channels[name]) {
+            return this.channels[name];
+        }
+        var c = new Channel(name, this);
+        addToStore(this, genKey(this), genKey(this, name));
+        this.channels[name] = c;
+        return c;
+    }
+    ;
+    /**
+     * Get channel by name.
+     *
+     * @param {String} name channel's name
+     * @param {Boolean} create if true, create channel
+     * @return {Channel}
+     * @memberOf ChannelService
+     */
+    getChannel(name, create) {
+        var channel = this.channels[name];
+        if (!channel && !!create) {
+            channel = this.channels[name] = new Channel(name, this);
+            addToStore(this, genKey(this), genKey(this, name));
+        }
+        return channel;
+    }
+    ;
+    /**
+     * Destroy channel by name.
+     *
+     * @param {String} name channel name
+     * @memberOf ChannelService
+     */
+    destroyChannel(name) {
+        delete this.channels[name];
+        removeFromStore(this, genKey(this), genKey(this, name));
+        removeAllFromStore(this, genKey(this, name));
+    }
+    ;
+    /**
+     * Push message by uids.
+     * Group the uids by group. ignore any uid if sid not specified.
+     *
+     * @param {String} route message route
+     * @param {Object} msg message that would be sent to client
+     * @param {Array} uids the receiver info list, [{uid: userId, sid: frontendServerId}]
+     * @param {Object} opts user-defined push options, optional
+     * @param {Function} cb cb(err)
+     * @memberOf ChannelService
+     */
+    pushMessageByUids(route, msg, uids, opts, cb) {
+        if (typeof route !== 'string') {
+            cb = opts;
+            opts = uids;
+            uids = msg;
+            msg = route;
+            route = msg.route;
+        }
+        if (!cb && typeof opts === 'function') {
+            cb = opts;
+            opts = {};
+        }
+        if (!uids || uids.length === 0) {
+            utils.invokeCallback(cb, new Error('uids should not be empty'));
+            return;
+        }
+        var groups = {}, record;
+        for (var i = 0, l = uids.length; i < l; i++) {
+            record = uids[i];
+            add(record.uid, record.sid, groups);
+        }
+        sendMessageByGroup(this, route, msg, groups, opts, cb);
+    }
+    ;
+    /**
+     * Broadcast message to all the connected clients.
+     *
+     * @param  {String}   stype      frontend server type string
+     * @param  {String}   route      route string
+     * @param  {Object}   msg        message
+     * @param  {Object}   opts       user-defined broadcast options, optional
+     *                               opts.binded: push to binded sessions or all the sessions
+     *                               opts.filterParam: parameters for broadcast filter.
+     * @param  {Function} cb         callback
+     * @memberOf ChannelService
+     */
+    broadcast(stype, route, msg, opts, cb) {
+        var app = this.app;
+        var namespace = 'sys';
+        var service = 'channelRemote';
+        var method = 'broadcast';
+        var servers = app.getServersByType(stype);
+        if (!servers || servers.length === 0) {
+            // server list is empty
+            utils.invokeCallback(cb);
+            return;
+        }
+        var count = servers.length;
+        var successFlag = false;
+        var latch = countDownLatch.createCountDownLatch(count, function () {
+            if (!successFlag) {
+                utils.invokeCallback(cb, new Error('broadcast fails'));
+                return;
+            }
+            utils.invokeCallback(cb, null);
+        });
+        var genCB = function (serverId) {
+            return function (err) {
+                if (err) {
+                    logger.error('[broadcast] fail to push message to serverId: ' + serverId + ', err:' + err.stack);
+                    latch.done();
+                    return;
+                }
+                successFlag = true;
+                latch.done();
+            };
+        };
+        var self = this;
+        var sendMessage = function (serverId) {
+            return (function () {
+                if (serverId === app.serverId) {
+                    self.channelRemote[method](route, msg, opts, genCB());
+                }
+                else {
+                    app.rpcInvoke(serverId, {
+                        namespace: namespace, service: service,
+                        method: method, args: [route, msg, opts]
+                    }, genCB(serverId));
+                }
+            }());
+        };
+        opts = { type: 'broadcast', userOptions: opts || {} };
+        // for compatiblity 
+        opts.isBroadcast = true;
+        if (opts.userOptions) {
+            opts.binded = opts.userOptions.binded;
+            opts.filterParam = opts.userOptions.filterParam;
+        }
+        for (var i = 0, l = count; i < l; i++) {
+            sendMessage(servers[i].id);
+        }
     }
     ;
 }
@@ -190,118 +196,6 @@ exports.ChannelService = ChannelService;
  */
 class Channel {
     constructor(name, service) {
-        /**
-         * Add user to channel.
-         *
-         * @param {Number} uid user id
-         * @param {String} sid frontend server id which user has connected to
-         */
-        this.add = function (uid, sid) {
-            if (this.state > ST_INITED) {
-                return false;
-            }
-            else {
-                var res = add(uid, sid, this.groups);
-                if (res) {
-                    this.records[uid] = { sid: sid, uid: uid };
-                    this.userAmount = this.userAmount + 1;
-                }
-                addToStore(this.__channelService__, genKey(this.__channelService__, this.name), genValue(sid, uid));
-                return res;
-            }
-        };
-        /**
-         * Remove user from channel.
-         *
-         * @param {Number} uid user id
-         * @param {String} sid frontend server id which user has connected to.
-         * @return [Boolean] true if success or false if fail
-         */
-        this.leave = function (uid, sid) {
-            if (!uid || !sid) {
-                return false;
-            }
-            var res = deleteFrom(uid, sid, this.groups[sid]);
-            if (res) {
-                delete this.records[uid];
-                this.userAmount = this.userAmount - 1;
-            }
-            if (this.userAmount < 0)
-                this.userAmount = 0; //robust
-            removeFromStore(this.__channelService__, genKey(this.__channelService__, this.name), genValue(sid, uid));
-            if (this.groups[sid] && this.groups[sid].length === 0) {
-                delete this.groups[sid];
-            }
-            return res;
-        };
-        /**
-         * Get channel UserAmount in a channel.
-        
-         *
-         * @return {number } channel member amount
-         */
-        this.getUserAmount = function () {
-            return this.userAmount;
-        };
-        /**
-         * Get channel members.
-         *
-         * <b>Notice:</b> Heavy operation.
-         *
-         * @return {Array} channel member uid list
-         */
-        this.getMembers = function () {
-            var res = [], groups = this.groups;
-            var group, i, l;
-            for (var sid in groups) {
-                group = groups[sid];
-                for (i = 0, l = group.length; i < l; i++) {
-                    res.push(group[i]);
-                }
-            }
-            return res;
-        };
-        /**
-         * Get Member info.
-         *
-         * @param  {String} uid user id
-         * @return {Object} member info
-         */
-        this.getMember = function (uid) {
-            return this.records[uid];
-        };
-        /**
-         * Destroy channel.
-         */
-        this.destroy = function () {
-            this.state = ST_DESTROYED;
-            this.__channelService__.destroyChannel(this.name);
-        };
-        /**
-         * Push message to all the members in the channel
-         *
-         * @param {String} route message route
-         * @param {Object} msg message that would be sent to client
-         * @param {Object} opts user-defined push options, optional
-         * @param {Function} cb callback function
-         */
-        this.pushMessage = function (route, msg, opts, cb) {
-            if (this.state !== ST_INITED) {
-                utils.invokeCallback(new Error('channel is not running now'));
-                return;
-            }
-            if (typeof route !== 'string') {
-                cb = opts;
-                opts = msg;
-                msg = route;
-                route = msg.route;
-            }
-            if (!cb && typeof opts === 'function') {
-                cb = opts;
-                opts = {};
-            }
-            sendMessageByGroup(this.__channelService__, route, msg, this.groups, opts, cb);
-        };
         this.apushMessage = utils.promisify(this.pushMessage.bind(this));
         this.name = name;
         this.groups = {}; // group map for uids. key: sid, value: [uid]
@@ -309,6 +203,125 @@ class Channel {
         this.__channelService__ = service;
         this.state = ST_INITED;
         this.userAmount = 0;
+    }
+    ;
+    /**
+     * Add user to channel.
+     *
+     * @param {Number} uid user id
+     * @param {String} sid frontend server id which user has connected to
+     */
+    add(uid, sid) {
+        if (this.state > ST_INITED) {
+            return false;
+        }
+        else {
+            var res = add(uid, sid, this.groups);
+            if (res) {
+                this.records[uid] = { sid: sid, uid: uid };
+                this.userAmount = this.userAmount + 1;
+            }
+            addToStore(this.__channelService__, genKey(this.__channelService__, this.name), genValue(sid, uid));
+            return res;
+        }
+    }
+    ;
+    /**
+     * Remove user from channel.
+     *
+     * @param {Number} uid user id
+     * @param {String} sid frontend server id which user has connected to.
+     * @return [Boolean] true if success or false if fail
+     */
+    leave(uid, sid) {
+        if (!uid || !sid) {
+            return false;
+        }
+        var res = deleteFrom(uid, sid, this.groups[sid]);
+        if (res) {
+            delete this.records[uid];
+            this.userAmount = this.userAmount - 1;
+        }
+        if (this.userAmount < 0)
+            this.userAmount = 0; //robust
+        removeFromStore(this.__channelService__, genKey(this.__channelService__, this.name), genValue(sid, uid));
+        if (this.groups[sid] && this.groups[sid].length === 0) {
+            delete this.groups[sid];
+        }
+        return res;
+    }
+    ;
+    /**
+     * Get channel UserAmount in a channel.
+    
+     *
+     * @return {number } channel member amount
+     */
+    getUserAmount() {
+        return this.userAmount;
+    }
+    ;
+    /**
+     * Get channel members.
+     *
+     * <b>Notice:</b> Heavy operation.
+     *
+     * @return {Array} channel member uid list
+     */
+    getMembers() {
+        var res = [], groups = this.groups;
+        var group, i, l;
+        for (var sid in groups) {
+            group = groups[sid];
+            for (i = 0, l = group.length; i < l; i++) {
+                res.push(group[i]);
+            }
+        }
+        return res;
+    }
+    ;
+    /**
+     * Get Member info.
+     *
+     * @param  {String} uid user id
+     * @return {Object} member info
+     */
+    getMember(uid) {
+        return this.records[uid];
+    }
+    ;
+    /**
+     * Destroy channel.
+     */
+    destroy() {
+        this.state = ST_DESTROYED;
+        this.__channelService__.destroyChannel(this.name);
+    }
+    ;
+    /**
+     * Push message to all the members in the channel
+     *
+     * @param {String} route message route
+     * @param {Object} msg message that would be sent to client
+     * @param {Object} opts user-defined push options, optional
+     * @param {Function} cb callback function
+     */
+    pushMessage(route, msg, opts, cb) {
+        if (this.state !== ST_INITED) {
+            utils.invokeCallback(new Error('channel is not running now'));
+            return;
+        }
+        if (typeof route !== 'string') {
+            cb = opts;
+            opts = msg;
+            msg = route;
+            route = msg.route;
+        }
+        if (!cb && typeof opts === 'function') {
+            cb = opts;
+            opts = {};
+        }
+        sendMessageByGroup(this.__channelService__, route, msg, this.groups, opts, cb);
     }
     ;
 }

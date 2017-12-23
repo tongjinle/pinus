@@ -1,15 +1,41 @@
+/// <reference types="node" />
 /*!
  * Pomelo -- proto
  * Copyright(c) 2012 xiechengchao <xiecc@163.com>
  * MIT Licensed
  */
+import { EventEmitter } from 'events';
 export declare class Application {
+    loaded: any[];
+    components: {};
+    settings: any;
+    event: EventEmitter;
+    serverId: any;
+    serverType: any;
+    curServer: any;
+    startTime: any;
+    master: any;
+    servers: {};
+    serverTypeMaps: {};
+    serverTypes: any[];
+    lifecycleCbs: {};
+    clusterSeq: {};
+    state: number;
+    stopTimer: any;
+    /**
+     * Proxy for rpc client rpcInvoke.
+     *
+     * @param {String}   serverId remote server id
+     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
+     * @param {Function} cb      callback function
+     */
+    rpcInvoke?: (serverId: string, msg: any, cb: Function) => void;
     /**
      * Initialize the server.
      *
      *   - setup default configuration
      */
-    init: (opts: any) => void;
+    init(opts: any): void;
     /**
      * Get application base path
      *
@@ -21,7 +47,7 @@ export declare class Application {
      *
      * @memberOf Application
      */
-    getBase: () => any;
+    getBase(): any;
     /**
      * Override require method in application
      *
@@ -29,7 +55,7 @@ export declare class Application {
      *
      * @memberOf Application
      */
-    require: (ph: any) => any;
+    require(ph: any): any;
     /**
      * Configure logger with {$base}/config/log4js.json
      *
@@ -37,7 +63,7 @@ export declare class Application {
      *
      * @memberOf Application
      */
-    configureLogger: (logger: any) => void;
+    configureLogger(logger: any): void;
     /**
      * add a filter to before and after filter
      *
@@ -45,21 +71,21 @@ export declare class Application {
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    filter: (filter: any) => void;
+    filter(filter: any): void;
     /**
      * Add before filter.
      *
      * @param {Object|Function} bf before fileter, bf(msg, session, next)
      * @memberOf Application
      */
-    before: (bf: any) => void;
+    before(bf: any): void;
     /**
      * Add after filter.
      *
      * @param {Object|Function} af after filter, `af(err, msg, session, resp, next)`
      * @memberOf Application
      */
-    after: (af: any) => void;
+    after(af: any): void;
     /**
      * add a global filter to before and after global filter
      *
@@ -67,35 +93,35 @@ export declare class Application {
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    globalFilter: (filter: any) => void;
+    globalFilter(filter: any): void;
     /**
      * Add global before filter.
      *
      * @param {Object|Function} bf before fileter, bf(msg, session, next)
      * @memberOf Application
      */
-    globalBefore: (bf: any) => void;
+    globalBefore(bf: any): void;
     /**
      * Add global after filter.
      *
      * @param {Object|Function} af after filter, `af(err, msg, session, resp, next)`
      * @memberOf Application
      */
-    globalAfter: (af: any) => void;
+    globalAfter(af: any): void;
     /**
      * Add rpc before filter.
      *
      * @param {Object|Function} bf before fileter, bf(serverId, msg, opts, next)
      * @memberOf Application
      */
-    rpcBefore: (bf: any) => void;
+    rpcBefore(bf: any): void;
     /**
      * Add rpc after filter.
      *
      * @param {Object|Function} af after filter, `af(serverId, msg, opts, next)`
      * @memberOf Application
      */
-    rpcAfter: (af: any) => void;
+    rpcAfter(af: any): void;
     /**
      * add a rpc filter to before and after rpc filter
      *
@@ -103,7 +129,7 @@ export declare class Application {
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    rpcFilter: (filter: any) => void;
+    rpcFilter(filter: any): void;
     /**
      * Load component
      *
@@ -113,7 +139,7 @@ export declare class Application {
      * @return {Object}     app instance for chain invoke
      * @memberOf Application
      */
-    load: (name: any, component: any, opts: any) => any;
+    load(name: any, component: any, opts?: any): this;
     /**
      * Load Configure json file to settings.(support different enviroment directory & compatible for old path)
      *
@@ -123,7 +149,7 @@ export declare class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    loadConfigBaseApp: (key: any, val: any, reload: any) => void;
+    loadConfigBaseApp(key: any, val: any, reload?: boolean): void;
     /**
      * Load Configure json file to settings.
      *
@@ -132,7 +158,7 @@ export declare class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    loadConfig: (key: any, val: any) => void;
+    loadConfig(key: any, val: any): void;
     /**
      * Set the route function for the specified server type.
      *
@@ -151,7 +177,7 @@ export declare class Application {
      * @return {Object}     current application instance for chain invoking
      * @memberOf Application
      */
-    route: (serverType: any, routeFunc: any) => any;
+    route(serverType: any, routeFunc: any): this;
     /**
      * Set before stop function. It would perform before servers stop.
      *
@@ -159,27 +185,27 @@ export declare class Application {
      * @return {Void}
      * @memberOf Application
      */
-    beforeStopHook: (fun: any) => void;
+    beforeStopHook(fun: any): void;
     /**
      * Start application. It would load the default components and start all the loaded components.
      *
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Lifecycle callback for after start.
      *
      * @param  {Function} cb callback function
      * @return {Void}
      */
-    afterStart: (cb: any) => void;
+    afterStart(cb: any): void;
     /**
      * Stop components.
      *
      * @param  {Boolean} force whether stop the app immediately
      */
-    stop: (force: any) => void;
+    stop(force: any): void;
     /**
      * Assign `setting` to `val`, or return `setting`'s value.
      *
@@ -199,7 +225,7 @@ export declare class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set: (setting: any, val: any, attach: any) => any;
+    set(setting: any, val: any, attach?: boolean): any;
     /**
      * Get property from setting
      *
@@ -207,7 +233,7 @@ export declare class Application {
      * @return {String} val
      * @memberOf Application
      */
-    get: (setting: any) => any;
+    get(setting: any): any;
     /**
      * Check if `setting` is enabled.
      *
@@ -215,7 +241,7 @@ export declare class Application {
      * @return {Boolean}
      * @memberOf Application
      */
-    enabled: (setting: any) => boolean;
+    enabled(setting: any): boolean;
     /**
      * Check if `setting` is disabled.
      *
@@ -223,7 +249,7 @@ export declare class Application {
      * @return {Boolean}
      * @memberOf Application
      */
-    disabled: (setting: any) => boolean;
+    disabled(setting: any): boolean;
     /**
      * Enable `setting`.
      *
@@ -231,7 +257,7 @@ export declare class Application {
      * @return {app} for chaining
      * @memberOf Application
      */
-    enable: (setting: any) => any;
+    enable(setting: any): any;
     /**
      * Disable `setting`.
      *
@@ -239,7 +265,7 @@ export declare class Application {
      * @return {app} for chaining
      * @memberOf Application
      */
-    disable: (setting: any) => any;
+    disable(setting: any): any;
     /**
      * Configure callback for the specified env and server type.
      * When no env is specified that callback will
@@ -266,7 +292,7 @@ export declare class Application {
      * @return {Application} for chaining
      * @memberOf Application
      */
-    configure: (env: any, type: any, fn: any) => any;
+    configure(env: any, type: any, fn: any): this;
     /**
      * Register admin modules. Admin modules is the extends point of the monitor system.
      *
@@ -275,7 +301,7 @@ export declare class Application {
      * @param {Object} opts construct parameter for module
      * @memberOf Application
      */
-    registerAdmin: (moduleId: any, module: any, opts: any) => void;
+    registerAdmin(moduleId: any, module: any, opts: any): void;
     /**
      * Use plugin.
      *
@@ -283,7 +309,7 @@ export declare class Application {
      * @param  {[type]} opts    (optional) construct parameters for the factory function
      * @memberOf Application
      */
-    use: (plugin: any, opts: any) => void;
+    use(plugin: any, opts: any): void;
     /**
      * Application transaction. Transcation includes conditions and handlers, if conditions are satisfied, handlers would be executed.
      * And you can set retry times to execute handlers. The transaction log is in file logs/transaction.log.
@@ -294,56 +320,56 @@ export declare class Application {
      * @param {Number} retry retry times to execute handlers if conditions are successfully executed
      * @memberOf Application
      */
-    transaction: (name: any, conditions: any, handlers: any, retry: any) => void;
+    transaction(name: any, conditions: any, handlers: any, retry: any): void;
     /**
      * Get master server info.
      *
      * @return {Object} master server info, {id, host, port}
      * @memberOf Application
      */
-    getMaster: () => any;
+    getMaster(): any;
     /**
      * Get current server info.
      *
      * @return {Object} current server info, {id, serverType, host, port}
      * @memberOf Application
      */
-    getCurServer: () => any;
+    getCurServer(): any;
     /**
      * Get current server id.
      *
      * @return {String|Number} current server id from servers.json
      * @memberOf Application
      */
-    getServerId: () => any;
+    getServerId(): any;
     /**
      * Get current server type.
      *
      * @return {String|Number} current server type from servers.json
      * @memberOf Application
      */
-    getServerType: () => any;
+    getServerType(): any;
     /**
      * Get all the current server infos.
      *
      * @return {Object} server info map, key: server id, value: server info
      * @memberOf Application
      */
-    getServers: () => any;
+    getServers(): {};
     /**
      * Get all server infos from servers.json.
      *
      * @return {Object} server info map, key: server id, value: server info
      * @memberOf Application
      */
-    getServersFromConfig: () => any;
+    getServersFromConfig(): any;
     /**
      * Get all the server type.
      *
      * @return {Array} server type list
      * @memberOf Application
      */
-    getServerTypes: () => any;
+    getServerTypes(): any[];
     /**
      * Get server info by server id from current server cluster.
      *
@@ -351,7 +377,7 @@ export declare class Application {
      * @return {Object} server info or undefined
      * @memberOf Application
      */
-    getServerById: (serverId: any) => any;
+    getServerById(serverId: any): any;
     /**
      * Get server info by server id from servers.json.
      *
@@ -359,7 +385,7 @@ export declare class Application {
      * @return {Object} server info or undefined
      * @memberOf Application
      */
-    getServerFromConfig: (serverId: any) => any;
+    getServerFromConfig(serverId: any): any;
     /**
      * Get server infos by server type.
      *
@@ -367,7 +393,7 @@ export declare class Application {
      * @return {Array}      server info list
      * @memberOf Application
      */
-    getServersByType: (serverType: any) => any;
+    getServersByType(serverType: any): any;
     /**
      * Check the server whether is a frontend server
      *
@@ -377,7 +403,7 @@ export declare class Application {
      *
      * @memberOf Application
      */
-    isFrontend: (server: any) => boolean;
+    isFrontend(server: any): boolean;
     /**
      * Check the server whether is a backend server
      *
@@ -386,49 +412,49 @@ export declare class Application {
      * @return {Boolean}
      * @memberOf Application
      */
-    isBackend: (server: any) => boolean;
+    isBackend(server: any): boolean;
     /**
      * Check whether current server is a master server
      *
      * @return {Boolean}
      * @memberOf Application
      */
-    isMaster: () => boolean;
+    isMaster(): boolean;
     /**
      * Add new server info to current application in runtime.
      *
      * @param {Array} servers new server info list
      * @memberOf Application
      */
-    addServers: (servers: any) => void;
+    addServers(servers: any): void;
     /**
      * Remove server info from current application at runtime.
      *
      * @param  {Array} ids server id list
      * @memberOf Application
      */
-    removeServers: (ids: any) => void;
+    removeServers(ids: any): void;
     /**
      * Replace server info from current application at runtime.
      *
      * @param  {Object} server id map
      * @memberOf Application
      */
-    replaceServers: (servers: any) => void;
+    replaceServers(servers: any): void;
     /**
      * Add crons from current application at runtime.
      *
      * @param  {Array} crons new crons would be added in application
      * @memberOf Application
      */
-    addCrons: (crons: any) => void;
+    addCrons(crons: any): void;
     /**
      * Remove crons from current application at runtime.
      *
      * @param  {Array} crons old crons would be removed in application
      * @memberOf Application
      */
-    removeCrons: (crons: any) => void;
+    removeCrons(crons: any): void;
     astart: () => Promise<{}>;
     aconfigure: (arg1: any, arg2: any) => Promise<{}>;
 }

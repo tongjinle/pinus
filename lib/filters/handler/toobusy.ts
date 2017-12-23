@@ -30,7 +30,7 @@ export class ToobusyFilterHandler
         }
     };
 
-    before = function (msg, session, next)
+    before(msg, session, next)
     {
         if (!!toobusy && toobusy())
         {

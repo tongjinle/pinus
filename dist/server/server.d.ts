@@ -21,12 +21,12 @@ export declare class Server extends EventEmitter {
     /**
      * Server lifecycle callback
      */
-    start: () => void;
-    afterStart: () => void;
+    start(): void;
+    afterStart(): void;
     /**
      * Stop server
      */
-    stop: () => void;
+    stop(): void;
     /**
      * Global handler.
      *
@@ -34,21 +34,21 @@ export declare class Server extends EventEmitter {
      * @param  {Object} session session object
      * @param  {Callback} callback function
      */
-    globalHandle: (msg: any, session: any, cb: any) => void;
+    globalHandle(msg: any, session: any, cb: any): void;
     /**
      * Handle request
      */
-    handle: (msg: any, session: any, cb: any) => void;
+    handle(msg: any, session: any, cb: any): void;
     /**
      * Add crons at runtime.
      *
      * @param {Array} crons would be added in application
      */
-    addCrons: (crons: any) => void;
+    addCrons(crons: any): void;
     /**
      * Remove crons at runtime.
      *
      * @param {Array} crons would be removed in application
      */
-    removeCrons: (crons: any) => void;
+    removeCrons(crons: any): void;
 }

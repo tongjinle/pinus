@@ -26,7 +26,7 @@ export class CountDownLatch
      *
      * @api public
      */
-    done = function ()
+    done()
     {
         if (this.count <= 0)
         {

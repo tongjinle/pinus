@@ -12,13 +12,13 @@ export default function() {
 
 export class TimeFilter
 {
-    before = function (msg, session, next)
+    before(msg, session, next)
     {
         session.__startTime__ = Date.now();
         next();
     };
 
-    after = function (err, msg, session, resp, next)
+    after(err, msg, session, resp, next)
     {
         var start = session.__startTime__;
         if (typeof start === 'number')

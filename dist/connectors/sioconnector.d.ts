@@ -16,12 +16,12 @@ export declare class SIOConnector extends EventEmitter {
     /**
      * Start connector to listen the specified port
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Stop connector
      */
-    stop: (force: any, cb: any) => void;
-    encode: (reqId: any, route: any, msg: any) => string | {
+    stop(force: any, cb: any): void;
+    encode(reqId: any, route: any, msg: any): string | {
         id: any;
         body: any;
     };
@@ -37,7 +37,7 @@ export declare class SIOConnector extends EventEmitter {
      * @param  {String} data socket.io package from client
      * @return {Object}      message object
      */
-    decode: (msg: any) => {
+    decode(msg: any): {
         id: number;
         route: any;
         body: any;

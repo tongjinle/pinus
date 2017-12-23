@@ -9,30 +9,6 @@ var ST_CLOSED = 2;
 class MQTTSocket extends events_1.EventEmitter {
     constructor(id, socket, adaptor) {
         super();
-        this.send = function (msg) {
-            if (this.state !== ST_INITED) {
-                return;
-            }
-            if (msg instanceof Buffer) {
-                // if encoded, send directly
-                this.socket.stream.write(msg);
-            }
-            else {
-                this.adaptor.publish(this, msg);
-            }
-        };
-        this.sendBatch = function (msgs) {
-            for (var i = 0, l = msgs.length; i < l; i++) {
-                this.send(msgs[i]);
-            }
-        };
-        this.disconnect = function () {
-            if (this.state === ST_CLOSED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-            this.socket.stream.destroy();
-        };
         this.id = id;
         this.socket = socket;
         this.remoteAddress = {
@@ -51,6 +27,33 @@ class MQTTSocket extends events_1.EventEmitter {
         socket.on('publish', this.adaptor.onPublish.bind(this.adaptor, this));
         this.state = ST_INITED;
         // TODO: any other events?
+    }
+    ;
+    send(msg) {
+        if (this.state !== ST_INITED) {
+            return;
+        }
+        if (msg instanceof Buffer) {
+            // if encoded, send directly
+            this.socket.stream.write(msg);
+        }
+        else {
+            this.adaptor.publish(this, msg);
+        }
+    }
+    ;
+    sendBatch(msgs) {
+        for (var i = 0, l = msgs.length; i < l; i++) {
+            this.send(msgs[i]);
+        }
+    }
+    ;
+    disconnect() {
+        if (this.state === ST_CLOSED) {
+            return;
+        }
+        this.state = ST_CLOSED;
+        this.socket.stream.destroy();
     }
     ;
 }

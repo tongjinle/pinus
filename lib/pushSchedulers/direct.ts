@@ -12,7 +12,7 @@ export class DirectService
     };
 
 
-    schedule = function (reqId, route, msg, recvs, opts, cb)
+    schedule(reqId, route, msg, recvs, opts, cb)
     {
         opts = opts || {};
         if (opts.type === 'broadcast')

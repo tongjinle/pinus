@@ -28,32 +28,32 @@ export declare class ProxyComponent {
      * @param {Function} cb
      * @return {Void}
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Component lifecycle callback
      *
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart: (cb: any) => void;
+    afterStart(cb: any): void;
     /**
      * Add remote server to the rpc client.
      *
      * @param {Array} servers server info list, {id, serverType, host, port}
      */
-    addServers: (servers: any) => void;
+    addServers(servers: any): void;
     /**
      * Remove remote server from the rpc client.
      *
      * @param  {Array} ids server id list
      */
-    removeServers: (ids: any) => void;
+    removeServers(ids: any): void;
     /**
      * Replace remote servers from the rpc client.
      *
      * @param  {Array} ids server id list
      */
-    replaceServers: (servers: any) => void;
+    replaceServers(servers: any): void;
     /**
      * Proxy for rpc client rpcInvoke.
      *
@@ -61,5 +61,5 @@ export declare class ProxyComponent {
      * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
      * @param {Function} cb      callback function
      */
-    rpcInvoke: (serverId: any, msg: any, cb: any) => void;
+    rpcInvoke(serverId: any, msg: any, cb: any): void;
 }

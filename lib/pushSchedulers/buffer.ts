@@ -17,7 +17,7 @@ export class BufferService
         this.flushInterval = opts.flushInterval || DEFAULT_FLUSH_INTERVAL;
     };
 
-    start = function (cb)
+    start(cb)
     {
         this.tid = setInterval(flush.bind(null, this), this.flushInterval);
         process.nextTick(function ()
@@ -26,7 +26,7 @@ export class BufferService
         });
     };
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         if (this.tid)
         {
@@ -39,7 +39,7 @@ export class BufferService
         });
     };
 
-    schedule = function (reqId, route, msg, recvs, opts, cb)
+    schedule(reqId, route, msg, recvs, opts, cb)
     {
         opts = opts || {};
         if (opts.type === 'broadcast')

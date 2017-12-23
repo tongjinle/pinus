@@ -24,6 +24,6 @@ export declare class TcpSocket extends Stream {
     packageBuffer: Buffer;
     state: number;
     constructor(socket: any, opts: any);
-    send: (msg: any, encode: any, cb: any) => void;
-    close: () => void;
+    send(msg: any, encode: any, cb: any): void;
+    close(): void;
 }

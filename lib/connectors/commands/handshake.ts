@@ -41,7 +41,7 @@ export class HandshakeCommand
         this.useCrypto = opts.useCrypto;
     };
 
-    handle = function (socket, msg)
+    handle(socket, msg)
     {
         if (!msg.sys)
         {

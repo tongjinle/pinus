@@ -8,8 +8,8 @@ export declare class Monitor {
     closeWatcher: any;
     monitorConsole: ConsoleService;
     constructor(app: any, opts: any);
-    start: (cb: any) => void;
-    startConsole: (cb: any) => void;
-    stop: (cb: any) => void;
-    reconnect: (masterInfo: any) => void;
+    start(cb: any): void;
+    startConsole(cb: any): void;
+    stop(cb: any): void;
+    reconnect(masterInfo: any): void;
 }

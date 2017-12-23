@@ -11,29 +11,6 @@ var ST_CLOSED = 2;
 class WSProcessor extends events_1.EventEmitter {
     constructor() {
         super();
-        this.add = function (socket, data) {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            this.httpServer.emit('connection', socket);
-            if (typeof socket.ondata === 'function') {
-                // compatible with stream2
-                socket.ondata(data, 0, data.length);
-            }
-            else {
-                // compatible with old stream
-                socket.emit('data', data);
-            }
-        };
-        this.close = function () {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-            this.wsServer.close();
-            this.wsServer = null;
-            this.httpServer = null;
-        };
         this.httpServer = new http_1.Server();
         var self = this;
         this.wsServer = new ws_1.Server({ server: this.httpServer });
@@ -42,6 +19,31 @@ class WSProcessor extends events_1.EventEmitter {
             self.emit('connection', socket);
         });
         this.state = ST_STARTED;
+    }
+    ;
+    add(socket, data) {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        this.httpServer.emit('connection', socket);
+        if (typeof socket.ondata === 'function') {
+            // compatible with stream2
+            socket.ondata(data, 0, data.length);
+        }
+        else {
+            // compatible with old stream
+            socket.emit('data', data);
+        }
+    }
+    ;
+    close() {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        this.state = ST_CLOSED;
+        this.wsServer.close();
+        this.wsServer = null;
+        this.httpServer = null;
     }
     ;
 }

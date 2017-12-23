@@ -34,7 +34,7 @@ export class ToobusyFilter
     /**
      * Before filter for rpc
      */
-    before = function (serverId, msg, opts, next)
+    before(serverId, msg, opts, next)
     {
         opts = opts || {};
         if (!!toobusy && toobusy())

@@ -14,11 +14,11 @@ export declare class MQTTConnector extends EventEmitter {
     /**
      * Start connector to listen the specified port
      */
-    start: (cb: any) => void;
-    stop: () => void;
-    encode: (reqId: any, route: any, msgBody: any) => Buffer | {
+    start(cb: any): void;
+    stop(): void;
+    encode(reqId: any, route: any, msgBody: any): Buffer | {
         id: any;
         body: any;
     };
-    close: () => void;
+    close(): void;
 }

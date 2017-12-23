@@ -20,98 +20,100 @@ exports.default = default_1;
 exports.moduleId = '__console__';
 class ConsoleModule {
     constructor(opts) {
-        this.monitorHandler = function (agent, msg, cb) {
-            var serverId = agent.id;
-            switch (msg.signal) {
-                case 'stop':
-                    if (agent.type === Constants.RESERVED.MASTER) {
-                        return;
-                    }
-                    this.app.stop(true);
-                    break;
-                case 'list':
-                    var serverType = agent.type;
-                    var pid = process.pid;
-                    var heapUsed = (process.memoryUsage().heapUsed / (1024 * 1024)).toFixed(2);
-                    var rss = (process.memoryUsage().rss / (1024 * 1024)).toFixed(2);
-                    var heapTotal = (process.memoryUsage().heapTotal / (1024 * 1024)).toFixed(2);
-                    var uptime = (process.uptime() / 60).toFixed(2);
-                    utils.invokeCallback(cb, {
-                        serverId: serverId,
-                        body: { serverId: serverId, serverType: serverType, pid: pid, rss: rss, heapTotal: heapTotal, heapUsed: heapUsed, uptime: uptime }
-                    });
-                    break;
-                case 'kill':
-                    utils.invokeCallback(cb, serverId);
-                    if (agent.type !== 'master') {
-                        setTimeout(function () {
-                            process.exit(-1);
-                        }, Constants.TIME.TIME_WAIT_MONITOR_KILL);
-                    }
-                    break;
-                case 'addCron':
-                    this.app.addCrons([msg.cron]);
-                    break;
-                case 'removeCron':
-                    this.app.removeCrons([msg.cron]);
-                    break;
-                case 'blacklist':
-                    if (this.app.isFrontend()) {
-                        var connector = this.app.components.__connector__;
-                        connector.blacklist = connector.blacklist.concat(msg.blacklist);
-                    }
-                    break;
-                case 'restart':
-                    if (agent.type === Constants.RESERVED.MASTER) {
-                        return;
-                    }
-                    var self = this;
-                    var server = this.app.get(Constants.RESERVED.CURRENT_SERVER);
-                    utils.invokeCallback(cb, server);
-                    process.nextTick(function () {
-                        self.app.stop(true);
-                    });
-                    break;
-                default:
-                    logger.error('receive error signal: %j', msg);
-                    break;
-            }
-        };
-        this.clientHandler = function (agent, msg, cb) {
-            var app = this.app;
-            switch (msg.signal) {
-                case 'kill':
-                    kill(app, agent, msg, cb);
-                    break;
-                case 'stop':
-                    stop(app, agent, msg, cb);
-                    break;
-                case 'list':
-                    list(agent, msg, cb);
-                    break;
-                case 'add':
-                    add(app, msg, cb);
-                    break;
-                case 'addCron':
-                    addCron(app, agent, msg, cb);
-                    break;
-                case 'removeCron':
-                    removeCron(app, agent, msg, cb);
-                    break;
-                case 'blacklist':
-                    blacklist(agent, msg, cb);
-                    break;
-                case 'restart':
-                    restart(app, agent, msg, cb);
-                    break;
-                default:
-                    utils.invokeCallback(cb, new Error('The command cannot be recognized, please check.'), null);
-                    break;
-            }
-        };
         opts = opts || {};
         this.app = opts.app;
         this.starter = opts.starter;
+    }
+    ;
+    monitorHandler(agent, msg, cb) {
+        var serverId = agent.id;
+        switch (msg.signal) {
+            case 'stop':
+                if (agent.type === Constants.RESERVED.MASTER) {
+                    return;
+                }
+                this.app.stop(true);
+                break;
+            case 'list':
+                var serverType = agent.type;
+                var pid = process.pid;
+                var heapUsed = (process.memoryUsage().heapUsed / (1024 * 1024)).toFixed(2);
+                var rss = (process.memoryUsage().rss / (1024 * 1024)).toFixed(2);
+                var heapTotal = (process.memoryUsage().heapTotal / (1024 * 1024)).toFixed(2);
+                var uptime = (process.uptime() / 60).toFixed(2);
+                utils.invokeCallback(cb, {
+                    serverId: serverId,
+                    body: { serverId: serverId, serverType: serverType, pid: pid, rss: rss, heapTotal: heapTotal, heapUsed: heapUsed, uptime: uptime }
+                });
+                break;
+            case 'kill':
+                utils.invokeCallback(cb, serverId);
+                if (agent.type !== 'master') {
+                    setTimeout(function () {
+                        process.exit(-1);
+                    }, Constants.TIME.TIME_WAIT_MONITOR_KILL);
+                }
+                break;
+            case 'addCron':
+                this.app.addCrons([msg.cron]);
+                break;
+            case 'removeCron':
+                this.app.removeCrons([msg.cron]);
+                break;
+            case 'blacklist':
+                if (this.app.isFrontend()) {
+                    var connector = this.app.components.__connector__;
+                    connector.blacklist = connector.blacklist.concat(msg.blacklist);
+                }
+                break;
+            case 'restart':
+                if (agent.type === Constants.RESERVED.MASTER) {
+                    return;
+                }
+                var self = this;
+                var server = this.app.get(Constants.RESERVED.CURRENT_SERVER);
+                utils.invokeCallback(cb, server);
+                process.nextTick(function () {
+                    self.app.stop(true);
+                });
+                break;
+            default:
+                logger.error('receive error signal: %j', msg);
+                break;
+        }
+    }
+    ;
+    clientHandler(agent, msg, cb) {
+        var app = this.app;
+        switch (msg.signal) {
+            case 'kill':
+                kill(app, agent, msg, cb);
+                break;
+            case 'stop':
+                stop(app, agent, msg, cb);
+                break;
+            case 'list':
+                list(agent, msg, cb);
+                break;
+            case 'add':
+                add(app, msg, cb);
+                break;
+            case 'addCron':
+                addCron(app, agent, msg, cb);
+                break;
+            case 'removeCron':
+                removeCron(app, agent, msg, cb);
+                break;
+            case 'blacklist':
+                blacklist(agent, msg, cb);
+                break;
+            case 'restart':
+                restart(app, agent, msg, cb);
+                break;
+            default:
+                utils.invokeCallback(cb, new Error('The command cannot be recognized, please check.'), null);
+                break;
+        }
     }
     ;
 }

@@ -23,7 +23,7 @@ export class TimeoutFilter
         this.maxSize = maxSize;
     };
 
-    before = function (msg, session, next)
+    before(msg, session, next)
     {
         var count = utils.size(this.timeouts);
         if (count > this.maxSize)
@@ -41,7 +41,7 @@ export class TimeoutFilter
         next();
     };
 
-    after = function (err, msg, session, resp, next)
+    after(err, msg, session, resp, next)
     {
         var timeout = this.timeouts[session.__timeout__];
         if (timeout)

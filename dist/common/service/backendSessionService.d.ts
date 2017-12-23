@@ -17,7 +17,7 @@ export declare class BackendSessionService {
     app: Application;
     name: string;
     constructor(app: any);
-    create: (opts: any) => BackendSession;
+    create(opts: any): BackendSession;
     /**
      * Get backend session by frontend server id and session id.
      *
@@ -27,7 +27,7 @@ export declare class BackendSessionService {
      *
      * @memberOf BackendSessionService
      */
-    get: (frontendId: any, sid: any, cb: any) => void;
+    get(frontendId: any, sid: any, cb: any): void;
     /**
      * Get backend sessions by frontend server id and user id.
      *
@@ -37,7 +37,7 @@ export declare class BackendSessionService {
      *
      * @memberOf BackendSessionService
      */
-    getByUid: (frontendId: any, uid: any, cb: any) => void;
+    getByUid(frontendId: any, uid: any, cb: any): void;
     /**
      * Kick a session by session id.
      *
@@ -47,7 +47,7 @@ export declare class BackendSessionService {
      *
      * @memberOf BackendSessionService
      */
-    kickBySid: (frontendId: any, sid: any, reason: any, cb: any) => void;
+    kickBySid(frontendId: any, sid: any, reason: any, cb: any): void;
     /**
      * Kick sessions by user id.
      *
@@ -58,7 +58,7 @@ export declare class BackendSessionService {
      *
      * @memberOf BackendSessionService
      */
-    kickByUid: (frontendId: any, uid: any, reason: any, cb: any) => void;
+    kickByUid(frontendId: any, uid: any, reason: any, cb: any): void;
     /**
      * Bind the session with the specified user id. It would finally invoke the
      * the sessionService.bind in the cooperating frontend server.
@@ -71,7 +71,7 @@ export declare class BackendSessionService {
      * @memberOf BackendSessionService
      * @api private
      */
-    bind: (frontendId: any, sid: any, uid: any, cb: any) => void;
+    bind(frontendId: any, sid: any, uid: any, cb: any): void;
     /**
      * Unbind the session with the specified user id. It would finally invoke the
      * the sessionService.unbind in the cooperating frontend server.
@@ -84,7 +84,7 @@ export declare class BackendSessionService {
      * @memberOf BackendSessionService
      * @api private
      */
-    unbind: (frontendId: any, sid: any, uid: any, cb: any) => void;
+    unbind(frontendId: any, sid: any, uid: any, cb: any): void;
     /**
      * Push the specified customized change to the frontend internal session.
      *
@@ -97,7 +97,7 @@ export declare class BackendSessionService {
      * @memberOf BackendSessionService
      * @api private
      */
-    push: (frontendId: any, sid: any, key: any, value: any, cb: any) => void;
+    push(frontendId: any, sid: any, key: any, value: any, cb: any): void;
     /**
      * Push all the customized changes to the frontend internal session.
      *
@@ -109,7 +109,7 @@ export declare class BackendSessionService {
      * @memberOf BackendSessionService
      * @api private
      */
-    pushAll: (frontendId: any, sid: any, settings: any, cb: any) => void;
+    pushAll(frontendId: any, sid: any, settings: any, cb: any): void;
     aget: Function;
     agetByUid: Function;
     akickBySid: Function;
@@ -133,6 +133,10 @@ export declare class BackendSessionService {
  * @constructor
  */
 export declare class BackendSession {
+    id: number;
+    frontendId: string;
+    uid: string;
+    settings: any;
     __sessionService__: BackendSessionService;
     constructor(opts: any, service: BackendSessionService);
     /**
@@ -144,7 +148,7 @@ export declare class BackendSession {
      *
      * @memberOf BackendSession
      */
-    bind: (uid: any, cb: any) => void;
+    bind(uid: any, cb: any): void;
     /**
      * Unbind current session with the user id. It would push the uid to frontend
      * server and unbind uid from the frontend internal session.
@@ -154,34 +158,34 @@ export declare class BackendSession {
      *
      * @memberOf BackendSession
      */
-    unbind: (uid: any, cb: any) => void;
+    unbind(uid: any, cb: any): void;
     /**
      * Set the key/value into backend session.
      *
      * @param {String} key   key
      * @param {Object} value value
      */
-    set: (key: any, value: any) => void;
+    set(key: any, value: any): void;
     /**
      * Get the value from backend session by key.
      *
      * @param  {String} key key
      * @return {Object}     value
      */
-    get: (key: any) => any;
+    get(key: any): any;
     /**
      * Push the key/value in backend session to the front internal session.
      *
      * @param  {String}   key key
      * @param  {Function} cb  callback function
      */
-    push: (key: any, cb: any) => void;
+    push(key: any, cb: any): void;
     /**
      * Push all the key/values in backend session to the frontend internal session.
      *
      * @param  {Function} cb callback function
      */
-    pushAll: (cb: any) => void;
+    pushAll(cb: any): void;
     abind: Function;
     aunbind: Function;
     apush: Function;
@@ -191,5 +195,5 @@ export declare class BackendSession {
      *
      * @api private
      */
-    export: () => {};
+    export(): {};
 }

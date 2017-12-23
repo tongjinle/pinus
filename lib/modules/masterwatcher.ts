@@ -32,7 +32,7 @@ export class MasterWatcherModule
 
     // ----------------- bind methods -------------------------
 
-    onServerAdd = function (record)
+    onServerAdd(record)
     {
         logger.debug('masterwatcher receive add server event, with server: %j', record);
         if (!record || record.type === 'client' || !record.serverType)
@@ -42,7 +42,7 @@ export class MasterWatcherModule
         this.watchdog.addServer(record);
     };
 
-    onServerReconnect = function (record)
+    onServerReconnect(record)
     {
         logger.debug('masterwatcher receive reconnect server event, with server: %j', record);
         if (!record || record.type === 'client' || !record.serverType)
@@ -53,7 +53,7 @@ export class MasterWatcherModule
         this.watchdog.reconnectServer(record);
     };
 
-    onServerLeave = function (id, type)
+    onServerLeave(id, type)
     {
         logger.debug('masterwatcher receive remove server event, with server: %s, type: %s', id, type);
         if (!id)
@@ -69,12 +69,12 @@ export class MasterWatcherModule
 
     // ----------------- module methods -------------------------
 
-    start = function (cb)
+    start(cb)
     {
         utils.invokeCallback(cb);
     };
 
-    masterHandler = function (agent, msg, cb)
+    masterHandler(agent, msg, cb)
     {
         if (!msg)
         {

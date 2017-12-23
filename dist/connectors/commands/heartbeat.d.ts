@@ -11,6 +11,6 @@ export declare class HeartbeatCommand {
     timeouts: {};
     clients: {};
     constructor(opts: any);
-    handle: (socket: any) => void;
-    clear: (id: any) => void;
+    handle(socket: any): void;
+    clear(id: any): void;
 }

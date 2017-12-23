@@ -56,19 +56,6 @@ class Pomelo {
             get buffer() { return load('./pushSchedulers/buffer'); }
         };
         /**
-         * Create an pomelo application.
-         *
-         * @return {Application}
-         * @memberOf Pomelo
-         * @api public
-         */
-        this.createApp = function (opts) {
-            var app = new application_1.Application();
-            app.init(opts);
-            this._app = app;
-            return app;
-        };
-        /**
          * Auto-load bundled components with getters.
          */
         fs.readdirSync(__dirname + '/components').forEach(function (filename) {
@@ -98,6 +85,20 @@ class Pomelo {
             this.rpcFilters.__defineGetter__(name, _load);
         });
     }
+    /**
+     * Create an pomelo application.
+     *
+     * @return {Application}
+     * @memberOf Pomelo
+     * @api public
+     */
+    createApp(opts) {
+        var app = new application_1.Application();
+        app.init(opts);
+        this._app = app;
+        return app;
+    }
+    ;
     /**
      * Get application
      */

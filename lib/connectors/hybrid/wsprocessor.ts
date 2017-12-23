@@ -33,7 +33,7 @@ export class WSProcessor extends EventEmitter
     };
 
 
-    add = function (socket, data)
+    add(socket, data)
     {
         if (this.state !== ST_STARTED)
         {
@@ -51,7 +51,7 @@ export class WSProcessor extends EventEmitter
         }
     };
 
-    close = function ()
+    close()
     {
         if (this.state !== ST_STARTED)
         {

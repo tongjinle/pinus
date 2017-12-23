@@ -17,79 +17,81 @@ class HandlerService {
     constructor(app, opts) {
         this.handlerMap = {};
         this.name = 'handler';
-        /**
-         * Handler the request.
-         */
-        this.handle = function (routeRecord, msg, session, cb) {
-            // the request should be processed by current server
-            var handler = this.getHandler(routeRecord);
-            if (!handler) {
-                logger.error('[handleManager]: fail to find handler for %j', msg.__route__);
-                utils.invokeCallback(cb, new Error('fail to find handler for ' + msg.__route__));
-                return;
-            }
-            var start = Date.now();
-            var self = this;
-            var callback = function (err, resp, opts) {
-                if (self.enableForwardLog) {
-                    var log = {
-                        route: msg.__route__,
-                        args: msg,
-                        time: utils.format(new Date(start)),
-                        timeUsed: Date.now() - start
-                    };
-                    forwardLogger.info(JSON.stringify(log));
-                }
-                // resp = getResp(arguments);
-                utils.invokeCallback(cb, err, resp, opts);
-            };
-            var method = routeRecord.method;
-            if (!Array.isArray(msg)) {
-                handler[method](msg, session).then((resp) => {
-                    callback(null, resp);
-                }, (reason) => {
-                    callback(reason);
-                });
-            }
-            else {
-                msg.push(session);
-                handler[method].apply(handler, msg).then((resp) => {
-                    callback(null, resp);
-                }, (reason) => {
-                    callback(reason);
-                });
-            }
-            return;
-        };
-        /**
-         * Get handler instance by routeRecord.
-         *
-         * @param  {Object} handlers    handler map
-         * @param  {Object} routeRecord route record parsed from route string
-         * @return {Object}             handler instance if any matchs or null for match fail
-         */
-        this.getHandler = function (routeRecord) {
-            var serverType = routeRecord.serverType;
-            if (!this.handlerMap[serverType]) {
-                loadHandlers(this.app, serverType, this.handlerMap);
-            }
-            var handlers = this.handlerMap[serverType] || {};
-            var handler = handlers[routeRecord.handler];
-            if (!handler) {
-                logger.warn('could not find handler for routeRecord: %j', routeRecord);
-                return null;
-            }
-            if (typeof handler[routeRecord.method] !== 'function') {
-                logger.warn('could not find the method %s in handler: %s', routeRecord.method, routeRecord.handler);
-                return null;
-            }
-            return handler;
-        };
         this.app = app;
         if (!!opts.reloadHandlers) {
             watchHandlers(app, this.handlerMap);
         }
         this.enableForwardLog = opts.enableForwardLog || false;
+    }
+    ;
+    /**
+     * Handler the request.
+     */
+    handle(routeRecord, msg, session, cb) {
+        // the request should be processed by current server
+        var handler = this.getHandler(routeRecord);
+        if (!handler) {
+            logger.error('[handleManager]: fail to find handler for %j', msg.__route__);
+            utils.invokeCallback(cb, new Error('fail to find handler for ' + msg.__route__));
+            return;
+        }
+        var start = Date.now();
+        var self = this;
+        var callback = function (err, resp, opts) {
+            if (self.enableForwardLog) {
+                var log = {
+                    route: msg.__route__,
+                    args: msg,
+                    time: utils.format(new Date(start)),
+                    timeUsed: Date.now() - start
+                };
+                forwardLogger.info(JSON.stringify(log));
+            }
+            // resp = getResp(arguments);
+            utils.invokeCallback(cb, err, resp, opts);
+        };
+        var method = routeRecord.method;
+        if (!Array.isArray(msg)) {
+            handler[method](msg, session).then((resp) => {
+                callback(null, resp);
+            }, (reason) => {
+                callback(reason);
+            });
+        }
+        else {
+            msg.push(session);
+            handler[method].apply(handler, msg).then((resp) => {
+                callback(null, resp);
+            }, (reason) => {
+                callback(reason);
+            });
+        }
+        return;
+    }
+    ;
+    /**
+     * Get handler instance by routeRecord.
+     *
+     * @param  {Object} handlers    handler map
+     * @param  {Object} routeRecord route record parsed from route string
+     * @return {Object}             handler instance if any matchs or null for match fail
+     */
+    getHandler(routeRecord) {
+        var serverType = routeRecord.serverType;
+        if (!this.handlerMap[serverType]) {
+            loadHandlers(this.app, serverType, this.handlerMap);
+        }
+        var handlers = this.handlerMap[serverType] || {};
+        var handler = handlers[routeRecord.handler];
+        if (!handler) {
+            logger.warn('could not find handler for routeRecord: %j', routeRecord);
+            return null;
+        }
+        if (typeof handler[routeRecord.method] !== 'function') {
+            logger.warn('could not find the method %s in handler: %s', routeRecord.method, routeRecord.handler);
+            return null;
+        }
+        return handler;
     }
     ;
 }

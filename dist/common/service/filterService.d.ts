@@ -11,13 +11,13 @@ export declare class FilterService {
      *
      * @param filter {Object|Function} filter instance or filter function.
      */
-    before: (filter: any) => void;
+    before(filter: any): void;
     /**
      * Add after filter into the filter chain.
      *
      * @param filter {Object|Function} filter instance or filter function.
      */
-    after: (filter: any) => void;
+    after(filter: any): void;
     /**
      * TODO: other insert method for filter? such as unshift
      */
@@ -29,7 +29,7 @@ export declare class FilterService {
      * @param session {Object} a session object for current request
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    beforeFilter: (msg: any, session: any, cb: any) => void;
+    beforeFilter(msg: any, session: any, cb: any): void;
     /**
      * Do after filter chain.
      * Give server a chance to do clean up jobs after request responsed.
@@ -41,5 +41,5 @@ export declare class FilterService {
      * @param {Object} resp response object send to client
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    afterFilter: (err: any, msg: any, session: any, resp: any, cb: any) => void;
+    afterFilter(err: any, msg: any, session: any, resp: any, cb: any): void;
 }

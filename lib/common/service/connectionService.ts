@@ -22,7 +22,7 @@ export class ConnectionService
      * @param uid {String} user id
      * @param info {Object} record for logined user
      */
-    addLoginedUser = function (uid, info)
+    addLoginedUser(uid, info)
     {
         if (!this.logined[uid])
         {
@@ -37,7 +37,7 @@ export class ConnectionService
      * @param uid {String} user id
      * @param info {Object} info for update.
      */
-    updateUserInfo = function (uid, info)
+    updateUserInfo(uid, info)
     {
         var user = this.logined[uid];
         if (!user)
@@ -57,7 +57,7 @@ export class ConnectionService
     /**
      * Increase connection count
      */
-    increaseConnectionCount = function ()
+    increaseConnectionCount()
     {
         this.connCount++;
     };
@@ -67,7 +67,7 @@ export class ConnectionService
      *
      * @param uid {String} user id
      */
-    removeLoginedUser = function (uid)
+    removeLoginedUser(uid)
     {
         if (!!this.logined[uid])
         {
@@ -81,7 +81,7 @@ export class ConnectionService
      *
      * @param uid {String} uid
      */
-    decreaseConnectionCount = function (uid)
+    decreaseConnectionCount(uid)
     {
         if (this.connCount)
         {
@@ -98,7 +98,7 @@ export class ConnectionService
      *
      * @return {Object} statistics info
      */
-    getStatisticsInfo = function ()
+    getStatisticsInfo()
     {
         var list = [];
         for (var uid in this.logined)

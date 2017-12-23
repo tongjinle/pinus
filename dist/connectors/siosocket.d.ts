@@ -12,7 +12,7 @@ export declare class SioSocket extends EventEmitter {
     };
     state: number;
     constructor(id: any, socket: any);
-    send: (msg: any) => void;
-    disconnect: () => void;
-    sendBatch: (msgs: any) => void;
+    send(msg: any): void;
+    disconnect(): void;
+    sendBatch(msgs: any): void;
 }

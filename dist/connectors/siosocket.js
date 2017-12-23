@@ -9,25 +9,6 @@ var ST_CLOSED = 1;
 class SioSocket extends events_1.EventEmitter {
     constructor(id, socket) {
         super();
-        this.send = function (msg) {
-            if (this.state !== ST_INITED) {
-                return;
-            }
-            if (typeof msg !== 'string') {
-                msg = JSON.stringify(msg);
-            }
-            this.socket.send(msg);
-        };
-        this.disconnect = function () {
-            if (this.state === ST_CLOSED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-            this.socket.disconnect();
-        };
-        this.sendBatch = function (msgs) {
-            this.send(encodeBatch(msgs));
-        };
         this.id = id;
         this.socket = socket;
         this.remoteAddress = {
@@ -42,6 +23,28 @@ class SioSocket extends events_1.EventEmitter {
         });
         this.state = ST_INITED;
         // TODO: any other events?
+    }
+    ;
+    send(msg) {
+        if (this.state !== ST_INITED) {
+            return;
+        }
+        if (typeof msg !== 'string') {
+            msg = JSON.stringify(msg);
+        }
+        this.socket.send(msg);
+    }
+    ;
+    disconnect() {
+        if (this.state === ST_CLOSED) {
+            return;
+        }
+        this.state = ST_CLOSED;
+        this.socket.disconnect();
+    }
+    ;
+    sendBatch(msgs) {
+        this.send(encodeBatch(msgs));
     }
     ;
 }

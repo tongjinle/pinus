@@ -25,7 +25,7 @@ export declare class RemoteComponent {
      * @param {Function} cb
      * @return {Void}
      */
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Remote component lifecycle function
      *
@@ -33,5 +33,5 @@ export declare class RemoteComponent {
      * @param {Function}  cb
      * @return {Void}
      */
-    stop: (force: any, cb: any) => void;
+    stop(force: any, cb: any): void;
 }

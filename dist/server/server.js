@@ -40,112 +40,119 @@ class Server extends events_2.EventEmitter {
         this.crons = [];
         this.jobs = {};
         this.state = ST_INITED;
-        /**
-         * Server lifecycle callback
-         */
-        this.start = function () {
-            if (this.state > ST_INITED) {
-                return;
-            }
-            this.globalFilterService = initFilter(true, this.app);
-            this.filterService = initFilter(false, this.app);
-            this.handlerService = initHandler(this.app, this.opts);
-            this.cronHandlers = loadCronHandlers(this.app);
-            loadCrons(this, this.app);
-            this.state = ST_STARTED;
-        };
-        this.afterStart = function () {
-            scheduleCrons(this, this.crons);
-        };
-        /**
-         * Stop server
-         */
-        this.stop = function () {
-            this.state = ST_STOPED;
-        };
-        /**
-         * Global handler.
-         *
-         * @param  {Object} msg request message
-         * @param  {Object} session session object
-         * @param  {Callback} callback function
-         */
-        this.globalHandle = function (msg, session, cb) {
-            if (this.state !== ST_STARTED) {
-                utils.invokeCallback(cb, new Error('server not started'));
-                return;
-            }
-            var routeRecord = parseRoute(msg.route);
-            if (!routeRecord) {
-                utils.invokeCallback(cb, new Error(`meet unknown route message ${msg.route}`));
-                return;
-            }
-            var self = this;
-            var dispatch = function (err, resp, opts) {
-                if (err) {
-                    handleError(true, self, err, msg, session, resp, opts, function (err, resp, opts) {
-                        response(true, self, err, msg, session, resp, opts, cb);
-                    });
-                    return;
-                }
-                if (self.app.getServerType() !== routeRecord.serverType) {
-                    doForward(self.app, msg, session, routeRecord, function (err, resp, opts) {
-                        response(true, self, err, msg, session, resp, opts, cb);
-                    });
-                }
-                else {
-                    doHandle(self, msg, session, routeRecord, function (err, resp, opts) {
-                        response(true, self, err, msg, session, resp, opts, cb);
-                    });
-                }
-            };
-            beforeFilter(true, self, msg, session, dispatch);
-        };
-        /**
-         * Handle request
-         */
-        this.handle = function (msg, session, cb) {
-            if (this.state !== ST_STARTED) {
-                cb(new Error('server not started'));
-                return;
-            }
-            var routeRecord = parseRoute(msg.route);
-            doHandle(this, msg, session, routeRecord, cb);
-        };
-        /**
-         * Add crons at runtime.
-         *
-         * @param {Array} crons would be added in application
-         */
-        this.addCrons = function (crons) {
-            this.cronHandlers = loadCronHandlers(this.app);
-            for (var i = 0, l = crons.length; i < l; i++) {
-                var cron = crons[i];
-                checkAndAdd(cron, this.crons, this);
-            }
-            scheduleCrons(this, crons);
-        };
-        /**
-         * Remove crons at runtime.
-         *
-         * @param {Array} crons would be removed in application
-         */
-        this.removeCrons = function (crons) {
-            for (var i = 0, l = crons.length; i < l; i++) {
-                var cron = crons[i];
-                var id = parseInt(cron.id);
-                if (!!this.jobs[id]) {
-                    schedule.cancelJob(this.jobs[id]);
-                }
-                else {
-                    logger.warn('cron is not in application: %j', cron);
-                }
-            }
-        };
         this.opts = opts || {};
         this.app = app;
         app.event.on(events_1.default.ADD_CRONS, this.addCrons.bind(this));
         app.event.on(events_1.default.REMOVE_CRONS, this.removeCrons.bind(this));
+    }
+    ;
+    /**
+     * Server lifecycle callback
+     */
+    start() {
+        if (this.state > ST_INITED) {
+            return;
+        }
+        this.globalFilterService = initFilter(true, this.app);
+        this.filterService = initFilter(false, this.app);
+        this.handlerService = initHandler(this.app, this.opts);
+        this.cronHandlers = loadCronHandlers(this.app);
+        loadCrons(this, this.app);
+        this.state = ST_STARTED;
+    }
+    ;
+    afterStart() {
+        scheduleCrons(this, this.crons);
+    }
+    ;
+    /**
+     * Stop server
+     */
+    stop() {
+        this.state = ST_STOPED;
+    }
+    ;
+    /**
+     * Global handler.
+     *
+     * @param  {Object} msg request message
+     * @param  {Object} session session object
+     * @param  {Callback} callback function
+     */
+    globalHandle(msg, session, cb) {
+        if (this.state !== ST_STARTED) {
+            utils.invokeCallback(cb, new Error('server not started'));
+            return;
+        }
+        var routeRecord = parseRoute(msg.route);
+        if (!routeRecord) {
+            utils.invokeCallback(cb, new Error(`meet unknown route message ${msg.route}`));
+            return;
+        }
+        var self = this;
+        var dispatch = function (err, resp, opts) {
+            if (err) {
+                handleError(true, self, err, msg, session, resp, opts, function (err, resp, opts) {
+                    response(true, self, err, msg, session, resp, opts, cb);
+                });
+                return;
+            }
+            if (self.app.getServerType() !== routeRecord.serverType) {
+                doForward(self.app, msg, session, routeRecord, function (err, resp, opts) {
+                    response(true, self, err, msg, session, resp, opts, cb);
+                });
+            }
+            else {
+                doHandle(self, msg, session, routeRecord, function (err, resp, opts) {
+                    response(true, self, err, msg, session, resp, opts, cb);
+                });
+            }
+        };
+        beforeFilter(true, self, msg, session, dispatch);
+    }
+    ;
+    /**
+     * Handle request
+     */
+    handle(msg, session, cb) {
+        if (this.state !== ST_STARTED) {
+            cb(new Error('server not started'));
+            return;
+        }
+        var routeRecord = parseRoute(msg.route);
+        doHandle(this, msg, session, routeRecord, cb);
+    }
+    ;
+    /**
+     * Add crons at runtime.
+     *
+     * @param {Array} crons would be added in application
+     */
+    addCrons(crons) {
+        this.cronHandlers = loadCronHandlers(this.app);
+        for (var i = 0, l = crons.length; i < l; i++) {
+            var cron = crons[i];
+            checkAndAdd(cron, this.crons, this);
+        }
+        scheduleCrons(this, crons);
+    }
+    ;
+    /**
+     * Remove crons at runtime.
+     *
+     * @param {Array} crons would be removed in application
+     */
+    removeCrons(crons) {
+        for (var i = 0, l = crons.length; i < l; i++) {
+            var cron = crons[i];
+            var id = parseInt(cron.id);
+            if (!!this.jobs[id]) {
+                schedule.cancelJob(this.jobs[id]);
+            }
+            else {
+                logger.warn('cron is not in application: %j', cron);
+            }
+        }
     }
     ;
 }

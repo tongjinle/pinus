@@ -42,7 +42,7 @@ export class SIOConnector extends EventEmitter
     /**
      * Start connector to listen the specified port
      */
-    start = function (cb)
+    start(cb)
     {
         var self = this;
         // issue https://github.com/NetEase/pomelo-cn/issues/174
@@ -92,13 +92,13 @@ export class SIOConnector extends EventEmitter
     /**
      * Stop connector
      */
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.wsocket.server.close();
         process.nextTick(cb);
     };
 
-    encode = function (reqId, route, msg)
+    encode(reqId, route, msg)
     {
         if (reqId)
         {
@@ -121,7 +121,7 @@ export class SIOConnector extends EventEmitter
      * @param  {String} data socket.io package from client
      * @return {Object}      message object
      */
-    decode = function (msg)
+    decode(msg)
     {
         var index = 0;
 

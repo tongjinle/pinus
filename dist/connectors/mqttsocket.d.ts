@@ -13,7 +13,7 @@ export declare class MQTTSocket extends EventEmitter {
     adaptor: any;
     state: number;
     constructor(id: any, socket: any, adaptor: any);
-    send: (msg: any) => void;
-    sendBatch: (msgs: any) => void;
-    disconnect: () => void;
+    send(msg: any): void;
+    sendBatch(msgs: any): void;
+    disconnect(): void;
 }

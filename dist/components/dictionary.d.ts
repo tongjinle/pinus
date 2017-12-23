@@ -8,8 +8,8 @@ export declare class DictionaryComponent {
     version: string;
     name: string;
     constructor(app: any, opts: any);
-    start: (cb: any) => void;
-    getDict: () => any;
-    getAbbrs: () => any;
-    getVersion: () => any;
+    start(cb: any): void;
+    getDict(): {};
+    getAbbrs(): {};
+    getVersion(): string;
 }

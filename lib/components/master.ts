@@ -33,7 +33,7 @@ export class MasterComponent
      * @param  {Function} cb
      * @return {Void}
      */
-    start = function (cb)
+    start(cb)
     {
         this.master.start(cb);
     };
@@ -45,7 +45,7 @@ export class MasterComponent
      * @param  {Function}  cb
      * @return {Void}
      */
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.master.stop(cb);
     };

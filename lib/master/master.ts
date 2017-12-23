@@ -32,7 +32,7 @@ export class MasterServer
     };
 
 
-    start = function (cb)
+    start(cb)
     {
         moduleUtil.registerDefaultModules(true, this.app, this.closeWatcher);
         moduleUtil.loadModules(this, this.masterConsole);
@@ -158,7 +158,7 @@ export class MasterServer
         });
     };
 
-    stop = function (cb)
+    stop(cb)
     {
         this.masterConsole.stop();
         process.nextTick(cb);

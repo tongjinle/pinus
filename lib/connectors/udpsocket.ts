@@ -52,7 +52,7 @@ export class UdpSocket extends EventEmitter
      *
      * @param  {Buffer} msg byte data
      */
-    send = function (msg)
+    send(msg)
     {
         if (this.state !== ST_WORKING)
         {
@@ -68,7 +68,7 @@ export class UdpSocket extends EventEmitter
         this.sendRaw(Package.encode(Package.TYPE_DATA, msg));
     };
 
-    sendRaw = function (msg)
+    sendRaw(msg)
     {
         this.socket.send(msg, 0, msg.length, this.port, this.host, function (err, bytes)
         {
@@ -80,7 +80,7 @@ export class UdpSocket extends EventEmitter
         });
     };
 
-    sendForce = function (msg)
+    sendForce(msg)
     {
         if (this.state === ST_CLOSED)
         {
@@ -89,7 +89,7 @@ export class UdpSocket extends EventEmitter
         this.sendRaw(msg);
     };
 
-    handshakeResponse = function (resp)
+    handshakeResponse(resp)
     {
         if (this.state !== ST_INITED)
         {
@@ -99,7 +99,7 @@ export class UdpSocket extends EventEmitter
         this.state = ST_WAIT_ACK;
     };
 
-    sendBatch = function (msgs)
+    sendBatch(msgs)
     {
         if (this.state !== ST_WORKING)
         {
@@ -114,7 +114,7 @@ export class UdpSocket extends EventEmitter
         this.sendRaw(Buffer.concat(rs));
     };
 
-    disconnect = function ()
+    disconnect()
     {
         if (this.state === ST_CLOSED)
         {

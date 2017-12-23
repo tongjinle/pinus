@@ -31,35 +31,46 @@ var STATE_STOPED = 4;  // app has stoped
 export class Application
 {
 
+    loaded = [];       // loaded component list
+    components = {};   // name -> component map
+    settings : any= {};     // collection keep set/get
+    event = new EventEmitter();  // event object to sub/pub events
+
+    // current server info
+    serverId = null;   // current server id
+    serverType = null; // current server type
+    curServer = null;  // current server info
+    startTime = null; // current server start time
+
+    // global server infos
+    master = null;         // master server info
+    servers = {};          // current global server info maps, id -> info
+    serverTypeMaps = {};   // current global type maps, type -> [info]
+    serverTypes = [];      // current global server type list
+    lifecycleCbs = {};     // current server custom lifecycle callbacks
+    clusterSeq = {};       // cluster id seqence
+    state: number;
+
+    stopTimer : any;
+
+    /**
+     * Proxy for rpc client rpcInvoke.
+     *
+     * @param {String}   serverId remote server id
+     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
+     * @param {Function} cb      callback function
+     */
+    rpcInvoke ?: (serverId : string, msg : any, cb : Function)=>void;
     /**
      * Initialize the server.
      *
      *   - setup default configuration
      */
-    init = function (opts)
+    init(opts)
     {
         opts = opts || {};
-        this.loaded = [];       // loaded component list
-        this.components = {};   // name -> component map
-        this.settings = {};     // collection keep set/get
         var base = opts.base || path.dirname(require.main.filename);
         this.set(Constants.RESERVED.BASE, base, true);
-        this.event = new EventEmitter();  // event object to sub/pub events
-
-        // current server info
-        this.serverId = null;   // current server id
-        this.serverType = null; // current server type
-        this.curServer = null;  // current server info
-        this.startTime = null; // current server start time
-
-        // global server infos
-        this.master = null;         // master server info
-        this.servers = {};          // current global server info maps, id -> info
-        this.serverTypeMaps = {};   // current global type maps, type -> [info]
-        this.serverTypes = [];      // current global server type list
-        this.lifecycleCbs = {};     // current server custom lifecycle callbacks
-        this.clusterSeq = {};       // cluster id seqence
-
         appUtil.defaultConfiguration(this);
 
         this.state = STATE_INITED;
@@ -77,7 +88,7 @@ export class Application
      *
      * @memberOf Application
      */
-    getBase = function ()
+    getBase()
     {
         return this.get(Constants.RESERVED.BASE);
     };
@@ -89,7 +100,7 @@ export class Application
      *
      * @memberOf Application
      */
-    require = function (ph)
+    require(ph)
     {
         return require(path.join(this.getBase(), ph));
     };
@@ -101,7 +112,7 @@ export class Application
      *
      * @memberOf Application
      */
-    configureLogger = function (logger)
+    configureLogger(logger)
     {
         if (process.env.POMELO_LOGGER !== 'off')
         {
@@ -129,7 +140,7 @@ export class Application
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    filter = function (filter)
+    filter(filter)
     {
         this.before(filter);
         this.after(filter);
@@ -141,7 +152,7 @@ export class Application
      * @param {Object|Function} bf before fileter, bf(msg, session, next)
      * @memberOf Application
      */
-    before = function (bf)
+    before(bf)
     {
         addFilter(this, Constants.KEYWORDS.BEFORE_FILTER, bf);
     };
@@ -152,7 +163,7 @@ export class Application
      * @param {Object|Function} af after filter, `af(err, msg, session, resp, next)`
      * @memberOf Application
      */
-    after = function (af)
+    after(af)
     {
         addFilter(this, Constants.KEYWORDS.AFTER_FILTER, af);
     };
@@ -164,7 +175,7 @@ export class Application
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    globalFilter = function (filter)
+    globalFilter(filter)
     {
         this.globalBefore(filter);
         this.globalAfter(filter);
@@ -176,7 +187,7 @@ export class Application
      * @param {Object|Function} bf before fileter, bf(msg, session, next)
      * @memberOf Application
      */
-    globalBefore = function (bf)
+    globalBefore(bf)
     {
         addFilter(this, Constants.KEYWORDS.GLOBAL_BEFORE_FILTER, bf);
     };
@@ -187,7 +198,7 @@ export class Application
      * @param {Object|Function} af after filter, `af(err, msg, session, resp, next)`
      * @memberOf Application
      */
-    globalAfter = function (af)
+    globalAfter(af)
     {
         addFilter(this, Constants.KEYWORDS.GLOBAL_AFTER_FILTER, af);
     };
@@ -198,7 +209,7 @@ export class Application
      * @param {Object|Function} bf before fileter, bf(serverId, msg, opts, next)
      * @memberOf Application
      */
-    rpcBefore = function (bf)
+    rpcBefore(bf)
     {
         addFilter(this, Constants.KEYWORDS.RPC_BEFORE_FILTER, bf);
     };
@@ -209,7 +220,7 @@ export class Application
      * @param {Object|Function} af after filter, `af(serverId, msg, opts, next)`
      * @memberOf Application
      */
-    rpcAfter = function (af)
+    rpcAfter(af)
     {
         addFilter(this, Constants.KEYWORDS.RPC_AFTER_FILTER, af);
     };
@@ -221,7 +232,7 @@ export class Application
      *                        A filter should have two methods: before and after.
      * @memberOf Application
      */
-    rpcFilter = function (filter)
+    rpcFilter(filter)
     {
         this.rpcBefore(filter);
         this.rpcAfter(filter);
@@ -236,7 +247,7 @@ export class Application
      * @return {Object}     app instance for chain invoke
      * @memberOf Application
      */
-    load = function (name, component, opts)
+    load(name, component, opts ?: any)
     {
         if (typeof name !== 'string')
         {
@@ -285,7 +296,7 @@ export class Application
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    loadConfigBaseApp = function (key, val, reload)
+    loadConfigBaseApp(key, val, reload = false)
     {
         var self = this;
         var env = this.get(Constants.RESERVED.ENV);
@@ -332,7 +343,7 @@ export class Application
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    loadConfig = function (key, val)
+    loadConfig(key, val)
     {
         var env = this.get(Constants.RESERVED.ENV);
         val = require(val);
@@ -361,7 +372,7 @@ export class Application
      * @return {Object}     current application instance for chain invoking
      * @memberOf Application
      */
-    route = function (serverType, routeFunc)
+    route(serverType, routeFunc)
     {
         var routes = this.get(Constants.KEYWORDS.ROUTE);
         if (!routes)
@@ -380,7 +391,7 @@ export class Application
      * @return {Void}
      * @memberOf Application
      */
-    beforeStopHook = function (fun)
+    beforeStopHook(fun)
     {
         logger.warn('this method was deprecated in pomelo 0.8');
         if (!!fun && typeof fun === 'function')
@@ -395,7 +406,7 @@ export class Application
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start = function (cb)
+    start(cb)
     {
         this.startTime = Date.now();
         if (this.state > STATE_INITED)
@@ -440,7 +451,7 @@ export class Application
      * @param  {Function} cb callback function
      * @return {Void}
      */
-    afterStart = function (cb)
+    afterStart(cb)
     {
         if (this.state !== STATE_START)
         {
@@ -479,7 +490,7 @@ export class Application
      *
      * @param  {Boolean} force whether stop the app immediately
      */
-    stop = function (force)
+    stop(force)
     {
         if (this.state > STATE_STARTED)
         {
@@ -545,7 +556,7 @@ export class Application
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set = function (setting, val, attach)
+    set(setting, val, attach ?: boolean)
     {
         if (arguments.length === 1)
         {
@@ -566,7 +577,7 @@ export class Application
      * @return {String} val
      * @memberOf Application
      */
-    get = function (setting)
+    get(setting)
     {
         return this.settings[setting];
     };
@@ -578,7 +589,7 @@ export class Application
      * @return {Boolean}
      * @memberOf Application
      */
-    enabled = function (setting)
+    enabled(setting)
     {
         return !!this.get(setting);
     };
@@ -590,7 +601,7 @@ export class Application
      * @return {Boolean}
      * @memberOf Application
      */
-    disabled = function (setting)
+    disabled(setting)
     {
         return !this.get(setting);
     };
@@ -602,7 +613,7 @@ export class Application
      * @return {app} for chaining
      * @memberOf Application
      */
-    enable = function (setting)
+    enable(setting)
     {
         return this.set(setting, true);
     };
@@ -614,7 +625,7 @@ export class Application
      * @return {app} for chaining
      * @memberOf Application
      */
-    disable = function (setting)
+    disable(setting)
     {
         return this.set(setting, false);
     };
@@ -645,7 +656,7 @@ export class Application
      * @return {Application} for chaining
      * @memberOf Application
      */
-    configure = function (env, type, fn)
+    configure(env, type, fn)
     {
         var args = [].slice.call(arguments);
         fn = args.pop();
@@ -678,7 +689,7 @@ export class Application
      * @param {Object} opts construct parameter for module
      * @memberOf Application
      */
-    registerAdmin = function (moduleId, module, opts)
+    registerAdmin(moduleId, module, opts)
     {
         var modules = this.get(Constants.KEYWORDS.MODULE);
         if (!modules)
@@ -716,7 +727,7 @@ export class Application
      * @param  {[type]} opts    (optional) construct parameters for the factory function
      * @memberOf Application
      */
-    use = function (plugin, opts)
+    use(plugin, opts)
     {
         if (!plugin.components)
         {
@@ -792,7 +803,7 @@ export class Application
      * @param {Number} retry retry times to execute handlers if conditions are successfully executed
      * @memberOf Application
      */
-    transaction = function (name, conditions, handlers, retry)
+    transaction(name, conditions, handlers, retry)
     {
         appManager.transaction(name, conditions, handlers, retry);
     };
@@ -803,7 +814,7 @@ export class Application
      * @return {Object} master server info, {id, host, port}
      * @memberOf Application
      */
-    getMaster = function ()
+    getMaster()
     {
         return this.master;
     };
@@ -814,7 +825,7 @@ export class Application
      * @return {Object} current server info, {id, serverType, host, port}
      * @memberOf Application
      */
-    getCurServer = function ()
+    getCurServer()
     {
         return this.curServer;
     };
@@ -825,7 +836,7 @@ export class Application
      * @return {String|Number} current server id from servers.json
      * @memberOf Application
      */
-    getServerId = function ()
+    getServerId()
     {
         return this.serverId;
     };
@@ -836,7 +847,7 @@ export class Application
      * @return {String|Number} current server type from servers.json
      * @memberOf Application
      */
-    getServerType = function ()
+    getServerType()
     {
         return this.serverType;
     };
@@ -847,7 +858,7 @@ export class Application
      * @return {Object} server info map, key: server id, value: server info
      * @memberOf Application
      */
-    getServers = function ()
+    getServers()
     {
         return this.servers;
     };
@@ -858,7 +869,7 @@ export class Application
      * @return {Object} server info map, key: server id, value: server info
      * @memberOf Application
      */
-    getServersFromConfig = function ()
+    getServersFromConfig()
     {
         return this.get(Constants.KEYWORDS.SERVER_MAP);
     };
@@ -869,7 +880,7 @@ export class Application
      * @return {Array} server type list
      * @memberOf Application
      */
-    getServerTypes = function ()
+    getServerTypes()
     {
         return this.serverTypes;
     };
@@ -881,7 +892,7 @@ export class Application
      * @return {Object} server info or undefined
      * @memberOf Application
      */
-    getServerById = function (serverId)
+    getServerById(serverId)
     {
         return this.servers[serverId];
     };
@@ -894,7 +905,7 @@ export class Application
      * @memberOf Application
      */
 
-    getServerFromConfig = function (serverId)
+    getServerFromConfig(serverId)
     {
         return this.get(Constants.KEYWORDS.SERVER_MAP)[serverId];
     };
@@ -906,7 +917,7 @@ export class Application
      * @return {Array}      server info list
      * @memberOf Application
      */
-    getServersByType = function (serverType)
+    getServersByType(serverType)
     {
         return this.serverTypeMaps[serverType];
     };
@@ -920,7 +931,7 @@ export class Application
      *
      * @memberOf Application
      */
-    isFrontend = function (server)
+    isFrontend(server)
     {
         server = server || this.getCurServer();
         return !!server && server.frontend === 'true';
@@ -934,7 +945,7 @@ export class Application
      * @return {Boolean}
      * @memberOf Application
      */
-    isBackend = function (server)
+    isBackend(server)
     {
         server = server || this.getCurServer();
         return !!server && !server.frontend;
@@ -946,7 +957,7 @@ export class Application
      * @return {Boolean}
      * @memberOf Application
      */
-    isMaster = function ()
+    isMaster()
     {
         return this.serverType === Constants.RESERVED.MASTER;
     };
@@ -957,7 +968,7 @@ export class Application
      * @param {Array} servers new server info list
      * @memberOf Application
      */
-    addServers = function (servers)
+    addServers(servers)
     {
         if (!servers || !servers.length)
         {
@@ -994,7 +1005,7 @@ export class Application
      * @param  {Array} ids server id list
      * @memberOf Application
      */
-    removeServers = function (ids)
+    removeServers(ids)
     {
         if (!ids || !ids.length)
         {
@@ -1027,7 +1038,7 @@ export class Application
      * @param  {Object} server id map
      * @memberOf Application
      */
-    replaceServers = function (servers)
+    replaceServers(servers)
     {
         if (!servers)
         {
@@ -1064,7 +1075,7 @@ export class Application
      * @param  {Array} crons new crons would be added in application
      * @memberOf Application
      */
-    addCrons = function (crons)
+    addCrons(crons)
     {
         if (!crons || !crons.length)
         {
@@ -1080,7 +1091,7 @@ export class Application
      * @param  {Array} crons old crons would be removed in application
      * @memberOf Application
      */
-    removeCrons = function (crons)
+    removeCrons(crons)
     {
         if (!crons || !crons.length)
         {

@@ -24,12 +24,12 @@ export declare class ConnectorComponent {
     connection: ConnectionComponent;
     constructor(app: any, opts: any);
     name: string;
-    start: (cb: any) => void;
-    afterStart: (cb: any) => void;
-    stop: (force: any, cb: any) => void;
-    send: (reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any) => any;
-    sendAsync: (reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any) => void;
-    doSend: (reqId: any, route: any, emsg: any, recvs: any, opts: any, cb: any) => void;
-    setPubKey: (id: any, key: any) => void;
-    getPubKey: (id: any) => any;
+    start(cb: any): void;
+    afterStart(cb: any): void;
+    stop(force: any, cb: any): void;
+    send(reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any): void;
+    sendAsync(reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any): void;
+    doSend(reqId: any, route: any, emsg: any, recvs: any, opts: any, cb: any): void;
+    setPubKey(id: any, key: any): void;
+    getPubKey(id: any): any;
 }

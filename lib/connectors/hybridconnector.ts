@@ -49,7 +49,7 @@ export class HybridConnector extends EventEmitter
     /**
      * Start connector to listen the specified port
      */
-    start = function (cb)
+    start(cb)
     {
         var app = require('../pomelo').app;
         var self = this;
@@ -94,7 +94,7 @@ export class HybridConnector extends EventEmitter
         process.nextTick(cb);
     };
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.switcher.close();
         this.listeningServer.close();

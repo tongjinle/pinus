@@ -19,16 +19,19 @@ exports.default = default_1;
 class MonitorComponent {
     constructor(app, opts) {
         this.name = '__monitor__';
-        this.start = function (cb) {
-            this.monitor.start(cb);
-        };
-        this.stop = function (force, cb) {
-            this.monitor.stop(cb);
-        };
-        this.reconnect = function (masterInfo) {
-            this.monitor.reconnect(masterInfo);
-        };
         this.monitor = new monitor_1.Monitor(app, opts);
+    }
+    ;
+    start(cb) {
+        this.monitor.start(cb);
+    }
+    ;
+    stop(force, cb) {
+        this.monitor.stop(cb);
+    }
+    ;
+    reconnect(masterInfo) {
+        this.monitor.reconnect(masterInfo);
     }
     ;
 }

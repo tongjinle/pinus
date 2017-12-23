@@ -20,7 +20,7 @@ export class RpcLogFilter
      * Before filter for rpc
      */
 
-    before = function (serverId, msg, opts, next)
+    before(serverId, msg, opts, next)
     {
         opts = opts || {};
         opts.__start_time__ = Date.now();
@@ -30,7 +30,7 @@ export class RpcLogFilter
     /**
      * After filter for rpc
      */
-    after = function (serverId, msg, opts, next)
+    after(serverId, msg, opts, next)
     {
         if (!!opts && !!opts.__start_time__)
         {

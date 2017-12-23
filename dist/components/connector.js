@@ -24,96 +24,6 @@ class ConnectorComponent {
         this.keys = {};
         this.blacklist = [];
         this.name = '__connector__';
-        this.start = function (cb) {
-            this.server = this.app.components.__server__;
-            this.session = this.app.components.__session__;
-            this.connection = this.app.components.__connection__;
-            // check component dependencies
-            if (!this.server) {
-                process.nextTick(function () {
-                    utils.invokeCallback(cb, new Error('fail to start connector component for no server component loaded'));
-                });
-                return;
-            }
-            if (!this.session) {
-                process.nextTick(function () {
-                    utils.invokeCallback(cb, new Error('fail to start connector component for no session component loaded'));
-                });
-                return;
-            }
-            process.nextTick(cb);
-        };
-        this.afterStart = function (cb) {
-            this.connector.start(cb);
-            this.connector.on('connection', hostFilter.bind(this, bindEvents));
-        };
-        this.stop = function (force, cb) {
-            if (this.connector) {
-                this.connector.stop(force, cb);
-                this.connector = null;
-                return;
-            }
-            else {
-                process.nextTick(cb);
-            }
-        };
-        this.send = function (reqId, route, msg, recvs, opts, cb) {
-            logger.debug('[%s] send message reqId: %s, route: %s, msg: %j, receivers: %j, opts: %j', this.app.serverId, reqId, route, msg, recvs, opts);
-            if (this.useAsyncCoder) {
-                return this.sendAsync(reqId, route, msg, recvs, opts, cb);
-            }
-            var emsg = msg;
-            if (this.encode) {
-                // use costumized encode
-                emsg = this.encode.call(this, reqId, route, msg);
-            }
-            else if (this.connector.encode) {
-                // use connector default encode
-                emsg = this.connector.encode(reqId, route, msg);
-            }
-            this.doSend(reqId, route, emsg, recvs, opts, cb);
-        };
-        this.sendAsync = function (reqId, route, msg, recvs, opts, cb) {
-            var emsg = msg;
-            var self = this;
-            if (this.encode) {
-                // use costumized encode
-                this.encode(reqId, route, msg, function (err, encodeMsg) {
-                    if (err) {
-                        return cb(err);
-                    }
-                    emsg = encodeMsg;
-                    self.doSend(reqId, route, emsg, recvs, opts, cb);
-                });
-            }
-            else if (this.connector.encode) {
-                // use connector default encode
-                this.connector.encode(reqId, route, msg, function (err, encodeMsg) {
-                    if (err) {
-                        return cb(err);
-                    }
-                    emsg = encodeMsg;
-                    self.doSend(reqId, route, emsg, recvs, opts, cb);
-                });
-            }
-        };
-        this.doSend = function (reqId, route, emsg, recvs, opts, cb) {
-            if (!emsg) {
-                process.nextTick(function () {
-                    return cb && cb(new Error('fail to send message for encode result is empty.'));
-                });
-            }
-            this.app.components.__pushScheduler__.schedule(reqId, route, emsg, recvs, opts, cb);
-        };
-        this.setPubKey = function (id, key) {
-            var pubKey = new rsa.Key();
-            pubKey.n = new rsa.BigInteger(key.rsa_n, 16);
-            pubKey.e = key.rsa_e;
-            this.keys[id] = pubKey;
-        };
-        this.getPubKey = function (id) {
-            return this.keys[id];
-        };
         opts = opts || {};
         this.app = app;
         this.connector = getConnector(app, opts);
@@ -133,6 +43,102 @@ class ConnectorComponent {
         this.server = null;
         this.session = null;
         this.connection = null;
+    }
+    ;
+    start(cb) {
+        this.server = this.app.components.__server__;
+        this.session = this.app.components.__session__;
+        this.connection = this.app.components.__connection__;
+        // check component dependencies
+        if (!this.server) {
+            process.nextTick(function () {
+                utils.invokeCallback(cb, new Error('fail to start connector component for no server component loaded'));
+            });
+            return;
+        }
+        if (!this.session) {
+            process.nextTick(function () {
+                utils.invokeCallback(cb, new Error('fail to start connector component for no session component loaded'));
+            });
+            return;
+        }
+        process.nextTick(cb);
+    }
+    ;
+    afterStart(cb) {
+        this.connector.start(cb);
+        this.connector.on('connection', hostFilter.bind(this, bindEvents));
+    }
+    ;
+    stop(force, cb) {
+        if (this.connector) {
+            this.connector.stop(force, cb);
+            this.connector = null;
+            return;
+        }
+        else {
+            process.nextTick(cb);
+        }
+    }
+    ;
+    send(reqId, route, msg, recvs, opts, cb) {
+        logger.debug('[%s] send message reqId: %s, route: %s, msg: %j, receivers: %j, opts: %j', this.app.serverId, reqId, route, msg, recvs, opts);
+        if (this.useAsyncCoder) {
+            return this.sendAsync(reqId, route, msg, recvs, opts, cb);
+        }
+        var emsg = msg;
+        if (this.encode) {
+            // use costumized encode
+            emsg = this.encode.call(this, reqId, route, msg);
+        }
+        else if (this.connector.encode) {
+            // use connector default encode
+            emsg = this.connector.encode(reqId, route, msg);
+        }
+        this.doSend(reqId, route, emsg, recvs, opts, cb);
+    }
+    ;
+    sendAsync(reqId, route, msg, recvs, opts, cb) {
+        var emsg = msg;
+        var self = this;
+        if (this.encode) {
+            // use costumized encode
+            this.encode(reqId, route, msg, function (err, encodeMsg) {
+                if (err) {
+                    return cb(err);
+                }
+                emsg = encodeMsg;
+                self.doSend(reqId, route, emsg, recvs, opts, cb);
+            });
+        }
+        else if (this.connector.encode) {
+            // use connector default encode
+            this.connector.encode(reqId, route, msg, function (err, encodeMsg) {
+                if (err) {
+                    return cb(err);
+                }
+                emsg = encodeMsg;
+                self.doSend(reqId, route, emsg, recvs, opts, cb);
+            });
+        }
+    }
+    doSend(reqId, route, emsg, recvs, opts, cb) {
+        if (!emsg) {
+            process.nextTick(function () {
+                return cb && cb(new Error('fail to send message for encode result is empty.'));
+            });
+        }
+        this.app.components.__pushScheduler__.schedule(reqId, route, emsg, recvs, opts, cb);
+    }
+    setPubKey(id, key) {
+        var pubKey = new rsa.Key();
+        pubKey.n = new rsa.BigInteger(key.rsa_n, 16);
+        pubKey.e = key.rsa_e;
+        this.keys[id] = pubKey;
+    }
+    ;
+    getPubKey(id) {
+        return this.keys[id];
     }
     ;
 }

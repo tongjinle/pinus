@@ -6,36 +6,39 @@ class BufferService {
     constructor(app, opts) {
         this.sessions = {}; // sid -> msg queue
         this.tid = null;
-        this.start = function (cb) {
-            this.tid = setInterval(flush.bind(null, this), this.flushInterval);
-            process.nextTick(function () {
-                utils.invokeCallback(cb);
-            });
-        };
-        this.stop = function (force, cb) {
-            if (this.tid) {
-                clearInterval(this.tid);
-                this.tid = null;
-            }
-            process.nextTick(function () {
-                utils.invokeCallback(cb);
-            });
-        };
-        this.schedule = function (reqId, route, msg, recvs, opts, cb) {
-            opts = opts || {};
-            if (opts.type === 'broadcast') {
-                doBroadcast(this, msg, opts.userOptions);
-            }
-            else {
-                doBatchPush(this, msg, recvs);
-            }
-            process.nextTick(function () {
-                utils.invokeCallback(cb);
-            });
-        };
         opts = opts || {};
         this.app = app;
         this.flushInterval = opts.flushInterval || DEFAULT_FLUSH_INTERVAL;
+    }
+    ;
+    start(cb) {
+        this.tid = setInterval(flush.bind(null, this), this.flushInterval);
+        process.nextTick(function () {
+            utils.invokeCallback(cb);
+        });
+    }
+    ;
+    stop(force, cb) {
+        if (this.tid) {
+            clearInterval(this.tid);
+            this.tid = null;
+        }
+        process.nextTick(function () {
+            utils.invokeCallback(cb);
+        });
+    }
+    ;
+    schedule(reqId, route, msg, recvs, opts, cb) {
+        opts = opts || {};
+        if (opts.type === 'broadcast') {
+            doBroadcast(this, msg, opts.userOptions);
+        }
+        else {
+            doBatchPush(this, msg, recvs);
+        }
+        process.nextTick(function () {
+            utils.invokeCallback(cb);
+        });
     }
     ;
 }

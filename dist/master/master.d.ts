@@ -8,6 +8,6 @@ export declare class MasterServer {
     closeWatcher: any;
     masterConsole: ConsoleService;
     constructor(app: any, opts: any);
-    start: (cb: any) => void;
-    stop: (cb: any) => void;
+    start(cb: any): void;
+    stop(cb: any): void;
 }

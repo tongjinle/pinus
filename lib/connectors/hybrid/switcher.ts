@@ -59,7 +59,7 @@ export class HybridSwitcher extends EventEmitter
         this.state = ST_STARTED;
     };
 
-    newSocket = function (socket)
+    newSocket(socket)
     {
         if (this.state !== ST_STARTED)
         {
@@ -92,7 +92,7 @@ export class HybridSwitcher extends EventEmitter
         });
     };
 
-    close = function ()
+    close()
     {
         if (this.state !== ST_STARTED)
         {

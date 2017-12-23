@@ -66,7 +66,7 @@ export class ConnectorComponent
     };
     name = '__connector__';
 
-    start = function (cb)
+    start(cb)
     {
         this.server = this.app.components.__server__;
         this.session = this.app.components.__session__;
@@ -94,13 +94,13 @@ export class ConnectorComponent
         process.nextTick(cb);
     };
 
-    afterStart = function (cb)
+    afterStart(cb)
     {
         this.connector.start(cb);
         this.connector.on('connection', hostFilter.bind(this, bindEvents));
     };
 
-    stop = function (force, cb)
+    stop(force, cb)
     {
         if (this.connector)
         {
@@ -113,7 +113,7 @@ export class ConnectorComponent
         }
     };
 
-    send = function (reqId, route, msg, recvs, opts, cb)
+    send(reqId, route, msg, recvs, opts, cb)
     {
         logger.debug('[%s] send message reqId: %s, route: %s, msg: %j, receivers: %j, opts: %j', this.app.serverId, reqId, route, msg, recvs, opts);
         if (this.useAsyncCoder)
@@ -135,7 +135,7 @@ export class ConnectorComponent
         this.doSend(reqId, route, emsg, recvs, opts, cb);
     };
 
-    sendAsync = function (reqId, route, msg, recvs, opts, cb)
+    sendAsync(reqId, route, msg, recvs, opts, cb)
     {
         var emsg = msg;
         var self = this;
@@ -169,7 +169,7 @@ export class ConnectorComponent
         }
     }
 
-    doSend = function (reqId, route, emsg, recvs, opts, cb)
+    doSend(reqId, route, emsg, recvs, opts, cb)
     {
         if (!emsg)
         {
@@ -183,7 +183,7 @@ export class ConnectorComponent
             recvs, opts, cb);
     }
 
-    setPubKey = function (id, key)
+    setPubKey(id, key)
     {
         var pubKey = new rsa.Key();
         pubKey.n = new rsa.BigInteger(key.rsa_n, 16);
@@ -191,7 +191,7 @@ export class ConnectorComponent
         this.keys[id] = pubKey;
     };
 
-    getPubKey = function (id)
+    getPubKey(id)
     {
         return this.keys[id];
     };

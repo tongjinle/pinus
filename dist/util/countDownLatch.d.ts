@@ -11,7 +11,7 @@ export declare class CountDownLatch {
      *
      * @api public
      */
-    done: () => void;
+    done(): void;
 }
 /**
  * Create a count down latch

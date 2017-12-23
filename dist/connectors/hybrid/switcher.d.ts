@@ -17,6 +17,6 @@ export declare class HybridSwitcher extends EventEmitter {
     setNoDelay: boolean;
     state: number;
     constructor(server: any, opts: any);
-    newSocket: (socket: any) => void;
-    close: () => void;
+    newSocket(socket: any): void;
+    close(): void;
 }

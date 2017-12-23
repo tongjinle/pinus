@@ -13,48 +13,6 @@ exports.default = default_1;
 exports.moduleId = Constants.KEYWORDS.MASTER_WATCHER;
 class MasterWatcherModule {
     constructor(opts, consoleService) {
-        // ----------------- bind methods -------------------------
-        this.onServerAdd = function (record) {
-            logger.debug('masterwatcher receive add server event, with server: %j', record);
-            if (!record || record.type === 'client' || !record.serverType) {
-                return;
-            }
-            this.watchdog.addServer(record);
-        };
-        this.onServerReconnect = function (record) {
-            logger.debug('masterwatcher receive reconnect server event, with server: %j', record);
-            if (!record || record.type === 'client' || !record.serverType) {
-                logger.warn('onServerReconnect receive wrong message: %j', record);
-                return;
-            }
-            this.watchdog.reconnectServer(record);
-        };
-        this.onServerLeave = function (id, type) {
-            logger.debug('masterwatcher receive remove server event, with server: %s, type: %s', id, type);
-            if (!id) {
-                logger.warn('onServerLeave receive server id is empty.');
-                return;
-            }
-            if (type !== 'client') {
-                this.watchdog.removeServer(id);
-            }
-        };
-        // ----------------- module methods -------------------------
-        this.start = function (cb) {
-            utils.invokeCallback(cb);
-        };
-        this.masterHandler = function (agent, msg, cb) {
-            if (!msg) {
-                logger.warn('masterwatcher receive empty message.');
-                return;
-            }
-            var func = masterMethods[msg.action];
-            if (!func) {
-                logger.info('masterwatcher unknown action: %j', msg.action);
-                return;
-            }
-            func(this, agent, msg, cb);
-        };
         this.app = opts.app;
         this.service = consoleService;
         this.id = this.app.getServerId();
@@ -62,6 +20,53 @@ class MasterWatcherModule {
         this.service.on('register', this.onServerAdd.bind(this));
         this.service.on('disconnect', this.onServerLeave.bind(this));
         this.service.on('reconnect', this.onServerReconnect.bind(this));
+    }
+    ;
+    // ----------------- bind methods -------------------------
+    onServerAdd(record) {
+        logger.debug('masterwatcher receive add server event, with server: %j', record);
+        if (!record || record.type === 'client' || !record.serverType) {
+            return;
+        }
+        this.watchdog.addServer(record);
+    }
+    ;
+    onServerReconnect(record) {
+        logger.debug('masterwatcher receive reconnect server event, with server: %j', record);
+        if (!record || record.type === 'client' || !record.serverType) {
+            logger.warn('onServerReconnect receive wrong message: %j', record);
+            return;
+        }
+        this.watchdog.reconnectServer(record);
+    }
+    ;
+    onServerLeave(id, type) {
+        logger.debug('masterwatcher receive remove server event, with server: %s, type: %s', id, type);
+        if (!id) {
+            logger.warn('onServerLeave receive server id is empty.');
+            return;
+        }
+        if (type !== 'client') {
+            this.watchdog.removeServer(id);
+        }
+    }
+    ;
+    // ----------------- module methods -------------------------
+    start(cb) {
+        utils.invokeCallback(cb);
+    }
+    ;
+    masterHandler(agent, msg, cb) {
+        if (!msg) {
+            logger.warn('masterwatcher receive empty message.');
+            return;
+        }
+        var func = masterMethods[msg.action];
+        if (!func) {
+            logger.info('masterwatcher unknown action: %j', msg.action);
+            return;
+        }
+        func(this, agent, msg, cb);
     }
     ;
 }

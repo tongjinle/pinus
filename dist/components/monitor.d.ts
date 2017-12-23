@@ -14,7 +14,7 @@ export declare class MonitorComponent {
     monitor: Monitor;
     constructor(app: any, opts: any);
     name: string;
-    start: (cb: any) => void;
-    stop: (force: any, cb: any) => void;
-    reconnect: (masterInfo: any) => void;
+    start(cb: any): void;
+    stop(force: any, cb: any): void;
+    reconnect(masterInfo: any): void;
 }

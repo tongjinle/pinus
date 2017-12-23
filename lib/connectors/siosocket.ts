@@ -42,7 +42,7 @@ export class SioSocket extends EventEmitter
 
 
 
-    send = function (msg)
+    send(msg)
     {
         if (this.state !== ST_INITED)
         {
@@ -55,7 +55,7 @@ export class SioSocket extends EventEmitter
         this.socket.send(msg);
     };
 
-    disconnect = function ()
+    disconnect()
     {
         if (this.state === ST_CLOSED)
         {
@@ -66,7 +66,7 @@ export class SioSocket extends EventEmitter
         this.socket.disconnect();
     };
 
-    sendBatch = function (msgs)
+    sendBatch(msgs)
     {
         this.send(encodeBatch(msgs));
     };

@@ -39,29 +39,31 @@ class RemoteComponent {
         this.app = app;
         this.opts = opts;
         this.name = '__remote__';
-        /**
-         * Remote component lifecycle function
-         *
-         * @param {Function} cb
-         * @return {Void}
-         */
-        this.start = function (cb) {
-            this.opts.port = this.app.getCurServer().port;
-            this.remote = genRemote(this.app, this.opts);
-            this.remote.start();
-            process.nextTick(cb);
-        };
-        /**
-         * Remote component lifecycle function
-         *
-         * @param {Boolean}  force whether stop the component immediately
-         * @param {Function}  cb
-         * @return {Void}
-         */
-        this.stop = function (force, cb) {
-            this.remote.stop(force);
-            process.nextTick(cb);
-        };
+    }
+    ;
+    /**
+     * Remote component lifecycle function
+     *
+     * @param {Function} cb
+     * @return {Void}
+     */
+    start(cb) {
+        this.opts.port = this.app.getCurServer().port;
+        this.remote = genRemote(this.app, this.opts);
+        this.remote.start();
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Remote component lifecycle function
+     *
+     * @param {Boolean}  force whether stop the component immediately
+     * @param {Function}  cb
+     * @return {Void}
+     */
+    stop(force, cb) {
+        this.remote.stop(force);
+        process.nextTick(cb);
     }
     ;
 }

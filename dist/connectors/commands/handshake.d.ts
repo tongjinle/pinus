@@ -15,5 +15,5 @@ export declare class HandshakeCommand {
     useProtobuf: boolean;
     useCrypto: boolean;
     constructor(opts: any);
-    handle: (socket: any, msg: any) => void;
+    handle(socket: any, msg: any): void;
 }

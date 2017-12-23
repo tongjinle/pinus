@@ -17,35 +17,35 @@ export declare class HybridSocket extends EventEmitter {
      *
      * @api private
      */
-    sendRaw: (msg: any) => void;
+    sendRaw(msg: any): void;
     /**
      * Send byte data package to client.
      *
      * @param  {Buffer} msg byte data
      */
-    send: (msg: any) => void;
+    send(msg: any): void;
     /**
      * Send byte data packages to client in batch.
      *
      * @param  {Buffer} msgs byte data
      */
-    sendBatch: (msgs: any) => void;
+    sendBatch(msgs: any): void;
     /**
      * Send message to client no matter whether handshake.
      *
      * @api private
      */
-    sendForce: (msg: any) => void;
+    sendForce(msg: any): void;
     /**
      * Response handshake request
      *
      * @api private
      */
-    handshakeResponse: (resp: any) => void;
+    handshakeResponse(resp: any): void;
     /**
      * Close the connection.
      *
      * @api private
      */
-    disconnect: () => void;
+    disconnect(): void;
 }

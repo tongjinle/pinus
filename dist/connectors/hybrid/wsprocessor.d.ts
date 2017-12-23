@@ -10,6 +10,6 @@ export declare class WSProcessor extends EventEmitter {
     wsServer: WebSocketServer;
     state: number;
     constructor();
-    add: (socket: any, data: any) => void;
-    close: () => void;
+    add(socket: any, data: any): void;
+    close(): void;
 }

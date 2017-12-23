@@ -41,7 +41,7 @@ export class ChannelService
     };
 
 
-    start = function (cb)
+    start(cb)
     {
         restoreChannel(this, cb);
     };
@@ -54,7 +54,7 @@ export class ChannelService
      * @param {String} name channel's name
      * @memberOf ChannelService
      */
-    createChannel = function (name)
+    createChannel(name)
     {
         if (this.channels[name])
         {
@@ -75,7 +75,7 @@ export class ChannelService
      * @return {Channel}
      * @memberOf ChannelService
      */
-    getChannel = function (name, create)
+    getChannel(name, create)
     {
         var channel = this.channels[name];
         if (!channel && !!create)
@@ -92,7 +92,7 @@ export class ChannelService
      * @param {String} name channel name
      * @memberOf ChannelService
      */
-    destroyChannel = function (name)
+    destroyChannel(name)
     {
         delete this.channels[name];
         removeFromStore(this, genKey(this), genKey(this, name));
@@ -110,7 +110,7 @@ export class ChannelService
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids = function (route, msg, uids, opts, cb)
+    pushMessageByUids(route, msg, uids, opts, cb)
     {
         if (typeof route !== 'string')
         {
@@ -154,7 +154,7 @@ export class ChannelService
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast = function (stype, route, msg, opts, cb)
+    broadcast(stype, route, msg, opts, cb)
     {
         var app = this.app;
         var namespace = 'sys';
@@ -245,7 +245,7 @@ export class Channel
 {
     name: string;
     groups: { [sid: number]: string };
-    records: { [key: string]: string };
+    records: { [key: string]: {sid:string,uid:string} };
     __channelService__: ChannelService;
     state: number;
     userAmount: number;
@@ -266,7 +266,7 @@ export class Channel
      * @param {Number} uid user id
      * @param {String} sid frontend server id which user has connected to
      */
-    add = function (uid, sid)
+    add(uid : string, sid : string)
     {
         if (this.state > ST_INITED)
         {
@@ -291,7 +291,7 @@ export class Channel
      * @param {String} sid frontend server id which user has connected to.
      * @return [Boolean] true if success or false if fail
      */
-    leave = function (uid, sid)
+    leave(uid : string, sid : string)
     {
         if (!uid || !sid)
         {
@@ -317,7 +317,7 @@ export class Channel
      *
      * @return {number } channel member amount
      */
-    getUserAmount = function ()
+    getUserAmount()
     {
         return this.userAmount;
     };
@@ -329,7 +329,7 @@ export class Channel
      *
      * @return {Array} channel member uid list
      */
-    getMembers = function ()
+    getMembers()
     {
         var res = [], groups = this.groups;
         var group, i, l;
@@ -350,7 +350,7 @@ export class Channel
      * @param  {String} uid user id
      * @return {Object} member info
      */
-    getMember = function (uid)
+    getMember(uid)
     {
         return this.records[uid];
     };
@@ -358,7 +358,7 @@ export class Channel
     /**
      * Destroy channel.
      */
-    destroy = function ()
+    destroy()
     {
         this.state = ST_DESTROYED;
         this.__channelService__.destroyChannel(this.name);
@@ -372,7 +372,7 @@ export class Channel
      * @param {Object} opts user-defined push options, optional
      * @param {Function} cb callback function
      */
-    pushMessage = function (route, msg, opts, cb)
+    pushMessage(route, msg, opts, cb)
     {
         if (this.state !== ST_INITED)
         {

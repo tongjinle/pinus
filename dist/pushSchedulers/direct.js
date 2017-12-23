@@ -3,22 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils = require("../util/utils");
 class DirectService {
     constructor(app, opts) {
-        this.schedule = function (reqId, route, msg, recvs, opts, cb) {
-            opts = opts || {};
-            if (opts.type === 'broadcast') {
-                doBroadcast(this, msg, opts.userOptions);
-            }
-            else {
-                doBatchPush(this, msg, recvs);
-            }
-            if (cb) {
-                process.nextTick(function () {
-                    utils.invokeCallback(cb);
-                });
-            }
-        };
         opts = opts || {};
         this.app = app;
+    }
+    ;
+    schedule(reqId, route, msg, recvs, opts, cb) {
+        opts = opts || {};
+        if (opts.type === 'broadcast') {
+            doBroadcast(this, msg, opts.userOptions);
+        }
+        else {
+            doBatchPush(this, msg, recvs);
+        }
+        if (cb) {
+            process.nextTick(function () {
+                utils.invokeCallback(cb);
+            });
+        }
     }
     ;
 }

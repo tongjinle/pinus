@@ -55,7 +55,7 @@ export declare class Pomelo {
      * @memberOf Pomelo
      * @api public
      */
-    createApp: (opts: any) => Application;
+    createApp(opts: any): Application;
     /**
      * Get application
      */

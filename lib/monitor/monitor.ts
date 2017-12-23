@@ -38,13 +38,13 @@ export class Monitor
         });
     };
 
-    start = function (cb)
+    start(cb)
     {
         moduleUtil.registerDefaultModules(false, this.app, this.closeWatcher);
         this.startConsole(cb);
     };
 
-    startConsole = function (cb)
+    startConsole(cb)
     {
         moduleUtil.loadModules(this, this.monitorConsole);
 
@@ -73,7 +73,7 @@ export class Monitor
         });
     };
 
-    stop = function (cb)
+    stop(cb)
     {
         this.monitorConsole.stop();
         this.modules = [];
@@ -84,7 +84,7 @@ export class Monitor
     };
 
     // monitor reconnect to master
-    reconnect = function (masterInfo)
+    reconnect(masterInfo)
     {
         var self = this;
         this.stop(function ()

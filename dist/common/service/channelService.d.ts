@@ -20,14 +20,14 @@ export declare class ChannelService {
     channelRemote: ChannelRemote;
     name: string;
     constructor(app: any, opts: any);
-    start: (cb: any) => void;
+    start(cb: any): void;
     /**
      * Create channel with name.
      *
      * @param {String} name channel's name
      * @memberOf ChannelService
      */
-    createChannel: (name: any) => any;
+    createChannel(name: any): Channel;
     /**
      * Get channel by name.
      *
@@ -36,14 +36,14 @@ export declare class ChannelService {
      * @return {Channel}
      * @memberOf ChannelService
      */
-    getChannel: (name: any, create: any) => any;
+    getChannel(name: any, create: any): Channel;
     /**
      * Destroy channel by name.
      *
      * @param {String} name channel name
      * @memberOf ChannelService
      */
-    destroyChannel: (name: any) => void;
+    destroyChannel(name: any): void;
     /**
      * Push message by uids.
      * Group the uids by group. ignore any uid if sid not specified.
@@ -55,7 +55,7 @@ export declare class ChannelService {
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids: (route: any, msg: any, uids: any, opts: any, cb: any) => void;
+    pushMessageByUids(route: any, msg: any, uids: any, opts: any, cb: any): void;
     /**
      * Broadcast message to all the connected clients.
      *
@@ -68,7 +68,7 @@ export declare class ChannelService {
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast: (stype: any, route: any, msg: any, opts: any, cb: any) => void;
+    broadcast(stype: any, route: any, msg: any, opts: any, cb: any): void;
     apushMessageByUids: Function;
     abroadcast: Function;
 }
@@ -85,7 +85,10 @@ export declare class Channel {
         [sid: number]: string;
     };
     records: {
-        [key: string]: string;
+        [key: string]: {
+            sid: string;
+            uid: string;
+        };
     };
     __channelService__: ChannelService;
     state: number;
@@ -97,7 +100,7 @@ export declare class Channel {
      * @param {Number} uid user id
      * @param {String} sid frontend server id which user has connected to
      */
-    add: (uid: any, sid: any) => boolean;
+    add(uid: string, sid: string): boolean;
     /**
      * Remove user from channel.
      *
@@ -105,14 +108,14 @@ export declare class Channel {
      * @param {String} sid frontend server id which user has connected to.
      * @return [Boolean] true if success or false if fail
      */
-    leave: (uid: any, sid: any) => boolean;
+    leave(uid: string, sid: string): boolean;
     /**
      * Get channel UserAmount in a channel.
     
      *
      * @return {number } channel member amount
      */
-    getUserAmount: () => any;
+    getUserAmount(): number;
     /**
      * Get channel members.
      *
@@ -120,18 +123,21 @@ export declare class Channel {
      *
      * @return {Array} channel member uid list
      */
-    getMembers: () => any[];
+    getMembers(): any[];
     /**
      * Get Member info.
      *
      * @param  {String} uid user id
      * @return {Object} member info
      */
-    getMember: (uid: any) => any;
+    getMember(uid: any): {
+        sid: string;
+        uid: string;
+    };
     /**
      * Destroy channel.
      */
-    destroy: () => void;
+    destroy(): void;
     /**
      * Push message to all the members in the channel
      *
@@ -140,6 +146,6 @@ export declare class Channel {
      * @param {Object} opts user-defined push options, optional
      * @param {Function} cb callback function
      */
-    pushMessage: (route: any, msg: any, opts: any, cb: any) => void;
+    pushMessage(route: any, msg: any, opts: any, cb: any): void;
     apushMessage: Function;
 }

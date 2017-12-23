@@ -17,47 +17,6 @@ var curId = 1;
 class HybridConnector extends events_1.EventEmitter {
     constructor(port, host, opts) {
         super();
-        /**
-         * Start connector to listen the specified port
-         */
-        this.start = function (cb) {
-            var app = require('../pomelo').app;
-            var self = this;
-            var gensocket = function (socket) {
-                var hybridsocket = new hybridsocket_1.HybridSocket(curId++, socket);
-                hybridsocket.on('handshake', self.handshake.handle.bind(self.handshake, hybridsocket));
-                hybridsocket.on('heartbeat', self.heartbeat.handle.bind(self.heartbeat, hybridsocket));
-                hybridsocket.on('disconnect', self.heartbeat.clear.bind(self.heartbeat, hybridsocket.id));
-                hybridsocket.on('closing', Kick.handle.bind(null, hybridsocket));
-                self.emit('connection', hybridsocket);
-            };
-            this.connector = app.components.__connector__.connector;
-            this.dictionary = app.components.__dictionary__;
-            this.protobuf = app.components.__protobuf__;
-            this.decodeIO_protobuf = app.components.__decodeIO__protobuf__;
-            if (!this.ssl) {
-                this.listeningServer = net.createServer();
-            }
-            else {
-                this.listeningServer = tls.createServer(this.ssl);
-            }
-            this.switcher = new switcher_1.HybridSwitcher(this.listeningServer, self.opts);
-            this.switcher.on('connection', function (socket) {
-                gensocket(socket);
-            });
-            if (!!this.distinctHost) {
-                this.listeningServer.listen(this.port, this.host);
-            }
-            else {
-                this.listeningServer.listen(this.port);
-            }
-            process.nextTick(cb);
-        };
-        this.stop = function (force, cb) {
-            this.switcher.close();
-            this.listeningServer.close();
-            process.nextTick(cb);
-        };
         this.decode = coder.decode;
         this.encode = coder.encode;
         this.opts = opts || {};
@@ -70,6 +29,49 @@ class HybridConnector extends events_1.EventEmitter {
         this.distinctHost = opts.distinctHost;
         this.ssl = opts.ssl;
         this.switcher = null;
+    }
+    ;
+    /**
+     * Start connector to listen the specified port
+     */
+    start(cb) {
+        var app = require('../pomelo').app;
+        var self = this;
+        var gensocket = function (socket) {
+            var hybridsocket = new hybridsocket_1.HybridSocket(curId++, socket);
+            hybridsocket.on('handshake', self.handshake.handle.bind(self.handshake, hybridsocket));
+            hybridsocket.on('heartbeat', self.heartbeat.handle.bind(self.heartbeat, hybridsocket));
+            hybridsocket.on('disconnect', self.heartbeat.clear.bind(self.heartbeat, hybridsocket.id));
+            hybridsocket.on('closing', Kick.handle.bind(null, hybridsocket));
+            self.emit('connection', hybridsocket);
+        };
+        this.connector = app.components.__connector__.connector;
+        this.dictionary = app.components.__dictionary__;
+        this.protobuf = app.components.__protobuf__;
+        this.decodeIO_protobuf = app.components.__decodeIO__protobuf__;
+        if (!this.ssl) {
+            this.listeningServer = net.createServer();
+        }
+        else {
+            this.listeningServer = tls.createServer(this.ssl);
+        }
+        this.switcher = new switcher_1.HybridSwitcher(this.listeningServer, self.opts);
+        this.switcher.on('connection', function (socket) {
+            gensocket(socket);
+        });
+        if (!!this.distinctHost) {
+            this.listeningServer.listen(this.port, this.host);
+        }
+        else {
+            this.listeningServer.listen(this.port);
+        }
+        process.nextTick(cb);
+    }
+    ;
+    stop(force, cb) {
+        this.switcher.close();
+        this.listeningServer.close();
+        process.nextTick(cb);
     }
     ;
 }

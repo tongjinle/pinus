@@ -33,7 +33,7 @@ export class ServerComponent
      * @param {Function} cb
      * @return {Void}
      */
-    start = function (cb)
+    start(cb)
     {
         this.server.start();
         process.nextTick(cb);
@@ -45,7 +45,7 @@ export class ServerComponent
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart = function (cb)
+    afterStart(cb)
     {
         this.server.afterStart();
         process.nextTick(cb);
@@ -58,7 +58,7 @@ export class ServerComponent
      * @param {Function}  cb
      * @return {Void}
      */
-    stop = function (force, cb)
+    stop(force, cb)
     {
         this.server.stop();
         process.nextTick(cb);
@@ -67,7 +67,7 @@ export class ServerComponent
     /**
      * Proxy server handle
      */
-    handle = function (msg, session, cb)
+    handle(msg, session, cb)
     {
         this.server.handle(msg, session, cb);
     };
@@ -75,7 +75,7 @@ export class ServerComponent
     /**
      * Proxy server global handle
      */
-    globalHandle = function (msg, session, cb)
+    globalHandle(msg, session, cb)
     {
         this.server.globalHandle(msg, session, cb);
     };

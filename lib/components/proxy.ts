@@ -69,7 +69,7 @@ export class ProxyComponent
      * @param {Function} cb
      * @return {Void}
      */
-    start = function (cb)
+    start(cb)
     {
         if (this.opts.enableRpcLog)
         {
@@ -100,7 +100,7 @@ export class ProxyComponent
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart = function (cb)
+    afterStart(cb)
     {
         var self = this;
         this.app.__defineGetter__('rpc', function ()
@@ -120,7 +120,7 @@ export class ProxyComponent
      *
      * @param {Array} servers server info list, {id, serverType, host, port}
      */
-    addServers = function (servers)
+    addServers(servers)
     {
         if (!servers || !servers.length)
         {
@@ -136,7 +136,7 @@ export class ProxyComponent
      *
      * @param  {Array} ids server id list
      */
-    removeServers = function (ids)
+    removeServers(ids)
     {
         this.client.removeServers(ids);
     };
@@ -146,7 +146,7 @@ export class ProxyComponent
      *
      * @param  {Array} ids server id list
      */
-    replaceServers = function (servers)
+    replaceServers(servers)
     {
         if (!servers || !servers.length)
         {
@@ -167,7 +167,7 @@ export class ProxyComponent
      * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
      * @param {Function} cb      callback function
      */
-    rpcInvoke = function (serverId, msg, cb)
+    rpcInvoke(serverId, msg, cb)
     {
         this.client.rpcInvoke(serverId, msg, cb);
     };

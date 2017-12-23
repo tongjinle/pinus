@@ -47,97 +47,103 @@ exports.default = default_1;
 class ProxyComponent {
     constructor(app, opts) {
         this.name = '__proxy__';
-        /**
-         * Proxy component lifecycle function
-         *
-         * @param {Function} cb
-         * @return {Void}
-         */
-        this.start = function (cb) {
-            if (this.opts.enableRpcLog) {
-                logger.warn('enableRpcLog is deprecated in 0.8.0, please use app.rpcFilter(pomelo.rpcFilters.rpcLog())');
-            }
-            var rpcBefores = this.app.get(Constants.KEYWORDS.RPC_BEFORE_FILTER);
-            var rpcAfters = this.app.get(Constants.KEYWORDS.RPC_AFTER_FILTER);
-            var rpcErrorHandler = this.app.get(Constants.RESERVED.RPC_ERROR_HANDLER);
-            if (!!rpcBefores) {
-                this.client.before(rpcBefores);
-            }
-            if (!!rpcAfters) {
-                this.client.after(rpcAfters);
-            }
-            if (!!rpcErrorHandler) {
-                this.client.setErrorHandler(rpcErrorHandler);
-            }
-            process.nextTick(cb);
-        };
-        /**
-         * Component lifecycle callback
-         *
-         * @param {Function} cb
-         * @return {Void}
-         */
-        this.afterStart = function (cb) {
-            var self = this;
-            this.app.__defineGetter__('rpc', function () {
-                return self.client.proxies.user;
-            });
-            this.app.__defineGetter__('sysrpc', function () {
-                return self.client.proxies.sys;
-            });
-            this.app.set('rpcInvoke', this.client.rpcInvoke.bind(this.client), true);
-            this.client.start(cb);
-        };
-        /**
-         * Add remote server to the rpc client.
-         *
-         * @param {Array} servers server info list, {id, serverType, host, port}
-         */
-        this.addServers = function (servers) {
-            if (!servers || !servers.length) {
-                return;
-            }
-            genProxies(this.client, this.app, servers);
-            this.client.addServers(servers);
-        };
-        /**
-         * Remove remote server from the rpc client.
-         *
-         * @param  {Array} ids server id list
-         */
-        this.removeServers = function (ids) {
-            this.client.removeServers(ids);
-        };
-        /**
-         * Replace remote servers from the rpc client.
-         *
-         * @param  {Array} ids server id list
-         */
-        this.replaceServers = function (servers) {
-            if (!servers || !servers.length) {
-                return;
-            }
-            // update proxies
-            this.client.proxies = {};
-            genProxies(this.client, this.app, servers);
-            this.client.replaceServers(servers);
-        };
-        /**
-         * Proxy for rpc client rpcInvoke.
-         *
-         * @param {String}   serverId remote server id
-         * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
-         * @param {Function} cb      callback function
-         */
-        this.rpcInvoke = function (serverId, msg, cb) {
-            this.client.rpcInvoke(serverId, msg, cb);
-        };
         this.app = app;
         this.opts = opts;
         this.client = genRpcClient(this.app, opts);
         this.app.event.on(events_1.default.ADD_SERVERS, this.addServers.bind(this));
         this.app.event.on(events_1.default.REMOVE_SERVERS, this.removeServers.bind(this));
         this.app.event.on(events_1.default.REPLACE_SERVERS, this.replaceServers.bind(this));
+    }
+    ;
+    /**
+     * Proxy component lifecycle function
+     *
+     * @param {Function} cb
+     * @return {Void}
+     */
+    start(cb) {
+        if (this.opts.enableRpcLog) {
+            logger.warn('enableRpcLog is deprecated in 0.8.0, please use app.rpcFilter(pomelo.rpcFilters.rpcLog())');
+        }
+        var rpcBefores = this.app.get(Constants.KEYWORDS.RPC_BEFORE_FILTER);
+        var rpcAfters = this.app.get(Constants.KEYWORDS.RPC_AFTER_FILTER);
+        var rpcErrorHandler = this.app.get(Constants.RESERVED.RPC_ERROR_HANDLER);
+        if (!!rpcBefores) {
+            this.client.before(rpcBefores);
+        }
+        if (!!rpcAfters) {
+            this.client.after(rpcAfters);
+        }
+        if (!!rpcErrorHandler) {
+            this.client.setErrorHandler(rpcErrorHandler);
+        }
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Component lifecycle callback
+     *
+     * @param {Function} cb
+     * @return {Void}
+     */
+    afterStart(cb) {
+        var self = this;
+        this.app.__defineGetter__('rpc', function () {
+            return self.client.proxies.user;
+        });
+        this.app.__defineGetter__('sysrpc', function () {
+            return self.client.proxies.sys;
+        });
+        this.app.set('rpcInvoke', this.client.rpcInvoke.bind(this.client), true);
+        this.client.start(cb);
+    }
+    ;
+    /**
+     * Add remote server to the rpc client.
+     *
+     * @param {Array} servers server info list, {id, serverType, host, port}
+     */
+    addServers(servers) {
+        if (!servers || !servers.length) {
+            return;
+        }
+        genProxies(this.client, this.app, servers);
+        this.client.addServers(servers);
+    }
+    ;
+    /**
+     * Remove remote server from the rpc client.
+     *
+     * @param  {Array} ids server id list
+     */
+    removeServers(ids) {
+        this.client.removeServers(ids);
+    }
+    ;
+    /**
+     * Replace remote servers from the rpc client.
+     *
+     * @param  {Array} ids server id list
+     */
+    replaceServers(servers) {
+        if (!servers || !servers.length) {
+            return;
+        }
+        // update proxies
+        this.client.proxies = {};
+        genProxies(this.client, this.app, servers);
+        this.client.replaceServers(servers);
+    }
+    ;
+    /**
+     * Proxy for rpc client rpcInvoke.
+     *
+     * @param {String}   serverId remote server id
+     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
+     * @param {Function} cb      callback function
+     */
+    rpcInvoke(serverId, msg, cb) {
+        this.client.rpcInvoke(serverId, msg, cb);
     }
     ;
 }

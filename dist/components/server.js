@@ -23,50 +23,55 @@ exports.default = default_1;
 class ServerComponent {
     constructor(app, opts) {
         this.name = '__server__';
-        /**
-         * Component lifecycle callback
-         *
-         * @param {Function} cb
-         * @return {Void}
-         */
-        this.start = function (cb) {
-            this.server.start();
-            process.nextTick(cb);
-        };
-        /**
-         * Component lifecycle callback
-         *
-         * @param {Function} cb
-         * @return {Void}
-         */
-        this.afterStart = function (cb) {
-            this.server.afterStart();
-            process.nextTick(cb);
-        };
-        /**
-         * Component lifecycle function
-         *
-         * @param {Boolean}  force whether stop the component immediately
-         * @param {Function}  cb
-         * @return {Void}
-         */
-        this.stop = function (force, cb) {
-            this.server.stop();
-            process.nextTick(cb);
-        };
-        /**
-         * Proxy server handle
-         */
-        this.handle = function (msg, session, cb) {
-            this.server.handle(msg, session, cb);
-        };
-        /**
-         * Proxy server global handle
-         */
-        this.globalHandle = function (msg, session, cb) {
-            this.server.globalHandle(msg, session, cb);
-        };
         this.server = server_1.create(app, opts);
+    }
+    ;
+    /**
+     * Component lifecycle callback
+     *
+     * @param {Function} cb
+     * @return {Void}
+     */
+    start(cb) {
+        this.server.start();
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Component lifecycle callback
+     *
+     * @param {Function} cb
+     * @return {Void}
+     */
+    afterStart(cb) {
+        this.server.afterStart();
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Component lifecycle function
+     *
+     * @param {Boolean}  force whether stop the component immediately
+     * @param {Function}  cb
+     * @return {Void}
+     */
+    stop(force, cb) {
+        this.server.stop();
+        process.nextTick(cb);
+    }
+    ;
+    /**
+     * Proxy server handle
+     */
+    handle(msg, session, cb) {
+        this.server.handle(msg, session, cb);
+    }
+    ;
+    /**
+     * Proxy server global handle
+     */
+    globalHandle(msg, session, cb) {
+        this.server.globalHandle(msg, session, cb);
     }
     ;
 }

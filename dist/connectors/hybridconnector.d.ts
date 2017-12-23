@@ -21,8 +21,8 @@ export declare class HybridConnector extends EventEmitter {
     /**
      * Start connector to listen the specified port
      */
-    start: (cb: any) => void;
-    stop: (force: any, cb: any) => void;
+    start(cb: any): void;
+    stop(force: any, cb: any): void;
     decode: (msg: any) => any;
     encode: (reqId: any, route: any, msg: any) => any;
 }

@@ -17,7 +17,7 @@ export class FilterService
      *
      * @param filter {Object|Function} filter instance or filter function.
      */
-    before = function (filter)
+    before(filter)
     {
         this.befores.push(filter);
     };
@@ -27,7 +27,7 @@ export class FilterService
      *
      * @param filter {Object|Function} filter instance or filter function.
      */
-    after = function (filter)
+    after(filter)
     {
         this.afters.unshift(filter);
     };
@@ -44,7 +44,7 @@ export class FilterService
      * @param session {Object} a session object for current request
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    beforeFilter = function (msg, session, cb)
+    beforeFilter(msg, session, cb)
     {
         var index = 0, self = this;
         var next = function (err?: any, resp?: any, opts?: any)
@@ -83,7 +83,7 @@ export class FilterService
      * @param {Object} resp response object send to client
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    afterFilter = function (err, msg, session, resp, cb)
+    afterFilter(err, msg, session, resp, cb)
     {
         var index = 0, self = this;
         function next(err)

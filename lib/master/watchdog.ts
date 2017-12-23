@@ -22,7 +22,7 @@ export class Watchdog extends EventEmitter
     };
 
 
-    addServer = function (server)
+    addServer(server)
     {
         if (!server)
         {
@@ -32,7 +32,7 @@ export class Watchdog extends EventEmitter
         this.notify({ action: 'addServer', server: server });
     };
 
-    removeServer = function (id)
+    removeServer(id)
     {
         if (!id)
         {
@@ -43,7 +43,7 @@ export class Watchdog extends EventEmitter
         this.notify({ action: 'removeServer', id: id });
     };
 
-    reconnectServer = function (server)
+    reconnectServer(server)
     {
         var self = this;
         if (!server)
@@ -62,22 +62,22 @@ export class Watchdog extends EventEmitter
         this.subscribe(server.id);
     };
 
-    subscribe = function (id)
+    subscribe(id)
     {
         this._listeners[id] = 1;
     };
 
-    unsubscribe = function (id)
+    unsubscribe(id)
     {
         delete this._listeners[id];
     };
 
-    query = function ()
+    query()
     {
         return this.servers;
     };
 
-    record = function (id)
+    record(id)
     {
         if (!this.isStarted && --this.count < 0)
         {
@@ -88,7 +88,7 @@ export class Watchdog extends EventEmitter
         }
     };
 
-    notifyById = function (id, msg)
+    notifyById(id, msg)
     {
         this.service.agent.request(id, Constants.KEYWORDS.MONITOR_WATCHER, msg, function (signal)
         {
@@ -102,7 +102,7 @@ export class Watchdog extends EventEmitter
         });
     };
 
-    notify = function (msg)
+    notify(msg)
     {
         var _listeners = this._listeners;
         var success = true;

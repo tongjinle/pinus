@@ -31,7 +31,7 @@ export class MQTTConnector extends EventEmitter
     /**
      * Start connector to listen the specified port
      */
-    start = function (cb)
+    start(cb)
     {
         var self = this;
         this.mqttServer = mqtt.createServer();
@@ -74,14 +74,14 @@ export class MQTTConnector extends EventEmitter
         process.nextTick(cb);
     };
 
-    stop = function ()
+    stop()
     {
         this.mqttServer.close();
         process.exit(0);
     };
 
 
-    encode = function (reqId, route, msgBody)
+    encode(reqId, route, msgBody)
     {
         if (!!reqId)
         {
@@ -92,7 +92,7 @@ export class MQTTConnector extends EventEmitter
         }
     };
 
-    close = function ()
+    close()
     {
         this.mqttServer.close();
     };

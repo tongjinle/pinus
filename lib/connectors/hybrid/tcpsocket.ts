@@ -78,12 +78,12 @@ export class TcpSocket extends Stream
     };
 
 
-    send = function (msg, encode, cb)
+    send(msg, encode, cb)
     {
         this._socket.write(msg, encode, cb);
     };
 
-    close = function ()
+    close()
     {
         if (!!this.closeMethod && this.closeMethod === 'end')
         {

@@ -25,22 +25,6 @@ class TcpSocket extends stream_1.Stream {
         // stream style interfaces.
         // TODO: need to port to stream2 after node 0.9
         super();
-        this.send = function (msg, encode, cb) {
-            this._socket.write(msg, encode, cb);
-        };
-        this.close = function () {
-            if (!!this.closeMethod && this.closeMethod === 'end') {
-                this._socket.end();
-            }
-            else {
-                try {
-                    this._socket.destroy();
-                }
-                catch (e) {
-                    logger.error('socket close with destroy error: %j', e.stack);
-                }
-            }
-        };
         if (!socket || !opts) {
             throw new Error('invalid socket or opts');
         }
@@ -64,6 +48,24 @@ class TcpSocket extends stream_1.Stream {
         this._socket.on('error', this.emit.bind(this, 'error'));
         this._socket.on('close', this.emit.bind(this, 'close'));
         this.state = ST_HEAD;
+    }
+    ;
+    send(msg, encode, cb) {
+        this._socket.write(msg, encode, cb);
+    }
+    ;
+    close() {
+        if (!!this.closeMethod && this.closeMethod === 'end') {
+            this._socket.end();
+        }
+        else {
+            try {
+                this._socket.destroy();
+            }
+            catch (e) {
+                logger.error('socket close with destroy error: %j', e.stack);
+            }
+        }
     }
     ;
 }

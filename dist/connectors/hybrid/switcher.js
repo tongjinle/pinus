@@ -19,36 +19,6 @@ var DEFAULT_TIMEOUT = 90;
 class HybridSwitcher extends events_1.EventEmitter {
     constructor(server, opts) {
         super();
-        this.newSocket = function (socket) {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            socket.setTimeout(this.timeout, function () {
-                logger.warn('connection is timeout without communication, the remote ip is %s && port is %s', socket.remoteAddress, socket.remotePort);
-                socket.destroy();
-            });
-            var self = this;
-            socket.once('data', function (data) {
-                // FIXME: handle incomplete HTTP method
-                if (isHttp(data)) {
-                    processHttp(self, self.wsprocessor, socket, data);
-                }
-                else {
-                    if (!!self.setNoDelay) {
-                        socket.setNoDelay(true);
-                    }
-                    processTcp(self, self.tcpprocessor, socket, data);
-                }
-            });
-        };
-        this.close = function () {
-            if (this.state !== ST_STARTED) {
-                return;
-            }
-            this.state = ST_CLOSED;
-            this.wsprocessor.close();
-            this.tcpprocessor.close();
-        };
         this.server = server;
         this.wsprocessor = new wsprocessor_1.WSProcessor();
         this.tcpprocessor = new tcpprocessor_1.TCPProcessor(opts.closeMethod);
@@ -68,6 +38,38 @@ class HybridSwitcher extends events_1.EventEmitter {
         this.wsprocessor.on('connection', this.emit.bind(this, 'connection'));
         this.tcpprocessor.on('connection', this.emit.bind(this, 'connection'));
         this.state = ST_STARTED;
+    }
+    ;
+    newSocket(socket) {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        socket.setTimeout(this.timeout, function () {
+            logger.warn('connection is timeout without communication, the remote ip is %s && port is %s', socket.remoteAddress, socket.remotePort);
+            socket.destroy();
+        });
+        var self = this;
+        socket.once('data', function (data) {
+            // FIXME: handle incomplete HTTP method
+            if (isHttp(data)) {
+                processHttp(self, self.wsprocessor, socket, data);
+            }
+            else {
+                if (!!self.setNoDelay) {
+                    socket.setNoDelay(true);
+                }
+                processTcp(self, self.tcpprocessor, socket, data);
+            }
+        });
+    }
+    ;
+    close() {
+        if (this.state !== ST_STARTED) {
+            return;
+        }
+        this.state = ST_CLOSED;
+        this.wsprocessor.close();
+        this.tcpprocessor.close();
     }
     ;
 }

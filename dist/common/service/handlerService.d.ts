@@ -14,7 +14,7 @@ export declare class HandlerService {
     /**
      * Handler the request.
      */
-    handle: (routeRecord: any, msg: any, session: any, cb: any) => void;
+    handle(routeRecord: any, msg: any, session: any, cb: any): void;
     /**
      * Get handler instance by routeRecord.
      *
@@ -22,5 +22,5 @@ export declare class HandlerService {
      * @param  {Object} routeRecord route record parsed from route string
      * @return {Object}             handler instance if any matchs or null for match fail
      */
-    getHandler: (routeRecord: any) => any;
+    getHandler(routeRecord: any): any;
 }

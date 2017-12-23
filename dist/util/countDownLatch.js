@@ -5,23 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 class CountDownLatch {
     constructor(count, opts, cb) {
-        /**
-         * Call when a task finish to count down.
-         *
-         * @api public
-         */
-        this.done = function () {
-            if (this.count <= 0) {
-                throw new Error('illegal state.');
-            }
-            this.count--;
-            if (this.count === 0) {
-                if (this.timerId) {
-                    clearTimeout(this.timerId);
-                }
-                this.cb();
-            }
-        };
         this.count = count;
         this.cb = cb;
         var self = this;
@@ -29,6 +12,24 @@ class CountDownLatch {
             this.timerId = setTimeout(function () {
                 self.cb(true);
             }, opts.timeout);
+        }
+    }
+    ;
+    /**
+     * Call when a task finish to count down.
+     *
+     * @api public
+     */
+    done() {
+        if (this.count <= 0) {
+            throw new Error('illegal state.');
+        }
+        this.count--;
+        if (this.count === 0) {
+            if (this.timerId) {
+                clearTimeout(this.timerId);
+            }
+            this.cb();
         }
     }
     ;

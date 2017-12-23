@@ -29,7 +29,7 @@ export class HeartbeatCommand
 
     };
 
-    handle = function (socket)
+    handle(socket)
     {
         if (!this.heartbeat)
         {
@@ -65,7 +65,7 @@ export class HeartbeatCommand
         }
     };
 
-    clear = function (id)
+    clear(id)
     {
         var tid = this.timeouts[id];
         if (tid)

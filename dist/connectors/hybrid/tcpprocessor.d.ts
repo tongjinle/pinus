@@ -7,6 +7,6 @@ export declare class TCPProcessor extends EventEmitter {
     closeMethod: Function;
     state: number;
     constructor(closeMethod: any);
-    add: (socket: any, data: any) => void;
-    close: () => void;
+    add(socket: any, data: any): void;
+    close(): void;
 }

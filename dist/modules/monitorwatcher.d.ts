@@ -5,6 +5,6 @@ export declare class MonitorWatcherModule {
     service: any;
     id: string;
     constructor(opts: any, consoleService: any);
-    start: (cb: any) => void;
-    monitorHandler: (agent: any, msg: any, cb: any) => void;
+    start(cb: any): void;
+    monitorHandler(agent: any, msg: any, cb: any): void;
 }

@@ -3,9 +3,9 @@ export declare class MqttAdaptor {
     publishRoute: any;
     subscribeRoute: any;
     constructor(opts: any);
-    onPublish: (client: any, packet: any) => void;
-    onSubscribe: (client: any, packet: any) => void;
-    onPubAck: (client: any, packet: any) => void;
+    onPublish(client: any, packet: any): void;
+    onSubscribe(client: any, packet: any): void;
+    onPubAck(client: any, packet: any): void;
     /**
      * Publish message or subscription ack.
      *
@@ -18,5 +18,5 @@ export declare class MqttAdaptor {
      *
      * otherwise packet is a illegal packet.
      */
-    publish: (client: any, packet: any) => void;
+    publish(client: any, packet: any): void;
 }

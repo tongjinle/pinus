@@ -11,24 +11,26 @@ module.exports = function (opts, consoleService) {
 exports.moduleId = Constants.KEYWORDS.MONITOR_WATCHER;
 class MonitorWatcherModule {
     constructor(opts, consoleService) {
-        this.start = function (cb) {
-            subscribeRequest(this, this.service.agent, this.id, cb);
-        };
-        this.monitorHandler = function (agent, msg, cb) {
-            if (!msg || !msg.action) {
-                return;
-            }
-            var func = monitorMethods[msg.action];
-            if (!func) {
-                logger.info('monitorwatcher unknown action: %j', msg.action);
-                return;
-            }
-            func(this, agent, msg, cb);
-        };
         this.app = opts.app;
         this.service = consoleService;
         this.id = this.app.getServerId();
         this.app.event.on(events_1.default.START_SERVER, finishStart.bind(null, this));
+    }
+    ;
+    start(cb) {
+        subscribeRequest(this, this.service.agent, this.id, cb);
+    }
+    ;
+    monitorHandler(agent, msg, cb) {
+        if (!msg || !msg.action) {
+            return;
+        }
+        var func = monitorMethods[msg.action];
+        if (!func) {
+            logger.info('monitorwatcher unknown action: %j', msg.action);
+            return;
+        }
+        func(this, agent, msg, cb);
     }
     ;
 }
