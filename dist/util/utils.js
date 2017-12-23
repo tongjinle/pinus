@@ -359,5 +359,17 @@ function isObject(arg) {
 }
 exports.isObject = isObject;
 ;
+function extendsObject(origin, add) {
+    if (!add || !this.isObject(add))
+        return origin;
+    var keys = Object.keys(add);
+    var i = keys.length;
+    while (i--) {
+        origin[keys[i]] = add[keys[i]];
+    }
+    return origin;
+}
+exports.extendsObject = extendsObject;
+;
 exports.promisify = util.promisify;
 //# sourceMappingURL=utils.js.map

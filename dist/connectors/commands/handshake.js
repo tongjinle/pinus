@@ -63,9 +63,10 @@ class HandshakeCommand {
             if (!!this.useProtobuf) {
                 throw new Error('protobuf can not be both used in the same project.');
             }
-            var version = pomelo_1.pomelo.app.components.__decodeIO__protobuf__.getVersion();
+            var component = pomelo_1.pomelo.app.components.__decodeIO__protobuf__;
+            var version = component.getVersion();
             if (!msg.sys.protoVersion || msg.sys.protoVersion < version) {
-                opts.protos = pomelo_1.pomelo.app.components.__decodeIO__protobuf__.getProtos();
+                opts.protos = component.getProtos();
             }
             opts.useProto = true;
         }

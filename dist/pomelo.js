@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const application_1 = require("./application");
 const util_1 = require("util");
 var Package = require('../package');
+const events_1 = require("./util/events");
 /**
  * Expose `createApplication()`.
  *
@@ -22,7 +23,7 @@ class Pomelo {
         /**
          * Event definitions that would be emitted by app.event
          */
-        this.events = require('./util/events');
+        this.events = events_1.default;
         /**
          * auto loaded components
          */

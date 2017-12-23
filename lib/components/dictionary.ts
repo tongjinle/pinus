@@ -5,13 +5,14 @@ import * as Loader from 'pomelo-loader';
 import * as pathUtil from '../util/pathUtil';
 import * as crypto from 'crypto';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 
 export default function(app, opts) {
     return new DictionaryComponent(app, opts);
 };
 
 
-export class DictionaryComponent
+export class DictionaryComponent implements Component
 {
     app: Application;
     dict = {};

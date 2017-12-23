@@ -3,6 +3,7 @@
  */
 import * as utils from '../../util/utils';
 import { Application } from '../../application';
+import { Component } from '../../interfaces/Component';
 
 var EXPORTED_FIELDS = ['id', 'frontendId', 'uid', 'settings'];
 
@@ -20,7 +21,7 @@ var EXPORTED_FIELDS = ['id', 'frontendId', 'uid', 'settings'];
  * @class
  * @constructor
  */
-export class BackendSessionService
+export class BackendSessionService implements Component
 {
     app: Application;
     name: string;

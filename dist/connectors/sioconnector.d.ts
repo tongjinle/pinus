@@ -12,6 +12,7 @@ export declare class SIOConnector extends EventEmitter {
     closeTimeout: number;
     heartbeatTimeout: number;
     heartbeatInterval: number;
+    siosocket: any;
     constructor(port: any, host: any, opts: any);
     /**
      * Start connector to listen the specified port

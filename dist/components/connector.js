@@ -34,21 +34,19 @@ class ConnectorComponent {
         this.useAsyncCoder = opts.useAsyncCoder;
         this.blacklistFun = opts.blacklistFun;
         if (opts.useDict) {
-            app.load(pomelo_1.pomelo.dictionary, app.get('dictionaryConfig'));
+            app.load(pomelo_1.pomelo.components.dictionary, app.get('dictionaryConfig'));
         }
         if (opts.useProtobuf) {
-            app.load(pomelo_1.pomelo.protobuf, app.get('protobufConfig'));
+            app.load(pomelo_1.pomelo.components.protobuf, app.get('protobufConfig'));
         }
         // component dependencies
         this.server = null;
         this.session = null;
-        this.connection = null;
     }
     ;
     start(cb) {
         this.server = this.app.components.__server__;
         this.session = this.app.components.__session__;
-        this.connection = this.app.components.__connection__;
         // check component dependencies
         if (!this.server) {
             process.nextTick(function () {

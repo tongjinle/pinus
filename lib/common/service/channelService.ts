@@ -2,6 +2,7 @@ import * as countDownLatch from '../../util/countDownLatch';
 import * as utils from '../../util/utils';
 import { ChannelRemote } from '../remote/frontend/channelRemote';
 import { getLogger } from 'pomelo-logger'; import { Application } from '../../application';
+import { Component } from '../../interfaces/Component';
  var logger = getLogger('pomelo', __filename);
 
 /**
@@ -19,7 +20,7 @@ var ST_DESTROYED = 1;
  * @class
  * @constructor
  */
-export class ChannelService
+export class ChannelService implements Component
 {
     app: Application;
     channels: { [key: string]: Channel };

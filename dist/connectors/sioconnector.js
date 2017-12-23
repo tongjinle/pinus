@@ -56,6 +56,7 @@ class SIOConnector extends events_1.EventEmitter {
         sio.on('connection', function (socket) {
             // this.wsocket.sockets.on('connection', function (socket) {
             var siosocket = new siosocket_1.SioSocket(curId++, socket);
+            this.siosocket = siosocket;
             self.emit('connection', siosocket);
             siosocket.on('closing', function (reason) {
                 siosocket.send({ route: 'onKick', reason: reason });
@@ -68,7 +69,7 @@ class SIOConnector extends events_1.EventEmitter {
      * Stop connector
      */
     stop(force, cb) {
-        this.wsocket.server.close();
+        this.siosocket.server.close();
         process.nextTick(cb);
     }
     ;

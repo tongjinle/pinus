@@ -88,13 +88,28 @@ class ProxyComponent {
      */
     afterStart(cb) {
         var self = this;
-        this.app.__defineGetter__('rpc', function () {
-            return self.client.proxies.user;
+        Object.defineProperty(this.app, 'rpc', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            get: function () {
+                return self.client.proxies.user;
+            }
         });
-        this.app.__defineGetter__('sysrpc', function () {
-            return self.client.proxies.sys;
+        Object.defineProperty(this.app, 'sysrpc', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            get: function () {
+                return self.client.proxies.sys;
+            }
         });
-        this.app.set('rpcInvoke', this.client.rpcInvoke.bind(this.client), true);
+        Object.defineProperty(this.app, 'rpcInvoke', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            value: this.client.rpcInvoke.bind(this.client)
+        });
         this.client.start(cb);
     }
     ;

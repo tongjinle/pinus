@@ -18,6 +18,7 @@ export class MQTTConnector extends EventEmitter
     host: string;
     opts: any;
     adaptor: MqttAdaptor;
+    mqttServer : any;
     constructor(port, host, opts)
     {
         super();

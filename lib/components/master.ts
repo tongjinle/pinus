@@ -2,6 +2,7 @@
  * Component for master.
  */
 import { MasterServer } from '../master/master';
+import { Component } from '../interfaces/Component';
 
 /**
  * Component factory function
@@ -18,7 +19,7 @@ export default function (app, opts) {
 *
 * @param {Object} app  current application context
 */
-export class MasterComponent
+export class MasterComponent implements Component
 {
     name = '__master__';
     master: MasterServer;

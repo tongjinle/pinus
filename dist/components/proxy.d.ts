@@ -1,5 +1,6 @@
 import { Client } from 'pomelo-rpc';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 /**
  * Component factory function
  *
@@ -16,7 +17,7 @@ export default function (app: any, opts: any): ProxyComponent;
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export declare class ProxyComponent {
+export declare class ProxyComponent implements Component {
     app: Application;
     opts: any;
     client: Client;

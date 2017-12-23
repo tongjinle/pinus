@@ -29,7 +29,7 @@ export class TcpSocket extends Stream
 
     _socket: any;
     headSize: number;
-    closeMethod: Function;
+    closeMethod: string;
     headBuffer: Buffer;
     headHandler: Function;
 

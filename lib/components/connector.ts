@@ -6,6 +6,8 @@ import { default as events } from '../util/events';
 import * as utils from '../util/utils';
 import { Application } from '../application';
 import { ConnectionComponent } from './connection';
+import { Component } from '../interfaces/Component';
+import { PushSchedulerComponent } from './pushScheduler';
 
 export default function (app, opts)
 {
@@ -20,7 +22,7 @@ export default function (app, opts)
  *                      opts.connector {Object} provides low level network and protocol details implementation between server and clients.
  */
 
-export class ConnectorComponent
+export class ConnectorComponent implements Component
 {
     app: Application;
     connector: any;
@@ -35,7 +37,6 @@ export class ConnectorComponent
     blacklist = [];
     server: any;
     session: any;
-    connection: ConnectionComponent;
 
     constructor(app, opts)
     {
@@ -51,18 +52,17 @@ export class ConnectorComponent
 
         if (opts.useDict)
         {
-            app.load(pomelo.dictionary, app.get('dictionaryConfig'));
+            app.load(pomelo.components.dictionary, app.get('dictionaryConfig'));
         }
 
         if (opts.useProtobuf)
         {
-            app.load(pomelo.protobuf, app.get('protobufConfig'));
+            app.load(pomelo.components.protobuf, app.get('protobufConfig'));
         }
 
         // component dependencies
         this.server = null;
         this.session = null;
-        this.connection = null;
     };
     name = '__connector__';
 
@@ -70,7 +70,6 @@ export class ConnectorComponent
     {
         this.server = this.app.components.__server__;
         this.session = this.app.components.__session__;
-        this.connection = this.app.components.__connection__;
 
         // check component dependencies
         if (!this.server)

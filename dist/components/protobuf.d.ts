@@ -1,8 +1,9 @@
 /// <reference types="node" />
 import { Protobuf } from 'pomelo-protobuf';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 export default function (app: any, opts: any): ProtobufComponent;
-export declare class ProtobufComponent {
+export declare class ProtobufComponent implements Component {
     app: Application;
     watchers: {};
     serverProtos: {};
@@ -11,8 +12,8 @@ export declare class ProtobufComponent {
     serverProtosPath: string;
     clientProtosPath: string;
     protobuf: Protobuf;
-    constructor(app: any, opts: any);
     name: string;
+    constructor(app: any, opts: any);
     encode(key: any, msg: any): Buffer;
     encode2Bytes(key: any, msg: any): Uint8Array;
     decode(key: any, msg: any): any;

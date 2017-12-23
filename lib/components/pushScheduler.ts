@@ -5,6 +5,7 @@
 import * as  DefaultScheduler from '../pushSchedulers/direct';
 import { getLogger } from 'pomelo-logger';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
 export default function (app, opts)
@@ -12,7 +13,7 @@ export default function (app, opts)
     return new PushSchedulerComponent(app, opts);
 };
 
-export class PushSchedulerComponent
+export class PushSchedulerComponent implements Component
 {
     scheduler : any;
     constructor(private app : Application, opts)
@@ -22,6 +23,8 @@ export class PushSchedulerComponent
     };
 
     name = '__pushScheduler__';
+    isSelectable : boolean;
+    selector : Function;
 
     /**
      * Component lifecycle callback

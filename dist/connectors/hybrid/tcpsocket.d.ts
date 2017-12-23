@@ -15,7 +15,7 @@ export declare class TcpSocket extends Stream {
     writeable: boolean;
     _socket: any;
     headSize: number;
-    closeMethod: Function;
+    closeMethod: string;
     headBuffer: Buffer;
     headHandler: Function;
     headOffset: number;

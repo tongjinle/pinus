@@ -10,6 +10,7 @@ import * as pathUtil from '../util/pathUtil';
 import * as Constants from '../util/constants';
 import { getLogger } from 'pomelo-logger';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
 /**
@@ -46,7 +47,7 @@ export default function (app, opts)
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export class ProxyComponent
+export class ProxyComponent implements Component
 {
     app: Application;
     opts: any;
@@ -103,15 +104,33 @@ export class ProxyComponent
     afterStart(cb)
     {
         var self = this;
-        this.app.__defineGetter__('rpc', function ()
-        {
-            return self.client.proxies.user;
+
+        Object.defineProperty(this.app, 'rpc', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            get : function ()
+            {
+                return self.client.proxies.user;
+            }
         });
-        this.app.__defineGetter__('sysrpc', function ()
-        {
-            return self.client.proxies.sys;
+
+        Object.defineProperty(this.app, 'sysrpc', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            get : function ()
+            {
+                return self.client.proxies.sys;
+            }
         });
-        this.app.set('rpcInvoke', this.client.rpcInvoke.bind(this.client), true);
+        Object.defineProperty(this.app, 'rpcInvoke', {
+            enumerable: true,
+            writable: true,
+            configurable: true,
+            value : this.client.rpcInvoke.bind(this.client)
+        });
+
         this.client.start(cb);
     };
 

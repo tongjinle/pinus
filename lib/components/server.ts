@@ -2,6 +2,7 @@
  * Component for server starup.
  */
 import { Server , create as createServer } from '../server/server';
+import { Component } from '../interfaces/Component';
 
 /**
  * Component factory function
@@ -18,7 +19,7 @@ export default function(app, opts) {
  *
  * @param {Object} app  current application context
  */
-export class ServerComponent 
+export class ServerComponent  implements Component
 {
     server: Server;
     constructor(app, opts)

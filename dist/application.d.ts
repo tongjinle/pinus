@@ -5,9 +5,38 @@
  * MIT Licensed
  */
 import { EventEmitter } from 'events';
+import { Component } from './interfaces/Component';
+import { DictionaryComponent } from './components/dictionary';
+import { PushSchedulerComponent } from './components/pushScheduler';
+import { BackendSessionService } from './common/service/backendSessionService';
+import { ChannelService } from './common/service/channelService';
+import { SessionComponent } from './components/session';
+import { ServerComponent } from './components/server';
+import { RemoteComponent } from './components/remote';
+import { ProxyComponent } from './components/proxy';
+import { ProtobufComponent } from './components/protobuf';
+import { MonitorComponent } from './components/monitor';
+import { MasterComponent } from './components/master';
+import { ConnectorComponent } from './components/connector';
+import { ConnectionComponent } from './components/connection';
 export declare class Application {
     loaded: any[];
-    components: {};
+    components: {
+        __backendSession__?: BackendSessionService;
+        __channel__?: ChannelService;
+        __connection__?: ConnectionComponent;
+        __connector__?: ConnectorComponent;
+        __dictionary__?: DictionaryComponent;
+        __master__?: MasterComponent;
+        __monitor__?: MonitorComponent;
+        __protobuf__?: ProtobufComponent;
+        __proxy__?: ProxyComponent;
+        __remote__?: RemoteComponent;
+        __server__?: ServerComponent;
+        __session__?: SessionComponent;
+        __pushScheduler__?: PushSchedulerComponent;
+        [key: string]: Component;
+    };
     settings: any;
     event: EventEmitter;
     serverId: any;
@@ -21,15 +50,8 @@ export declare class Application {
     lifecycleCbs: {};
     clusterSeq: {};
     state: number;
+    base: string;
     stopTimer: any;
-    /**
-     * Proxy for rpc client rpcInvoke.
-     *
-     * @param {String}   serverId remote server id
-     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
-     * @param {Function} cb      callback function
-     */
-    rpcInvoke?: (serverId: string, msg: any, cb: Function) => void;
     /**
      * Initialize the server.
      *
@@ -225,7 +247,7 @@ export declare class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting: any, val: any, attach?: boolean): any;
+    set(setting: any, val: any): this;
     /**
      * Get property from setting
      *
@@ -257,7 +279,7 @@ export declare class Application {
      * @return {app} for chaining
      * @memberOf Application
      */
-    enable(setting: any): any;
+    enable(setting: any): this;
     /**
      * Disable `setting`.
      *
@@ -265,7 +287,7 @@ export declare class Application {
      * @return {app} for chaining
      * @memberOf Application
      */
-    disable(setting: any): any;
+    disable(setting: any): this;
     /**
      * Configure callback for the specified env and server type.
      * When no env is specified that callback will
@@ -403,7 +425,7 @@ export declare class Application {
      *
      * @memberOf Application
      */
-    isFrontend(server: any): boolean;
+    isFrontend(server?: any): boolean;
     /**
      * Check the server whether is a backend server
      *
@@ -457,4 +479,14 @@ export declare class Application {
     removeCrons(crons: any): void;
     astart: () => Promise<{}>;
     aconfigure: (arg1: any, arg2: any) => Promise<{}>;
+    rpc?: any;
+    sysrpc?: any;
+    /**
+     * Proxy for rpc client rpcInvoke.
+     *
+     * @param {String}   serverId remote server id
+     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
+     * @param {Function} cb      callback function
+     */
+    rpcInvoke?: (serverId: string, msg: any, cb: Function) => void;
 }

@@ -39,6 +39,7 @@ export class Server extends EventEmitter
     globalFilterService = null;
     filterService = null;
     handlerService = null;
+    cronHandlers = null;
     crons = [];
     jobs = {};
     state = ST_INITED;

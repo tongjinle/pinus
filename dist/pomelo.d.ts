@@ -43,7 +43,18 @@ export declare class Pomelo {
     /**
      * Event definitions that would be emitted by app.event
      */
-    events: any;
+    events: {
+        ADD_SERVERS: string;
+        REMOVE_SERVERS: string;
+        REPLACE_SERVERS: string;
+        BIND_SESSION: string;
+        UNBIND_SESSION: string;
+        CLOSE_SESSION: string;
+        ADD_CRONS: string;
+        REMOVE_CRONS: string;
+        START_SERVER: string;
+        START_ALL: string;
+    };
     /**
      * auto loaded components
      */

@@ -11,6 +11,7 @@ import { Package, Message } from 'pomelo-protocol';
 import * as coder from './common/coder';
 import { EventEmitter } from 'events';
 import { getLogger } from 'pomelo-logger';
+import { SocketType } from 'dgram';
 var logger = getLogger('pomelo', __filename);
 
 var curId = 1;
@@ -18,12 +19,14 @@ var curId = 1;
 export class UDPConnector extends EventEmitter
 {
     opts: any;
-    type: string;
+    type: SocketType;
     handshake: HandshakeCommand;
     heartbeat: HeartbeatCommand;
     clients: { [key: string]: any };
     host: string;
     port: number;
+    tcpServer : any;
+    socket:any;
 
     constructor(port, host, opts)
     {
@@ -36,7 +39,7 @@ export class UDPConnector extends EventEmitter
             opts.heartbeat = Constants.TIME.DEFAULT_UDP_HEARTBEAT_TIME;
             opts.timeout = Constants.TIME.DEFAULT_UDP_HEARTBEAT_TIMEOUT;
         }
-        this.heartbeat = new HeartbeatCommand(utils.extends(opts, { disconnectOnTimeout: true }));
+        this.heartbeat = new HeartbeatCommand(utils.extendsObject(opts, { disconnectOnTimeout: true }));
         this.clients = {};
         this.host = host;
         this.port = port;

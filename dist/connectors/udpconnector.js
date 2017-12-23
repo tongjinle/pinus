@@ -25,7 +25,7 @@ class UDPConnector extends events_1.EventEmitter {
             opts.heartbeat = Constants.TIME.DEFAULT_UDP_HEARTBEAT_TIME;
             opts.timeout = Constants.TIME.DEFAULT_UDP_HEARTBEAT_TIMEOUT;
         }
-        this.heartbeat = new heartbeat_1.HeartbeatCommand(utils.extends(opts, { disconnectOnTimeout: true }));
+        this.heartbeat = new heartbeat_1.HeartbeatCommand(utils.extendsObject(opts, { disconnectOnTimeout: true }));
         this.clients = {};
         this.host = host;
         this.port = port;

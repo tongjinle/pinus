@@ -17,6 +17,20 @@ import * as appManager from './common/manager/appManager';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import { Component } from './interfaces/Component';
+import { DictionaryComponent } from './components/dictionary';
+import { PushSchedulerComponent } from './components/pushScheduler';
+import { BackendSessionService } from './common/service/backendSessionService';
+import { ChannelService } from './common/service/channelService';
+import { SessionComponent } from './components/session';
+import { ServerComponent } from './components/server';
+import { RemoteComponent } from './components/remote';
+import { ProxyComponent } from './components/proxy';
+import { ProtobufComponent } from './components/protobuf';
+import { MonitorComponent } from './components/monitor';
+import { MasterComponent } from './components/master';
+import { ConnectorComponent } from './components/connector';
+import { ConnectionComponent } from './components/connection';
 
 
 
@@ -32,7 +46,22 @@ export class Application
 {
 
     loaded = [];       // loaded component list
-    components = {};   // name -> component map
+    components : {
+        __backendSession__ ?: BackendSessionService,
+        __channel__ ?: ChannelService,
+        __connection__ ?: ConnectionComponent,
+        __connector__ ?: ConnectorComponent,
+        __dictionary__ ?: DictionaryComponent,
+        __master__ ?: MasterComponent,
+        __monitor__ ?: MonitorComponent,
+        __protobuf__ ?: ProtobufComponent,
+        __proxy__ ?: ProxyComponent,
+        __remote__ ?: RemoteComponent,
+        __server__ ?: ServerComponent,
+        __session__ ?: SessionComponent,
+        __pushScheduler__ ?: PushSchedulerComponent,
+        [key:string] : Component
+    } = {};   // name -> component map
     settings : any= {};     // collection keep set/get
     event = new EventEmitter();  // event object to sub/pub events
 
@@ -50,17 +79,10 @@ export class Application
     lifecycleCbs = {};     // current server custom lifecycle callbacks
     clusterSeq = {};       // cluster id seqence
     state: number;
+    base : string;
 
     stopTimer : any;
 
-    /**
-     * Proxy for rpc client rpcInvoke.
-     *
-     * @param {String}   serverId remote server id
-     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
-     * @param {Function} cb      callback function
-     */
-    rpcInvoke ?: (serverId : string, msg : any, cb : Function)=>void;
     /**
      * Initialize the server.
      *
@@ -70,7 +92,9 @@ export class Application
     {
         opts = opts || {};
         var base = opts.base || path.dirname(require.main.filename);
-        this.set(Constants.RESERVED.BASE, base, true);
+        this.set(Constants.RESERVED.BASE, base);
+        this.base = base;
+        
         appUtil.defaultConfiguration(this);
 
         this.state = STATE_INITED;
@@ -556,17 +580,9 @@ export class Application
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting, val, attach ?: boolean)
+    set(setting, val)
     {
-        if (arguments.length === 1)
-        {
-            return this.settings[setting];
-        }
         this.settings[setting] = val;
-        if (attach)
-        {
-            this[setting] = val;
-        }
         return this;
     };
 
@@ -931,7 +947,7 @@ export class Application
      *
      * @memberOf Application
      */
-    isFrontend(server)
+    isFrontend(server ?: any)
     {
         server = server || this.getCurServer();
         return !!server && server.frontend === 'true';
@@ -1103,6 +1119,18 @@ export class Application
 
     astart = util.promisify(this.start);
     aconfigure = util.promisify(this.configure);
+
+    rpc ?: any;
+    sysrpc ?: any;
+    
+    /**
+     * Proxy for rpc client rpcInvoke.
+     *
+     * @param {String}   serverId remote server id
+     * @param {Object}   msg      rpc message: {serverType: serverType, service: serviceName, method: methodName, args: arguments}
+     * @param {Function} cb      callback function
+     */
+    rpcInvoke ?: (serverId : string, msg : any, cb : Function)=>void;
 }
 var replaceServer = function (slist, serverInfo)
 {

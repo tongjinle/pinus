@@ -38,6 +38,7 @@ import { SerialFilter } from './filters/handler/serial';
 import { TimeoutFilter } from './filters/handler/timeout';
 var Package = require('../package');
 
+import {default as events} from './util/events';
 /**
  * Expose `createApplication()`.
  *
@@ -56,7 +57,7 @@ export class Pomelo
     /**
      * Event definitions that would be emitted by app.event
      */
-    events = require('./util/events');
+    events = events;
 
     /**
      * auto loaded components

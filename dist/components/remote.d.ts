@@ -1,4 +1,6 @@
+import { RemoteServer } from 'pomelo-rpc';
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 /**
  * Remote component factory function
  *
@@ -14,11 +16,12 @@ export default function (app: any, opts: any): RemoteComponent;
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export declare class RemoteComponent {
+export declare class RemoteComponent implements Component {
     private app;
     private opts;
     constructor(app: Application, opts: any);
     name: string;
+    remote: RemoteServer;
     /**
      * Remote component lifecycle function
      *

@@ -9,6 +9,10 @@ import { HandshakeCommand } from './commands/handshake';
 import { HeartbeatCommand } from './commands/heartbeat';
 import * as Kick from './commands/kick';
 import * as coder from './common/coder';
+import { ConnectorComponent } from '../components/connector';
+import { DictionaryComponent } from '../components/dictionary';
+import { ProtobufComponent } from '../components/protobuf';
+import { Component } from '../interfaces/Component';
 
 var curId = 1;
 
@@ -26,8 +30,15 @@ export class HybridConnector extends EventEmitter
     handshake: HandshakeCommand;
     heartbeat: HeartbeatCommand;
     distinctHost: string;
-    ssl: boolean;
+    ssl: tls.TlsOptions;
     switcher: any;
+
+    connector : ConnectorComponent;
+    dictionary : DictionaryComponent;
+    protobuf : ProtobufComponent;
+    decodeIO_protobuf : Component;
+
+    listeningServer : any;
 
     constructor(port, host, opts)
     {

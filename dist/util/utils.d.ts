@@ -47,4 +47,5 @@ export declare function isLocal(host: any): boolean;
 export declare function loadCluster(app: any, server: any, serverMap: any): void;
 export declare function headHandler(headBuffer: any): number;
 export declare function isObject(arg: any): boolean;
+export declare function extendsObject(origin: any, add: any): any;
 export declare var promisify: typeof util.promisify;

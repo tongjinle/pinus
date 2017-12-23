@@ -14,6 +14,7 @@ export declare class Server extends EventEmitter {
     globalFilterService: any;
     filterService: any;
     handlerService: any;
+    cronHandlers: any;
     crons: any[];
     jobs: {};
     state: number;

@@ -27,23 +27,23 @@
     "server"
   ],
   "dependencies": {
-    "socket.io": "1.7.2",
     "async": "0.2.5",
-    "seq-queue": "0.0.5",
-    "crc": "0.2.0",
     "cliff": "0.1.8",
-    "mkdirp": "0.3.3",
-    "pomelo-loader": "1.0.1",
-    "pomelo-rpc": "1.0.1",
-    "pomelo-protocol": "1.0.0",
-    "pomelo-admin": "1.0.1",
-    "pomelo-logger": "1.0.3",
-    "pomelo-scheduler": "1.0.2",
-    "ws": "1.1.1",
-    "pomelo-protobuf": "1.0.0",
-    "node-bignumber": "1.2.1",
     "commander": "2.0.0",
-    "mqtt": "0.3.9"
+    "crc": "0.2.0",
+    "mkdirp": "0.3.3",
+    "mqtt": "0.3.9",
+    "node-bignumber": "1.2.1",
+    "pomelo-admin": "1.0.1",
+    "pomelo-loader": "1.0.1",
+    "pomelo-logger": "1.0.3",
+    "pomelo-protobuf": "1.0.0",
+    "pomelo-protocol": "1.0.0",
+    "pomelo-rpc": "1.0.1",
+    "pomelo-scheduler": "1.0.2",
+    "seq-queue": "0.0.5",
+    "socket.io": "1.7.2",
+    "ws": "1.1.1"
   },
   "bin": {
     "pomelo": "./bin/pomelo"

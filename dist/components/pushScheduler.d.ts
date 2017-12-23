@@ -1,10 +1,13 @@
 import { Application } from '../application';
+import { Component } from '../interfaces/Component';
 export default function (app: any, opts: any): PushSchedulerComponent;
-export declare class PushSchedulerComponent {
+export declare class PushSchedulerComponent implements Component {
     private app;
     scheduler: any;
     constructor(app: Application, opts: any);
     name: string;
+    isSelectable: boolean;
+    selector: Function;
     /**
      * Component lifecycle callback
      *

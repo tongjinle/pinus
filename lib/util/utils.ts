@@ -424,4 +424,14 @@ export function isObject(arg)
     return typeof arg === 'object' && arg !== null;
 };
 
+export function extendsObject(origin, add) {
+    if (!add || !this.isObject(add)) return origin;
+  
+    var keys = Object.keys(add);
+    var i = keys.length;
+    while (i--) {
+      origin[keys[i]] = add[keys[i]];
+    }
+    return origin;
+  };
 export var promisify = util.promisify;

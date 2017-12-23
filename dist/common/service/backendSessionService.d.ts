@@ -1,4 +1,5 @@
 import { Application } from '../../application';
+import { Component } from '../../interfaces/Component';
 /**
  * Service that maintains backend sessions and the communication with frontend
  * servers.
@@ -13,7 +14,7 @@ import { Application } from '../../application';
  * @class
  * @constructor
  */
-export declare class BackendSessionService {
+export declare class BackendSessionService implements Component {
     app: Application;
     name: string;
     constructor(app: any);

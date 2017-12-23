@@ -4,13 +4,14 @@ import { Protobuf} from 'pomelo-protobuf';
 import * as Constants from '../util/constants';
 import * as crypto from 'crypto';
 import { getLogger } from 'pomelo-logger'; import { Application } from '../application';
+import { Component } from '../interfaces/Component';
  var logger = getLogger('pomelo', __filename);
 
 export default function(app, opts) {
     return new ProtobufComponent (app, opts);
 };
 
-export class ProtobufComponent
+export class ProtobufComponent implements Component
 {
     app: Application;
 
@@ -22,6 +23,7 @@ export class ProtobufComponent
     clientProtosPath: string;
 
     protobuf: Protobuf;
+    name = '__protobuf__';
 
     constructor(app, opts)
     {
@@ -43,7 +45,6 @@ export class ProtobufComponent
         this.protobuf = new Protobuf({ encoderProtos: this.serverProtos, decoderProtos: this.clientProtos });
     };
 
-    name = '__protobuf__';
 
     encode(key, msg)
     {

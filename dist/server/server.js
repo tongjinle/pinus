@@ -37,6 +37,7 @@ class Server extends events_2.EventEmitter {
         this.globalFilterService = null;
         this.filterService = null;
         this.handlerService = null;
+        this.cronHandlers = null;
         this.crons = [];
         this.jobs = {};
         this.state = ST_INITED;

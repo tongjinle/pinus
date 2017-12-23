@@ -23,6 +23,7 @@ export class SIOConnector extends EventEmitter
     closeTimeout: number;
     heartbeatTimeout: number;
     heartbeatInterval: number;
+    siosocket : any;
 
 
     constructor(port, host, opts)
@@ -79,6 +80,7 @@ export class SIOConnector extends EventEmitter
         {
             // this.wsocket.sockets.on('connection', function (socket) {
             var siosocket = new SioSocket(curId++, socket);
+            this.siosocket = siosocket;
             self.emit('connection', siosocket);
             siosocket.on('closing', function (reason)
             {
@@ -94,7 +96,7 @@ export class SIOConnector extends EventEmitter
      */
     stop(force, cb)
     {
-        this.wsocket.server.close();
+        this.siosocket.server.close();
         process.nextTick(cb);
     };
 

@@ -55,7 +55,8 @@ class Application {
     init(opts) {
         opts = opts || {};
         var base = opts.base || path.dirname(require.main.filename);
-        this.set(Constants.RESERVED.BASE, base, true);
+        this.set(Constants.RESERVED.BASE, base);
+        this.base = base;
         appUtil.defaultConfiguration(this);
         this.state = STATE_INITED;
         logger.info('application inited: %j', this.getServerId());
@@ -475,14 +476,8 @@ class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting, val, attach) {
-        if (arguments.length === 1) {
-            return this.settings[setting];
-        }
+    set(setting, val) {
         this.settings[setting] = val;
-        if (attach) {
-            this[setting] = val;
-        }
         return this;
     }
     ;

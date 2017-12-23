@@ -10,6 +10,7 @@ export declare class MQTTConnector extends EventEmitter {
     host: string;
     opts: any;
     adaptor: MqttAdaptor;
+    mqttServer: any;
     constructor(port: any, host: any, opts: any);
     /**
      * Start connector to listen the specified port
