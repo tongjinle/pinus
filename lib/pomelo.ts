@@ -131,7 +131,7 @@ export class Pomelo
      * @memberOf Pomelo
      * @api public
      */
-    createApp(opts)
+    createApp(opts ?: any)
     {
         var app = new Application();
         app.init(opts);

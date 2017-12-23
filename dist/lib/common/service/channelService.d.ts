@@ -1,6 +1,7 @@
 import { ChannelRemote } from '../remote/frontend/channelRemote';
 import { Application } from '../../application';
 import { IComponent } from '../../interfaces/Component';
+import { IStore } from '../../interfaces/IStore';
 /**
  * Create and maintain channels for server local.
  *
@@ -16,7 +17,7 @@ export declare class ChannelService implements IComponent {
         [key: string]: Channel;
     };
     prefix: string;
-    store: any;
+    store: IStore;
     broadcastFilter: any;
     channelRemote: ChannelRemote;
     name: string;

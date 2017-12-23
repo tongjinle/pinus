@@ -19,6 +19,8 @@ import { MonitorComponent } from './components/monitor';
 import { MasterComponent } from './components/master';
 import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
+import { SessionService } from './common/service/sessionService';
+export declare type ConfigureCallback = () => void;
 export declare class Application {
     loaded: any[];
     components: {
@@ -37,6 +39,9 @@ export declare class Application {
         __pushScheduler__?: PushSchedulerComponent;
         [key: string]: IComponent;
     };
+    sessionService?: SessionService;
+    backendSessionService?: BackendSessionService;
+    channelService?: ChannelService;
     settings: any;
     event: EventEmitter;
     serverId: any;
@@ -214,14 +219,14 @@ export declare class Application {
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start(cb: any): void;
+    start(cb?: Function): void;
     /**
      * Lifecycle callback for after start.
      *
      * @param  {Function} cb callback function
      * @return {Void}
      */
-    afterStart(cb: any): void;
+    afterStart(cb?: Function): void;
     /**
      * Stop components.
      *
@@ -314,7 +319,9 @@ export declare class Application {
      * @return {Application} for chaining
      * @memberOf Application
      */
-    configure(env: any, type: any, fn: any): this;
+    configure(fn: ConfigureCallback): Application;
+    configure(env: string, fn: ConfigureCallback): Application;
+    configure(env: string, type: string, fn: ConfigureCallback): Application;
     /**
      * Register admin modules. Admin modules is the extends point of the monitor system.
      *
@@ -478,7 +485,7 @@ export declare class Application {
      */
     removeCrons(crons: any): void;
     astart: () => Promise<{}>;
-    aconfigure: (arg1: any, arg2: any) => Promise<{}>;
+    aconfigure: (arg1: string, arg2: string, arg3: ConfigureCallback) => Promise<{}>;
     rpc?: any;
     sysrpc?: any;
     /**

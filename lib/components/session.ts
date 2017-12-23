@@ -2,9 +2,9 @@ import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 
-export default function(app, opts) {
+export default function(app : Application, opts) {
   var cmp = new SessionComponent(app, opts);
-  app.set('sessionService', cmp, true);
+  app.set('sessionService', cmp);
   return cmp;
 };
 

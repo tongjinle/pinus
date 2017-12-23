@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sessionService_1 = require("../common/service/sessionService");
 function default_1(app, opts) {
     var cmp = new SessionComponent(app, opts);
-    app.set('sessionService', cmp, true);
+    app.set('sessionService', cmp);
     return cmp;
 }
 exports.default = default_1;

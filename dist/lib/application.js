@@ -536,32 +536,6 @@ class Application {
         return this.set(setting, false);
     }
     ;
-    /**
-     * Configure callback for the specified env and server type.
-     * When no env is specified that callback will
-     * be invoked for all environments and when no type is specified
-     * that callback will be invoked for all server types.
-     *
-     * Examples:
-     *
-     *  app.configure(function(){
-     *    // executed for all envs and server types
-     *  });
-     *
-     *  app.configure('development', function(){
-     *    // executed development env
-     *  });
-     *
-     *  app.configure('development', 'connector', function(){
-     *    // executed for development env and connector server type
-     *  });
-     *
-     * @param {String} env application environment
-     * @param {Function} fn callback function
-     * @param {String} type server type
-     * @return {Application} for chaining
-     * @memberOf Application
-     */
     configure(env, type, fn) {
         var args = [].slice.call(arguments);
         fn = args.pop();

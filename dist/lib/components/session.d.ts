@@ -1,7 +1,7 @@
 import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-export default function (app: any, opts: any): SessionComponent;
+export default function (app: Application, opts: any): SessionComponent;
 /**
  * Session component. Manage sessions.
  *

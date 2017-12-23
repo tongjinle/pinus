@@ -31,8 +31,10 @@ import { MonitorComponent } from './components/monitor';
 import { MasterComponent } from './components/master';
 import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
+import { SessionService } from './common/service/sessionService';
 
 
+export type ConfigureCallback =  ()=>void;
 
 /**
  * Application states
@@ -62,6 +64,11 @@ export class Application
         __pushScheduler__ ?: PushSchedulerComponent,
         [key:string] : IComponent
     } = {};   // name -> component map
+
+    sessionService ?: SessionService;
+    backendSessionService ?: BackendSessionService;
+    channelService ?: ChannelService;
+
     settings : any= {};     // collection keep set/get
     event = new EventEmitter();  // event object to sub/pub events
 
@@ -430,7 +437,7 @@ export class Application
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start(cb)
+    start(cb ?: Function)
     {
         this.startTime = Date.now();
         if (this.state > STATE_INITED)
@@ -475,7 +482,7 @@ export class Application
      * @param  {Function} cb callback function
      * @return {Void}
      */
-    afterStart(cb)
+    afterStart(cb ?: Function)
     {
         if (this.state !== STATE_START)
         {
@@ -672,7 +679,11 @@ export class Application
      * @return {Application} for chaining
      * @memberOf Application
      */
-    configure(env, type, fn)
+    
+    configure(fn : ConfigureCallback):Application;
+    configure(env : string, fn : ConfigureCallback):Application;
+    configure(env : string, type : string, fn : ConfigureCallback):Application
+    configure(env : string | ConfigureCallback, type ?: string | ConfigureCallback, fn ?: ConfigureCallback):Application
     {
         var args = [].slice.call(arguments);
         fn = args.pop();

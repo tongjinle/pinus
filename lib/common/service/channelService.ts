@@ -3,6 +3,7 @@ import * as utils from '../../util/utils';
 import { ChannelRemote } from '../remote/frontend/channelRemote';
 import { getLogger } from 'pomelo-logger'; import { Application } from '../../application';
 import { IComponent } from '../../interfaces/Component';
+import { IStore } from '../../interfaces/IStore';
  var logger = getLogger('pomelo', __filename);
 
 /**
@@ -25,7 +26,7 @@ export class ChannelService implements IComponent
     app: Application;
     channels: { [key: string]: Channel };
     prefix: string;
-    store: any;
+    store: IStore;
     broadcastFilter: any;
     channelRemote: ChannelRemote;
     name: string;

@@ -5,7 +5,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as Constants from './constants';
 import * as starter from '../master/starter';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pomelo-logger';import { Application } from '../application';
+ var logger = getLogger('pomelo', __filename);
 
 /**
  * Initialize application configuration.
@@ -191,6 +192,12 @@ var loadMaster = function (app)
     app.master = app.get(Constants.RESERVED.MASTER);
 };
 
+function setHelp(app : Application , name : string , value : any)
+{
+    app.set(name , value);
+    (app as any)[name] = value;
+}
+
 /**
  * Process server start command
  */
@@ -203,26 +210,26 @@ var processArgs = function (app, args)
     var type = args.type || Constants.RESERVED.ALL;
     var startId = args.startId;
 
-    app.set(Constants.RESERVED.MAIN, args.main, true);
-    app.set(Constants.RESERVED.SERVER_TYPE, serverType, true);
-    app.set(Constants.RESERVED.SERVER_ID, serverId, true);
-    app.set(Constants.RESERVED.MODE, mode, true);
-    app.set(Constants.RESERVED.TYPE, type, true);
+    setHelp(app, Constants.RESERVED.MAIN, args.main);
+    setHelp(app, Constants.RESERVED.SERVER_TYPE, serverType);
+    setHelp(app, Constants.RESERVED.SERVER_ID, serverId);
+    setHelp(app, Constants.RESERVED.MODE, mode);
+    setHelp(app, Constants.RESERVED.TYPE, type);
     if (!!startId)
     {
-        app.set(Constants.RESERVED.STARTID, startId, true);
+        setHelp(app, Constants.RESERVED.STARTID, startId);
     }
 
     if (masterha === 'true')
     {
         app.master = args;
-        app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
+        setHelp(app, Constants.RESERVED.CURRENT_SERVER, args);
     } else if (serverType !== Constants.RESERVED.MASTER)
     {
-        app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
+        setHelp(app, Constants.RESERVED.CURRENT_SERVER, args);
     } else
     {
-        app.set(Constants.RESERVED.CURRENT_SERVER, app.getMaster(), true);
+        setHelp(app, Constants.RESERVED.CURRENT_SERVER, app.getMaster());
     }
 };
 
@@ -231,7 +238,7 @@ var processArgs = function (app, args)
  */
 var setupEnv = function (app, args)
 {
-    app.set(Constants.RESERVED.ENV, args.env || process.env.NODE_ENV || Constants.RESERVED.ENV_DEV, true);
+    setHelp(app, Constants.RESERVED.ENV, args.env || process.env.NODE_ENV || Constants.RESERVED.ENV_DEV);
 };
 
 /**
