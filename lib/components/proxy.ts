@@ -5,7 +5,7 @@
 import * as crc from 'crc';
 import * as utils from '../util/utils';
 import { default as events } from '../util/events';
-import { Client , createClient} from 'pomelo-rpc';
+import { RpcClient , createClient} from 'pomelo-rpc';
 import * as pathUtil from '../util/pathUtil';
 import * as Constants from '../util/constants';
 import { getLogger } from 'pomelo-logger';
@@ -51,7 +51,7 @@ export class ProxyComponent implements IComponent
 {
     app: Application;
     opts: any;
-    client: Client;
+    client: RpcClient;
     constructor(app, opts)
     {
         this.app = app;
