@@ -1,6 +1,6 @@
 import { ConnectionService } from '../common/service/connectionService';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 
 /**
  * Connection component for statistics connection status of frontend servers
@@ -9,7 +9,7 @@ export default function(app) {
     return new ConnectionComponent(app);
 };
 
-export class ConnectionComponent implements Component
+export class ConnectionComponent implements IComponent
 {
     app: Application;
     service: ConnectionService;

@@ -5,7 +5,7 @@
  * MIT Licensed
  */
 import { EventEmitter } from 'events';
-import { Component } from './interfaces/Component';
+import { IComponent } from './interfaces/Component';
 import { DictionaryComponent } from './components/dictionary';
 import { PushSchedulerComponent } from './components/pushScheduler';
 import { BackendSessionService } from './common/service/backendSessionService';
@@ -35,7 +35,7 @@ export declare class Application {
         __server__?: ServerComponent;
         __session__?: SessionComponent;
         __pushScheduler__?: PushSchedulerComponent;
-        [key: string]: Component;
+        [key: string]: IComponent;
     };
     settings: any;
     event: EventEmitter;

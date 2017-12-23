@@ -1,6 +1,6 @@
 import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 
 export default function(app, opts) {
   var cmp = new SessionComponent(app, opts);
@@ -14,7 +14,7 @@ export default function(app, opts) {
  * @param {Object} app  current application context
  * @param {Object} opts attach parameters
  */
-export class SessionComponent implements Component
+export class SessionComponent implements IComponent
 {
     app: Application;
     service: SessionService;

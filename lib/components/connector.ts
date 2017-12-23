@@ -6,7 +6,7 @@ import { default as events } from '../util/events';
 import * as utils from '../util/utils';
 import { Application } from '../application';
 import { ConnectionComponent } from './connection';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 import { PushSchedulerComponent } from './pushScheduler';
 
 export default function (app, opts)
@@ -22,7 +22,7 @@ export default function (app, opts)
  *                      opts.connector {Object} provides low level network and protocol details implementation between server and clients.
  */
 
-export class ConnectorComponent implements Component
+export class ConnectorComponent implements IComponent
 {
     app: Application;
     connector: any;

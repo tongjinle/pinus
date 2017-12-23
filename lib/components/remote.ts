@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as pathUtil from '../util/pathUtil';
 import { createServer , Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 
 /**
  * Remote component factory function
@@ -37,7 +37,7 @@ export default function (app, opts)
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export class RemoteComponent  implements Component
+export class RemoteComponent  implements IComponent
 {
 
     constructor(private app: Application, private opts: any)

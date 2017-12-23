@@ -1,4 +1,4 @@
-export interface Component {
+export interface IComponent {
     name: string;
     /**
      * Component lifecycle callback

@@ -1,6 +1,6 @@
 import { SessionService } from '../common/service/sessionService';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 export default function (app: any, opts: any): SessionComponent;
 /**
  * Session component. Manage sessions.
@@ -8,7 +8,7 @@ export default function (app: any, opts: any): SessionComponent;
  * @param {Object} app  current application context
  * @param {Object} opts attach parameters
  */
-export declare class SessionComponent implements Component {
+export declare class SessionComponent implements IComponent {
     app: Application;
     service: SessionService;
     constructor(app: any, opts: any);

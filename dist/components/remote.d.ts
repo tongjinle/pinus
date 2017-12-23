@@ -1,6 +1,6 @@
 import { Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 /**
  * Remote component factory function
  *
@@ -16,7 +16,7 @@ export default function (app: any, opts: any): RemoteComponent;
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export declare class RemoteComponent implements Component {
+export declare class RemoteComponent implements IComponent {
     private app;
     private opts;
     constructor(app: Application, opts: any);

@@ -3,7 +3,7 @@
  * Load and start monitor client.
  */
 import { Monitor } from '../monitor/monitor';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 /**
  * Component factory function
  *
@@ -11,7 +11,7 @@ import { Component } from '../interfaces/Component';
  * @return {Object}      component instances
  */
 export default function (app: any, opts: any): MonitorComponent;
-export declare class MonitorComponent implements Component {
+export declare class MonitorComponent implements IComponent {
     monitor: Monitor;
     constructor(app: any, opts: any);
     name: string;

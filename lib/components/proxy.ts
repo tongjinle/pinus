@@ -10,7 +10,7 @@ import * as pathUtil from '../util/pathUtil';
 import * as Constants from '../util/constants';
 import { getLogger } from 'pomelo-logger';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
 /**
@@ -47,7 +47,7 @@ export default function (app, opts)
  * @param {Object} app  current application context
  * @param {Object} opts construct parameters
  */
-export class ProxyComponent implements Component
+export class ProxyComponent implements IComponent
 {
     app: Application;
     opts: any;

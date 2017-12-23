@@ -3,7 +3,7 @@
  * Load and start monitor client.
  */
 import { Monitor } from '../monitor/monitor';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 
 
 
@@ -18,7 +18,7 @@ export default function (app, opts)
     return new MonitorComponent(app, opts);
 };
 
-export class MonitorComponent implements Component
+export class MonitorComponent implements IComponent
 {
     monitor: Monitor;
     constructor(app, opts)

@@ -1,6 +1,6 @@
 import { ChannelRemote } from '../remote/frontend/channelRemote';
 import { Application } from '../../application';
-import { Component } from '../../interfaces/Component';
+import { IComponent } from '../../interfaces/Component';
 /**
  * Create and maintain channels for server local.
  *
@@ -10,7 +10,7 @@ import { Component } from '../../interfaces/Component';
  * @class
  * @constructor
  */
-export declare class ChannelService implements Component {
+export declare class ChannelService implements IComponent {
     app: Application;
     channels: {
         [key: string]: Channel;

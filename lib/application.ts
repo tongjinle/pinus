@@ -17,7 +17,7 @@ import * as appManager from './common/manager/appManager';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
-import { Component } from './interfaces/Component';
+import { IComponent } from './interfaces/Component';
 import { DictionaryComponent } from './components/dictionary';
 import { PushSchedulerComponent } from './components/pushScheduler';
 import { BackendSessionService } from './common/service/backendSessionService';
@@ -60,7 +60,7 @@ export class Application
         __server__ ?: ServerComponent,
         __session__ ?: SessionComponent,
         __pushScheduler__ ?: PushSchedulerComponent,
-        [key:string] : Component
+        [key:string] : IComponent
     } = {};   // name -> component map
     settings : any= {};     // collection keep set/get
     event = new EventEmitter();  // event object to sub/pub events

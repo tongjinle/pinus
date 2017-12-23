@@ -1,5 +1,5 @@
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 export default function (app: any, opts: any): ConnectorComponent;
 /**
  * Connector component. Receive client requests and attach session with socket.
@@ -8,7 +8,7 @@ export default function (app: any, opts: any): ConnectorComponent;
  * @param {Object} opts attach parameters
  *                      opts.connector {Object} provides low level network and protocol details implementation between server and clients.
  */
-export declare class ConnectorComponent implements Component {
+export declare class ConnectorComponent implements IComponent {
     app: Application;
     connector: any;
     encode: any;

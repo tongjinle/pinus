@@ -2,7 +2,7 @@
  * Component for master.
  */
 import { MasterServer } from '../master/master';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 /**
  * Component factory function
  *
@@ -15,7 +15,7 @@ export default function (app: any, opts: any): MasterComponent;
 *
 * @param {Object} app  current application context
 */
-export declare class MasterComponent implements Component {
+export declare class MasterComponent implements IComponent {
     name: string;
     master: MasterServer;
     constructor(app: any, opts: any);

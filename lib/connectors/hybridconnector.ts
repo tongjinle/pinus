@@ -12,7 +12,7 @@ import * as coder from './common/coder';
 import { ConnectorComponent } from '../components/connector';
 import { DictionaryComponent } from '../components/dictionary';
 import { ProtobufComponent } from '../components/protobuf';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 
 var curId = 1;
 
@@ -36,7 +36,7 @@ export class HybridConnector extends EventEmitter
     connector : ConnectorComponent;
     dictionary : DictionaryComponent;
     protobuf : ProtobufComponent;
-    decodeIO_protobuf : Component;
+    decodeIO_protobuf : IComponent;
 
     listeningServer : any;
 

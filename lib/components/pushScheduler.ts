@@ -5,7 +5,7 @@
 import * as  DefaultScheduler from '../pushSchedulers/direct';
 import { getLogger } from 'pomelo-logger';
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 var logger = getLogger('pomelo', __filename);
 
 export default function (app, opts)
@@ -13,7 +13,7 @@ export default function (app, opts)
     return new PushSchedulerComponent(app, opts);
 };
 
-export class PushSchedulerComponent implements Component
+export class PushSchedulerComponent implements IComponent
 {
     scheduler : any;
     constructor(private app : Application, opts)

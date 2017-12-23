@@ -1,7 +1,7 @@
 import { Application } from '../application';
-import { Component } from '../interfaces/Component';
+import { IComponent } from '../interfaces/Component';
 export default function (app: any, opts: any): PushSchedulerComponent;
-export declare class PushSchedulerComponent implements Component {
+export declare class PushSchedulerComponent implements IComponent {
     private app;
     scheduler: any;
     constructor(app: Application, opts: any);
