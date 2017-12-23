@@ -109,7 +109,7 @@ var genRemote = function (app, opts) {
         return opts.rpcServer.create(opts);
     }
     else {
-        return pomelo_rpc_1.RemoteServer.create(opts);
+        return pomelo_rpc_1.createServer(opts);
     }
 };
 //# sourceMappingURL=remote.js.map

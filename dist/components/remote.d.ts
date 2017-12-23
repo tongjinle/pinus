@@ -1,4 +1,4 @@
-import { RemoteServer } from 'pomelo-rpc';
+import { Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
 import { Component } from '../interfaces/Component';
 /**
@@ -21,7 +21,7 @@ export declare class RemoteComponent implements Component {
     private opts;
     constructor(app: Application, opts: any);
     name: string;
-    remote: RemoteServer;
+    remote: Gateway;
     /**
      * Remote component lifecycle function
      *

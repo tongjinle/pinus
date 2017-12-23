@@ -5,7 +5,7 @@
 import * as crc from 'crc';
 import * as utils from '../util/utils';
 import { default as events } from '../util/events';
-import { Client } from 'pomelo-rpc';
+import { Client , createClient} from 'pomelo-rpc';
 import * as pathUtil from '../util/pathUtil';
 import * as Constants from '../util/constants';
 import { getLogger } from 'pomelo-logger';
@@ -208,7 +208,7 @@ var genRpcClient = function (app, opts)
         return opts.rpcClient.create(opts);
     } else
     {
-        return Client.create(opts);
+        return createClient(opts);
     }
 };
 

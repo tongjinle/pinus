@@ -136,7 +136,7 @@ export function optComponents(comps, method, cb)
         {
             done();
         }
-    }, function (err)
+    }, function (err : Error)
     {
         if (err)
         {

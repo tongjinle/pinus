@@ -41,7 +41,7 @@ export function transaction(name, conditions, handlers, retry)
         method(cb);
         transactionLogger.info('[%s]:[%s] condition is executed.', name, cnames[i]);
         i++;
-    }, function (err)
+    }, function (err : Error)
     {
         if (err)
         {
@@ -92,7 +92,7 @@ export function transaction(name, conditions, handlers, retry)
                             method(cb);
                             transactionLogger.info('[%s]:[%s] handler is executed.', name, dnames[j]);
                             j++;
-                        }, function (err)
+                        }, function (err : Error)
                         {
                             if (err)
                             {

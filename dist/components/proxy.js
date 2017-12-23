@@ -177,7 +177,7 @@ var genRpcClient = function (app, opts) {
         return opts.rpcClient.create(opts);
     }
     else {
-        return pomelo_rpc_1.Client.create(opts);
+        return pomelo_rpc_1.createClient(opts);
     }
 };
 /**

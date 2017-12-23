@@ -4,7 +4,7 @@
  */
 import * as fs from 'fs';
 import * as pathUtil from '../util/pathUtil';
-import { RemoteServer } from 'pomelo-rpc';
+import { createServer , Gateway } from 'pomelo-rpc';
 import { Application } from '../application';
 import { Component } from '../interfaces/Component';
 
@@ -45,7 +45,7 @@ export class RemoteComponent  implements Component
     };
 
     name = '__remote__';
-    remote : RemoteServer;
+    remote : Gateway;
 
     /**
      * Remote component lifecycle function
@@ -125,6 +125,6 @@ var genRemote = function (app, opts)
         return opts.rpcServer.create(opts);
     } else
     {
-        return RemoteServer.create(opts);
+        return createServer(opts);
     }
 };
