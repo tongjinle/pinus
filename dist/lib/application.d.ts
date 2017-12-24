@@ -22,6 +22,8 @@ import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
 import { IModule, IModuleFactory } from 'pomelo-admin';
+import { ChannelComponent } from './components/channel';
+import { BackendSessionComponent } from './components/backendSession';
 export declare type ConfigureCallback = () => void;
 export declare type AConfigureFunc1 = () => Promise<void>;
 export declare type AConfigureFunc2 = (env: string) => Promise<void>;
@@ -29,8 +31,8 @@ export declare type AConfigureFunc3 = (env: string, type: string) => Promise<voi
 export declare class Application {
     loaded: any[];
     components: {
-        __backendSession__?: BackendSessionService;
-        __channel__?: ChannelService;
+        __backendSession__?: BackendSessionComponent;
+        __channel__?: ChannelComponent;
         __connection__?: ConnectionComponent;
         __connector__?: ConnectorComponent;
         __dictionary__?: DictionaryComponent;

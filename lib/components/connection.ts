@@ -4,15 +4,12 @@ import { IComponent } from '../interfaces/Component';
 
 
 
-export class ConnectionComponent implements IComponent
+export class ConnectionComponent extends ConnectionService implements IComponent
 {
-    app: Application;
-    service: ConnectionService;
     name = '__connection__';
 
     constructor(app)
     {
-        this.app = app;
-        this.service = new ConnectionService(app);
+        super(app);
     };
 }

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const backendSessionService_1 = require("../common/service/backendSessionService");
-class BackendSessionComponent {
+class BackendSessionComponent extends backendSessionService_1.BackendSessionService {
     constructor(app) {
+        super(app);
         this.name = '__backendSession__';
-        var service = new backendSessionService_1.BackendSessionService(app);
         // export backend session service to the application context.
-        app.set('backendSessionService', service, true);
+        app.set('backendSessionService', this, true);
     }
     ;
 }

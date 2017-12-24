@@ -35,6 +35,8 @@ import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
 import { isFunction } from 'util';
 import { IModule, IModuleFactory } from 'pomelo-admin';
+import { ChannelComponent } from './components/channel';
+import { BackendSessionComponent } from './components/backendSession';
 
 
 export type ConfigureCallback =  ()=>void;
@@ -54,8 +56,8 @@ export class Application
 
     loaded = [];       // loaded component list
     components : {
-        __backendSession__ ?: BackendSessionService,
-        __channel__ ?: ChannelService,
+        __backendSession__ ?: BackendSessionComponent,
+        __channel__ ?: ChannelComponent,
         __connection__ ?: ConnectionComponent,
         __connector__ ?: ConnectorComponent,
         __dictionary__ ?: DictionaryComponent,

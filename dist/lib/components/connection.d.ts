@@ -1,9 +1,6 @@
 import { ConnectionService } from '../common/service/connectionService';
-import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-export declare class ConnectionComponent implements IComponent {
-    app: Application;
-    service: ConnectionService;
+export declare class ConnectionComponent extends ConnectionService implements IComponent {
     name: string;
     constructor(app: any);
 }

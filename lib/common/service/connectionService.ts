@@ -10,6 +10,7 @@ export class ConnectionService
     loginedCount = 0;
     logined = {};
 
+
     constructor(app)
     {
         this.serverId = app.getServerId();

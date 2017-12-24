@@ -3,14 +3,13 @@ import { IComponent } from '../interfaces/Component';
 import { Application } from '../application';
 
 
-export class BackendSessionComponent implements IComponent
+export class BackendSessionComponent extends BackendSessionService implements IComponent
 {
   constructor(app: Application) 
   {
-    var service = new BackendSessionService(app);
+    super(app);
     // export backend session service to the application context.
-    app.set('backendSessionService', service, true);
-
+    app.set('backendSessionService', this, true);
   };
 
   name = '__backendSession__';
