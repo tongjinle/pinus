@@ -6,7 +6,7 @@ class BackendSessionComponent {
         this.name = '__backendSession__';
         var service = new backendSessionService_1.BackendSessionService(app);
         // export backend session service to the application context.
-        app.set('backendSessionService', service);
+        app.set('backendSessionService', service, true);
     }
     ;
 }

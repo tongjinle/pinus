@@ -49,7 +49,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    get(frontendId, sid, cb)
+    get(frontendId, sid, cb : (err : Error | null , result ?: BackendSession)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -68,7 +68,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    getByUid(frontendId, uid, cb)
+    getByUid(frontendId, uid, cb : (err : Error | null , result ?: BackendSession[])=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -87,7 +87,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    kickBySid(frontendId, sid, reason, cb)
+    kickBySid(frontendId, sid, reason, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -113,7 +113,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    kickByUid(frontendId, uid, reason, cb)
+    kickByUid(frontendId, uid, reason, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -141,7 +141,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    bind(frontendId, sid, uid, cb)
+    bind(frontendId, sid, uid, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -162,7 +162,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    unbind(frontendId, sid, uid, cb)
+    unbind(frontendId, sid, uid, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -183,7 +183,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    push(frontendId, sid, key, value, cb)
+    push(frontendId, sid, key, value, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -203,7 +203,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    pushAll(frontendId, sid, settings, cb)
+    pushAll(frontendId, sid, settings, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -212,10 +212,14 @@ export class BackendSessionService implements IComponent
         rpcInvoke(this.app, frontendId, namespace, service, method, args, cb);
     };
 
-    aget = utils.promisify(this.get.bind(this));
-    agetByUid = utils.promisify(this.getByUid.bind(this));
-    akickBySid = utils.promisify(this.kickBySid.bind(this));
-    akickByUid = utils.promisify(this.kickByUid.bind(this));
+    aget = utils.promisify(this.get);
+    agetByUid = utils.promisify(this.getByUid);
+    akickBySid = utils.promisify(this.kickBySid);
+    akickByUid = utils.promisify(this.kickByUid);
+    abind = utils.promisify(this.bind);
+    aunbind = utils.promisify(this.unbind);
+    apush = utils.promisify(this.push);
+    apushAll = utils.promisify(this.pushAll);
 }
 
 var rpcInvoke = function(app, sid, namespace, service, method, args, cb) {
@@ -264,7 +268,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    bind(uid, cb)
+    bind(uid, cb : (err : Error | null , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.bind(this.frontendId, this.id, uid, function (err)
@@ -286,7 +290,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    unbind(uid, cb)
+    unbind(uid, cb : (err : Error | null , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.unbind(this.frontendId, this.id, uid, function (err)
@@ -327,7 +331,7 @@ export class BackendSession
      * @param  {String}   key key
      * @param  {Function} cb  callback function
      */
-    push(key, cb)
+    push(key, cb : (err : Error | null , result ?: void)=>void)
     {
         this.__sessionService__.push(this.frontendId, this.id, key, this.get(key), cb);
     };
@@ -337,15 +341,15 @@ export class BackendSession
      *
      * @param  {Function} cb callback function
      */
-    pushAll(cb)
+    pushAll(cb : (err : Error | null , result ?: void)=>void)
     {
         this.__sessionService__.pushAll(this.frontendId, this.id, this.settings, cb);
     };
 
-    abind = utils.promisify(this.bind.bind(this));
-    aunbind = utils.promisify(this.unbind.bind(this));
-    apush = utils.promisify(this.push.bind(this));
-    apushAll = utils.promisify(this.pushAll.bind(this));
+    abind = utils.promisify(this.bind);
+    aunbind = utils.promisify(this.unbind);
+    apush = utils.promisify(this.push);
+    apushAll = utils.promisify(this.pushAll);
 
     /**
      * Export the key/values for serialization.

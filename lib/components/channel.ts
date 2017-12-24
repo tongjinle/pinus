@@ -7,7 +7,7 @@ export class ChannelComponent implements IComponent
   constructor(app: Application, opts)
   {
     var service = new ChannelService(app, opts);
-    app.set('channelService', service);
+    app.set('channelService', service, true);
   };
   name = '__channel__';
 }

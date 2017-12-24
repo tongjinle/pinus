@@ -16,7 +16,7 @@ export class SessionComponent extends SessionService implements IComponent
     {
         super(opts);
         this.app = app;
-        app.set('sessionService', this);
+        app.set('sessionService', this, true);
     };
 
     name = '__session__';

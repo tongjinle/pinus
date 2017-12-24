@@ -38,7 +38,7 @@ export class Server extends EventEmitter
 
     globalFilterService = null;
     filterService = null;
-    handlerService = null;
+    handlerService : HandlerService = null;
     cronHandlers = null;
     crons = [];
     jobs = {};
@@ -440,7 +440,7 @@ var doForward = function (app, msg, session, routeRecord, cb)
     }
 };
 
-var doHandle = function (server, msg, session, routeRecord, cb)
+var doHandle = function (server : Server, msg, session, routeRecord, cb)
 {
     var originMsg = msg;
     msg = msg.body || {};

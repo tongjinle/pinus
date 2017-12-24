@@ -14,6 +14,6 @@ export declare class MsgRemote {
      * @param session {Object} session object for current request
      * @param cb {Function} callback function
      */
-    forwardMessage: (arg1: any, arg2: any) => Promise<{}>;
-    forwardMessage2: (arg1: any, arg2: any, arg3: any, arg4: any, arg5: any) => Promise<{}>;
+    forwardMessage: (arg1: any, arg2: any) => Promise<any>;
+    forwardMessage2: (arg1: any, arg2: any, arg3: any, arg4: any, arg5: any) => Promise<any>;
 }

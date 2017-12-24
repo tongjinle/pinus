@@ -12,7 +12,7 @@ export declare class ChannelRemote {
      * @param  {Object}   opts  push options
      * @param  {Function} cb    callback function
      */
-    pushMessage: (arg1: any, arg2: any, arg3: any, arg4: any) => Promise<{}>;
+    pushMessage: (arg1: any, arg2: any, arg3: any, arg4: any) => Promise<any>;
     /**
      * Broadcast to all the client connectd with current frontend server.
      *
@@ -21,5 +21,5 @@ export declare class ChannelRemote {
      * @param  {Boolean}   opts   broadcast options.
      * @param  {Function}  cb     callback function
      */
-    broadcast: (arg1: any, arg2: any, arg3: any) => Promise<{}>;
+    broadcast: (arg1: any, arg2: any, arg3: any) => Promise<any>;
 }

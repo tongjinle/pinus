@@ -21,8 +21,8 @@ var ST_DESTROYED = 1;
  */
 class ChannelService {
     constructor(app, opts) {
-        this.apushMessageByUids = utils.promisify(this.pushMessageByUids.bind(this));
-        this.abroadcast = utils.promisify(this.broadcast.bind(this));
+        this.apushMessageByUids = utils.promisify(this.pushMessageByUids);
+        this.abroadcast = utils.promisify(this.broadcast);
         opts = opts || {};
         this.app = app;
         this.channels = {};
@@ -196,7 +196,7 @@ exports.ChannelService = ChannelService;
  */
 class Channel {
     constructor(name, service) {
-        this.apushMessage = utils.promisify(this.pushMessage.bind(this));
+        this.apushMessage = utils.promisify(this.pushMessage);
         this.name = name;
         this.groups = {}; // group map for uids. key: sid, value: [uid]
         this.records = {}; // member records. key: uid

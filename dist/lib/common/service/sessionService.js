@@ -21,8 +21,12 @@ var ST_CLOSED = 1;
  */
 class SessionService {
     constructor(opts) {
-        this.akick = utils.promisify(this.kick.bind(this));
-        this.akickBySessionId = utils.promisify(this.kickBySessionId.bind(this));
+        this.akick = utils.promisify(this.kick);
+        this.akickBySessionId = utils.promisify(this.kickBySessionId);
+        this.abind = utils.promisify(this.bind);
+        this.aunbind = utils.promisify(this.unbind);
+        this.aimport = utils.promisify(this.import);
+        this.aimportAll = utils.promisify(this.importAll);
         opts = opts || {};
         this.singleSession = opts.singleSession;
         this.sessions = {}; // sid -> session
@@ -64,7 +68,7 @@ class SessionService {
         if (session.uid) {
             if (session.uid === uid) {
                 // already bound with the same uid
-                cb();
+                cb(null);
                 return;
             }
             // already bound with other uid
@@ -529,10 +533,10 @@ exports.Session = Session;
 class FrontendSession extends events_1.EventEmitter {
     constructor(session) {
         super();
-        this.abind = utils.promisify(this.bind.bind(this));
-        this.aunbind = utils.promisify(this.unbind.bind(this));
-        this.apush = utils.promisify(this.push.bind(this));
-        this.apushAll = utils.promisify(this.pushAll.bind(this));
+        this.abind = utils.promisify(this.bind);
+        this.aunbind = utils.promisify(this.unbind);
+        this.apush = utils.promisify(this.push);
+        this.apushAll = utils.promisify(this.pushAll);
         clone(session, this, FRONTEND_SESSION_FIELDS);
         // deep copy for settings
         this.settings = dclone(session.settings);

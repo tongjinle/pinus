@@ -61,7 +61,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    bind(sid, uid, cb)
+    bind(sid, uid, cb : (err : Error | null , result ?: void)=>void)
     {
         var session = this.sessions[sid];
 
@@ -79,7 +79,7 @@ export class SessionService
             if (session.uid === uid)
             {
                 // already bound with the same uid
-                cb();
+                cb(null);
                 return;
             }
 
@@ -132,7 +132,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    unbind(sid, uid, cb)
+    unbind(sid, uid, cb : (err ?: Error , result ?: void)=>void)
     {
         var session = this.sessions[sid];
 
@@ -250,7 +250,7 @@ export class SessionService
      *
      * @api private
      */
-    import(sid, key, value, cb)
+    import(sid, key, value, cb : (err ?: Error , result ?: void)=>void)
     {
         var session = this.sessions[sid];
         if (!session)
@@ -268,7 +268,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    importAll(sid, settings, cb)
+    importAll(sid, settings, cb : (err ?: Error , result ?: void)=>void)
     {
         var session = this.sessions[sid];
         if (!session)
@@ -292,7 +292,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    kick(uid, reason, cb)
+    kick(uid : string, reason ?: string, cb ?: (err ?: Error , result ?: void)=>void)
     {
         // compatible for old kick(uid, cb);
         if (typeof reason === 'function')
@@ -338,7 +338,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    kickBySessionId(sid, reason, cb)
+    kickBySessionId(sid : number, reason ?: string, cb ?: (err ?: Error , result ?: void)=>void)
     {
         if (typeof reason === 'function')
         {
@@ -476,8 +476,12 @@ export class SessionService
         return utils.size(this.sessions);
     };
 
-    akick = utils.promisify(this.kick.bind(this));
-    akickBySessionId = utils.promisify(this.kickBySessionId.bind(this));
+    akick = utils.promisify(this.kick);
+    akickBySessionId = utils.promisify(this.kickBySessionId);
+    abind = utils.promisify(this.bind);
+    aunbind = utils.promisify(this.unbind);
+    aimport = utils.promisify(this.import);
+    aimportAll = utils.promisify(this.importAll);
 }
 /**
  * Send message to the client that associated with the session.
@@ -671,7 +675,7 @@ export class FrontendSession extends EventEmitter
     };
 
 
-    bind(uid, cb)
+    bind(uid, cb : (err ?: Error , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.bind(this.id, uid, function (err)
@@ -684,7 +688,7 @@ export class FrontendSession extends EventEmitter
         });
     };
 
-    unbind(uid, cb)
+    unbind(uid, cb : (err ?: Error , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.unbind(this.id, uid, function (err)
@@ -707,12 +711,12 @@ export class FrontendSession extends EventEmitter
         return this.settings[key];
     };
 
-    push(key, cb)
+    push(key, cb : (err ?: Error , result ?: void)=>void)
     {
         this.__sessionService__.import(this.id, key, this.get(key), cb);
     };
 
-    pushAll(cb)
+    pushAll(cb : (err ?: Error , result ?: void)=>void)
     {
         this.__sessionService__.importAll(this.id, this.settings, cb);
     };
@@ -724,10 +728,10 @@ export class FrontendSession extends EventEmitter
     };
 
 
-    abind = utils.promisify(this.bind.bind(this));
-    aunbind = utils.promisify(this.unbind.bind(this));
-    apush = utils.promisify(this.push.bind(this));
-    apushAll = utils.promisify(this.pushAll.bind(this));
+    abind = utils.promisify(this.bind);
+    aunbind = utils.promisify(this.unbind);
+    apush = utils.promisify(this.push);
+    apushAll = utils.promisify(this.pushAll);
 
     /**
      * Export the key/values for serialization.

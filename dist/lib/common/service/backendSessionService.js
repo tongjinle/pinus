@@ -21,10 +21,14 @@ var EXPORTED_FIELDS = ['id', 'frontendId', 'uid', 'settings'];
  */
 class BackendSessionService {
     constructor(app) {
-        this.aget = utils.promisify(this.get.bind(this));
-        this.agetByUid = utils.promisify(this.getByUid.bind(this));
-        this.akickBySid = utils.promisify(this.kickBySid.bind(this));
-        this.akickByUid = utils.promisify(this.kickByUid.bind(this));
+        this.aget = utils.promisify(this.get);
+        this.agetByUid = utils.promisify(this.getByUid);
+        this.akickBySid = utils.promisify(this.kickBySid);
+        this.akickByUid = utils.promisify(this.kickByUid);
+        this.abind = utils.promisify(this.bind);
+        this.aunbind = utils.promisify(this.unbind);
+        this.apush = utils.promisify(this.push);
+        this.apushAll = utils.promisify(this.pushAll);
         this.app = app;
     }
     ;
@@ -219,10 +223,10 @@ var rpcInvoke = function (app, sid, namespace, service, method, args, cb) {
  */
 class BackendSession {
     constructor(opts, service) {
-        this.abind = utils.promisify(this.bind.bind(this));
-        this.aunbind = utils.promisify(this.unbind.bind(this));
-        this.apush = utils.promisify(this.push.bind(this));
-        this.apushAll = utils.promisify(this.pushAll.bind(this));
+        this.abind = utils.promisify(this.bind);
+        this.aunbind = utils.promisify(this.unbind);
+        this.apush = utils.promisify(this.push);
+        this.apushAll = utils.promisify(this.pushAll);
         for (var f in opts) {
             this[f] = opts[f];
         }

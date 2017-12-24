@@ -444,7 +444,7 @@ export class Application
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start(cb ?: Function)
+    start(cb ?: (err ?: Error , result ?: void)=>void)
     {
         this.startTime = Date.now();
         if (this.state > STATE_INITED)
@@ -594,9 +594,13 @@ export class Application
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting, val)
+    set(setting, val, attach?:boolean)
     {
         this.settings[setting] = val;
+        if(attach)
+        {
+            this[setting] = val;
+        }
         return this;
     };
 
@@ -1144,8 +1148,8 @@ export class Application
         this.event.emit(events.REMOVE_CRONS, crons);
     };
 
-    astart = util.promisify(this.start);
-    aconfigure = util.promisify(this.configure);
+    astart = utils.promisify(this.start);
+    aconfigure = utils.promisify(this.configure);
 
     rpc ?: any;
     sysrpc ?: any;

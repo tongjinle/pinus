@@ -12,7 +12,7 @@ class SessionComponent extends sessionService_1.SessionService {
         super(opts);
         this.name = '__session__';
         this.app = app;
-        app.set('sessionService', this);
+        app.set('sessionService', this, true);
     }
     ;
 }

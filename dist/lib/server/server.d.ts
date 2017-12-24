@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { HandlerService } from '../common/service/handlerService';
 import { Application } from '../application';
 import { EventEmitter } from 'events';
 /**
@@ -13,7 +14,7 @@ export declare class Server extends EventEmitter {
     opts: any;
     globalFilterService: any;
     filterService: any;
-    handlerService: any;
+    handlerService: HandlerService;
     cronHandlers: any;
     crons: any[];
     jobs: {};

@@ -57,7 +57,7 @@ export declare class ChannelService implements IComponent {
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids(route: any, msg: any, uids: any, opts: any, cb: any): void;
+    pushMessageByUids(route: any, msg: any, uids: any, opts?: any, cb?: (err?: Error, result?: void) => void): void;
     /**
      * Broadcast message to all the connected clients.
      *
@@ -70,9 +70,9 @@ export declare class ChannelService implements IComponent {
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast(stype: any, route: any, msg: any, opts: any, cb: any): void;
-    apushMessageByUids: Function;
-    abroadcast: Function;
+    broadcast(stype: any, route: any, msg: any, opts?: any, cb?: (err?: Error, result?: void) => void): void;
+    apushMessageByUids: (arg1: any, arg2: any) => Promise<{}>;
+    abroadcast: (arg1: any, arg2: any) => Promise<{}>;
 }
 /**
  * Channel maintains the receiver collection for a subject. You can
@@ -148,6 +148,6 @@ export declare class Channel {
      * @param {Object} opts user-defined push options, optional
      * @param {Function} cb callback function
      */
-    pushMessage(route: any, msg: any, opts: any, cb: any): void;
-    apushMessage: Function;
+    pushMessage(route: any, msg: any, opts?: any, cb?: (err: Error | null, result?: void) => void): void;
+    apushMessage: (arg1: any) => Promise<{}>;
 }

@@ -5,7 +5,7 @@ class ChannelComponent {
     constructor(app, opts) {
         this.name = '__channel__';
         var service = new channelService_1.ChannelService(app, opts);
-        app.set('channelService', service);
+        app.set('channelService', service, true);
     }
     ;
 }

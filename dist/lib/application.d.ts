@@ -226,7 +226,7 @@ export declare class Application {
      * @param  {Function} cb callback function
      * @memberOf Application
      */
-    start(cb?: Function): void;
+    start(cb?: (err?: Error, result?: void) => void): void;
     /**
      * Lifecycle callback for after start.
      *
@@ -259,7 +259,7 @@ export declare class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting: any, val: any): this;
+    set(setting: any, val: any, attach?: boolean): this;
     /**
      * Get property from setting
      *
@@ -494,7 +494,7 @@ export declare class Application {
      * @memberOf Application
      */
     removeCrons(crons: any): void;
-    astart: () => Promise<{}>;
+    astart: () => Promise<void>;
     aconfigure: (arg1: string, arg2: string, arg3: ConfigureCallback) => Promise<{}>;
     rpc?: any;
     sysrpc?: any;

@@ -9,7 +9,7 @@ export class BackendSessionComponent implements IComponent
   {
     var service = new BackendSessionService(app);
     // export backend session service to the application context.
-    app.set('backendSessionService', service);
+    app.set('backendSessionService', service, true);
 
   };
 

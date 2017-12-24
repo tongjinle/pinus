@@ -28,7 +28,7 @@ export class ChannelRemote
      * @param  {Object}   opts  push options
      * @param  {Function} cb    callback function
      */
-    pushMessage = utils.promisify(function (route, msg, uids, opts, cb)
+    pushMessage = utils.promisify(function (route, msg, uids, opts, cb : (err : Error | null , result ?: any)=>void)
     {
         if (!msg)
         {
@@ -71,7 +71,7 @@ export class ChannelRemote
      * @param  {Boolean}   opts   broadcast options. 
      * @param  {Function}  cb     callback function
      */
-    broadcast = utils.promisify(function (route, msg, opts, cb)
+    broadcast = utils.promisify(function (route, msg, opts, cb : (err : Error | null , result ?: any)=>void)
     {
         var connector = this.app.components.__connector__;
 

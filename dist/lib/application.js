@@ -18,7 +18,6 @@ const Constants = require("./util/constants");
 const appManager = require("./common/manager/appManager");
 const fs = require("fs");
 const path = require("path");
-const util = require("util");
 const util_1 = require("util");
 /**
  * Application states
@@ -45,8 +44,8 @@ class Application {
         this.serverTypes = []; // current global server type list
         this.lifecycleCbs = {}; // current server custom lifecycle callbacks
         this.clusterSeq = {}; // cluster id seqence
-        this.astart = util.promisify(this.start);
-        this.aconfigure = util.promisify(this.configure);
+        this.astart = utils.promisify(this.start);
+        this.aconfigure = utils.promisify(this.configure);
     }
     /**
      * Initialize the server.
@@ -465,8 +464,11 @@ class Application {
      * @return {Server|Mixed} for chaining, or the setting value
      * @memberOf Application
      */
-    set(setting, val) {
+    set(setting, val, attach) {
         this.settings[setting] = val;
+        if (attach) {
+            this[setting] = val;
+        }
         return this;
     }
     ;

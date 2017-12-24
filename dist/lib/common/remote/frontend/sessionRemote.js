@@ -12,16 +12,16 @@ exports.default = default_1;
 ;
 class SessionRemote {
     constructor(app) {
-        this.bind = utils.promisify(function (sid, uid, cb) {
-            this.app.get('sessionService').bind(sid, uid, cb);
+        this.bind = utils.promisify((sid, uid, cb) => {
+            this.app.sessionService.bind(sid, uid, cb);
         });
-        this.unbind = utils.promisify(function (sid, uid, cb) {
+        this.unbind = utils.promisify((sid, uid, cb) => {
             this.app.get('sessionService').unbind(sid, uid, cb);
         });
-        this.push = utils.promisify(function (sid, key, value, cb) {
+        this.push = utils.promisify((sid, key, value, cb) => {
             this.app.get('sessionService').import(sid, key, value, cb);
         });
-        this.pushAll = utils.promisify(function (sid, settings, cb) {
+        this.pushAll = utils.promisify((sid, settings, cb) => {
             this.app.get('sessionService').importAll(sid, settings, cb);
         });
         /**
@@ -30,7 +30,7 @@ class SessionRemote {
          * @param  {String}   sid session id binded with the session
          * @param  {Function} cb(err, sinfo)  callback funtion, sinfo would be null if the session not exist.
          */
-        this.getBackendSessionBySid = utils.promisify(function (sid, cb) {
+        this.getBackendSessionBySid = utils.promisify((sid, cb) => {
             var session = this.app.get('sessionService').get(sid);
             if (!session) {
                 utils.invokeCallback(cb);
@@ -44,7 +44,7 @@ class SessionRemote {
          * @param  {String}   uid user id binded with the session
          * @param  {Function} cb(err, sinfo)  callback funtion, sinfo would be null if the session does not exist.
          */
-        this.getBackendSessionsByUid = utils.promisify(function (uid, cb) {
+        this.getBackendSessionsByUid = utils.promisify((uid, cb) => {
             var sessions = this.app.get('sessionService').getByUid(uid);
             if (!sessions) {
                 utils.invokeCallback(cb);
@@ -63,7 +63,7 @@ class SessionRemote {
          * @param  {String}   reason  kick reason
          * @param  {Function} cb  callback function
          */
-        this.kickBySid = utils.promisify(function (sid, reason, cb) {
+        this.kickBySid = utils.promisify((sid, reason, cb) => {
             this.app.get('sessionService').kickBySessionId(sid, reason, cb);
         });
         /**
@@ -73,7 +73,7 @@ class SessionRemote {
          * @param  {String}          reason     kick reason
          * @param  {Function} cb     callback function
          */
-        this.kickByUid = utils.promisify(function (uid, reason, cb) {
+        this.kickByUid = utils.promisify((uid, reason, cb) => {
             this.app.get('sessionService').kick(uid, reason, cb);
         });
         this.app = app;

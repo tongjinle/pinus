@@ -39,14 +39,14 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    bind(sid: any, uid: any, cb: any): void;
+    bind(sid: any, uid: any, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Unbind a session with the user id.
      *
      * @memberOf SessionService
      * @api private
      */
-    unbind(sid: any, uid: any, cb: any): void;
+    unbind(sid: any, uid: any, cb: (err?: Error, result?: void) => void): void;
     /**
      * Get session by id.
      *
@@ -81,14 +81,14 @@ export declare class SessionService {
      *
      * @api private
      */
-    import(sid: any, key: any, value: any, cb: any): void;
+    import(sid: any, key: any, value: any, cb: (err?: Error, result?: void) => void): void;
     /**
      * Import new value for the existed session.
      *
      * @memberOf SessionService
      * @api private
      */
-    importAll(sid: any, settings: any, cb: any): void;
+    importAll(sid: any, settings: any, cb: (err?: Error, result?: void) => void): void;
     /**
      * Kick all the session offline under the user id.
      *
@@ -97,7 +97,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    kick(uid: any, reason: any, cb: any): void;
+    kick(uid: string, reason?: string, cb?: (err?: Error, result?: void) => void): void;
     /**
      * Kick a user offline by session id.
      *
@@ -106,7 +106,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    kickBySessionId(sid: any, reason: any, cb: any): void;
+    kickBySessionId(sid: number, reason?: string, cb?: (err?: Error, result?: void) => void): void;
     /**
      * Get client remote address by session id.
      *
@@ -155,8 +155,12 @@ export declare class SessionService {
      *
      */
     getSessionsCount(): number;
-    akick: Function;
-    akickBySessionId: Function;
+    akick: (arg1: string, arg2: string) => Promise<void>;
+    akickBySessionId: (arg1: number, arg2: string) => Promise<void>;
+    abind: (arg1: any, arg2: any) => Promise<void>;
+    aunbind: (arg1: any, arg2: any) => Promise<void>;
+    aimport: (arg1: any, arg2: any, arg3: any) => Promise<void>;
+    aimportAll: (arg1: any, arg2: any) => Promise<void>;
 }
 /**
  * Session maintains the relationship between client connection and user information.
@@ -244,17 +248,17 @@ export declare class FrontendSession extends EventEmitter {
     private __session__;
     private __sessionService__;
     constructor(session: any);
-    bind(uid: any, cb: any): void;
-    unbind(uid: any, cb: any): void;
+    bind(uid: any, cb: (err?: Error, result?: void) => void): void;
+    unbind(uid: any, cb: (err?: Error, result?: void) => void): void;
     set(key: any, value: any): void;
     get(key: any): any;
-    push(key: any, cb: any): void;
-    pushAll(cb: any): void;
+    push(key: any, cb: (err?: Error, result?: void) => void): void;
+    pushAll(cb: (err?: Error, result?: void) => void): void;
     on(event: string | symbol, listener: (...args: any[]) => void): this;
-    abind: Function;
-    aunbind: Function;
-    apush: Function;
-    apushAll: Function;
+    abind: (arg1: any) => Promise<void>;
+    aunbind: (arg1: any) => Promise<void>;
+    apush: (arg1: any) => Promise<void>;
+    apushAll: () => Promise<void>;
     /**
      * Export the key/values for serialization.
      *

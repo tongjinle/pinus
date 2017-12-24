@@ -112,7 +112,7 @@ export class ChannelService implements IComponent
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids(route, msg, uids, opts, cb)
+    pushMessageByUids(route, msg, uids, opts ?: any, cb ? : (err ?: Error , result ?: void)=>void)
     {
         if (typeof route !== 'string')
         {
@@ -156,7 +156,7 @@ export class ChannelService implements IComponent
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast(stype, route, msg, opts, cb)
+    broadcast(stype, route, msg, opts ?: any, cb ? : (err ?: Error , result ?: void)=>void)
     {
         var app = this.app;
         var namespace = 'sys';
@@ -233,8 +233,8 @@ export class ChannelService implements IComponent
         }
     };
 
-    apushMessageByUids = utils.promisify(this.pushMessageByUids.bind(this));
-    abroadcast = utils.promisify(this.broadcast.bind(this));
+    apushMessageByUids = utils.promisify(this.pushMessageByUids);
+    abroadcast = utils.promisify(this.broadcast);
 }
 /**
  * Channel maintains the receiver collection for a subject. You can
@@ -374,7 +374,7 @@ export class Channel
      * @param {Object} opts user-defined push options, optional
      * @param {Function} cb callback function
      */
-    pushMessage(route, msg, opts, cb)
+    pushMessage(route, msg, opts ?: any, cb ? : (err : Error | null , result ?: void)=>void)
     {
         if (this.state !== ST_INITED)
         {
@@ -399,7 +399,7 @@ export class Channel
         sendMessageByGroup(this.__channelService__, route, msg, this.groups, opts, cb);
     };
 
-    apushMessage = utils.promisify(this.pushMessage.bind(this));
+    apushMessage = utils.promisify(this.pushMessage);
 }
 /**
  * add uid and sid into group. ignore any uid that uid not specified.
