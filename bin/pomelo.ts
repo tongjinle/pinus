@@ -3,21 +3,21 @@
 /**
  * Module dependencies.
  */
-var fs = require('fs'),
-  os = require('os'),
-  path = require('path'),
-  util = require('util'),
-  cliff = require('cliff'),
-  mkdirp = require('mkdirp'),
-  co = require('../lib/modules/console'),
-  utils = require('../lib/util/utils'),
-  starter = require('../lib/master/starter'),
-  exec = require('child_process').exec,
-  spawn = require('child_process').spawn,
-  version = require('../package.json').version,
-  adminClient = require('pomelo-admin').adminClient,
-  constants = require('../lib/util/constants'),
-  program = require('commander');
+import * as fs from 'fs'
+import * as os from 'os'
+import * as path from 'path'
+import * as util from 'util'
+import * as cliff from 'cliff'
+import * as mkdirp from 'mkdirp'
+import {ConsoleModule as co} from '../lib/modules/console'
+import * as utils from '../lib/util/utils'
+import * as starter from '../lib/master/starter'
+import {exec} from 'child_process'
+import {spawn} from 'child_process'
+var version = require('../../package.json').version
+import {AdminClient} from 'pomelo-admin'
+import * as constants from '../lib/util/constants'
+import * as program from 'commander';
 
 /**
  *  Constant Variables
@@ -40,10 +40,10 @@ var FILEREAD_ERROR = 'Fail to read the file, please check if the application is 
 var CLOSEAPP_INFO = 'Closing the application......\nPlease wait......';
 var ADD_SERVER_INFO = 'Successfully add server.';
 var RESTART_SERVER_INFO = 'Successfully restart server.';
-var INIT_PROJ_NOTICE = '\nThe default admin user is: \n\n'+ '  username'.green + ': admin\n  ' + 'password'.green+ ': admin\n\nYou can configure admin users by editing adminUser.json later.\n ';
-var SCRIPT_NOT_FOUND = 'Fail to find an appropriate script to run,\nplease check the current work directory or the directory specified by option `--directory`.\n'.red;
-var MASTER_HA_NOT_FOUND = 'Fail to find an appropriate masterha config file, \nplease check the current work directory or the arguments passed to.\n'.red;
-var COMMAND_ERROR = 'Illegal command format. Use `pomelo --help` to get more info.\n'.red;
+var INIT_PROJ_NOTICE = ('\nThe default admin user is: \n\n'+ '  username' as any).green + ': admin\n  ' + ('password' as any).green+ ': admin\n\nYou can configure admin users by editing adminUser.json later.\n ';
+var SCRIPT_NOT_FOUND = ('Fail to find an appropriate script to run,\nplease check the current work directory or the directory specified by option `--directory`.\n' as any).red;
+var MASTER_HA_NOT_FOUND = ('Fail to find an appropriate masterha config file, \nplease check the current work directory or the arguments passed to.\n' as any).red;
+var COMMAND_ERROR = ('Illegal command format. Use `pomelo --help` to get more info.\n' as any).red;
 var DAEMON_INFO = 'The application is running in the background now.\n';
 
 program.version(version);
@@ -159,7 +159,7 @@ function init(path) {
           if(force) {
             createApplicationAt(path, type);
           } else {
-            abort('Fail to init a project'.red);
+            abort(('Fail to init a project' as any).red);
           }
         });
       }
@@ -344,7 +344,7 @@ function start(opts) {
 
   var logDir = path.resolve(opts.directory, 'logs');
   if (!fs.existsSync(logDir)) {
-    fs.mkdir(logDir);
+    fs.mkdirSync(logDir);
   }
   
   var ls;
@@ -376,7 +376,7 @@ function start(opts) {
  */
 function list(opts) {
   var id = 'pomelo_list_' + Date.now();
-  connectToMaster(id, opts, function(client) {
+  connectToMaster(id, opts, function(client : AdminClient) {
     client.request(co.moduleId, {signal: 'list'}, function(err, data) {
       if(err) {
         console.error(err);
@@ -493,7 +493,7 @@ function restart(opts) {
 }
 
 function connectToMaster(id, opts, cb) {
-  var client = new adminClient({username: opts.username, password: opts.password, md5: true});
+  var client = new AdminClient({username: opts.username, password: opts.password, md5: true});
   client.connect(id, opts.host, opts.port, function(err) {
     if(err) {
       abort(CONNECT_ERROR + err.red);
@@ -591,7 +591,7 @@ function copy(origin, target) {
   }
   if(!fs.existsSync(target)) {
     mkdir(target);
-    console.log('   create : '.green + target);
+    console.log(('   create : ' as any).green + target);
   }
   fs.readdir(origin, function(err, datalist) {
     if(err) {
@@ -602,7 +602,7 @@ function copy(origin, target) {
       var tCurrent = path.resolve(target, datalist[i]);
       if(fs.statSync(oCurrent).isFile()) {
         fs.writeFileSync(tCurrent, fs.readFileSync(oCurrent, ''), '');
-        console.log('   create : '.green + tCurrent);
+        console.log(('   create : ' as any).green + tCurrent);
       } else if(fs.statSync(oCurrent).isDirectory()) {
         copy(oCurrent, tCurrent);
       }
@@ -616,12 +616,12 @@ function copy(origin, target) {
  * @param {String} path
  * @param {Function} fn
  */
-function mkdir(path, fn) {
-  mkdirp(path, 0755, function(err){
+function mkdir(path, fn ?: Function) {
+  mkdirp(path, 0o755, function(err){
     if(err) {
       throw err;
     }
-    console.log('   create : '.green + path);
+    console.log(('   create : ' as any).green + path);
     if(typeof fn === 'function') {
       fn();
     }
@@ -648,7 +648,7 @@ function connectorType(cb) {
          cb(msg.trim());
          break;
       default:
-         console.log('Invalid choice! Please input 1 - 5.'.red + '\n');
+         console.log(('Invalid choice! Please input 1 - 5.' as any).red + '\n');
          connectorType(cb);
          break;
     }

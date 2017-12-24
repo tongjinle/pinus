@@ -140,7 +140,7 @@ var kill = function (app, agent, msg, cb) {
     for (sid in agent.idMap) {
         record = agent.idMap[sid];
         serverIds.push(record.id);
-        agent.request(record.id, module.exports.moduleId, { signal: msg.signal }, agentRequestCallback);
+        agent.request(record.id, ConsoleModule.moduleId, { signal: msg.signal }, agentRequestCallback);
     }
 };
 var stop = function (app, agent, msg, cb) {
@@ -154,7 +154,7 @@ var stop = function (app, agent, msg, cb) {
                 utils.invokeCallback(cb, new Error('Cannot find the server to stop.'), null);
             }
             else {
-                agent.notifyById(serverId, module.exports.moduleId, { signal: msg.signal });
+                agent.notifyById(serverId, ConsoleModule.moduleId, { signal: msg.signal });
             }
         }
         utils.invokeCallback(cb, null, { status: "part" });
@@ -166,7 +166,7 @@ var stop = function (app, agent, msg, cb) {
             serverIds.push(key);
         }
         app.set(Constants.RESERVED.STOP_SERVERS, serverIds);
-        agent.notifyAll(module.exports.moduleId, { signal: msg.signal });
+        agent.notifyAll(ConsoleModule.moduleId, { signal: msg.signal });
         setTimeout(function () {
             app.stop(true);
             utils.invokeCallback(cb, null, { status: "all" });
@@ -205,7 +205,7 @@ var restart = function (app, agent, msg, cb) {
     });
     var request = function (id) {
         return (function () {
-            agent.request(id, module.exports.moduleId, { signal: msg.signal }, function (msg) {
+            agent.request(id, ConsoleModule.moduleId, { signal: msg.signal }, function (msg) {
                 if (!utils.size(msg)) {
                     latch.done();
                     return;
@@ -242,7 +242,7 @@ var list = function (agent, msg, cb) {
     };
     for (sid in agent.idMap) {
         record = agent.idMap[sid];
-        agent.request(record.id, module.exports.moduleId, { signal: msg.signal }, callback);
+        agent.request(record.id, ConsoleModule.moduleId, { signal: msg.signal }, callback);
     }
 };
 var add = function (app, msg, cb) {
@@ -270,7 +270,7 @@ var blacklist = function (agent, msg, cb) {
             return;
         }
     }
-    agent.notifyAll(module.exports.moduleId, { signal: msg.signal, blacklist: msg.args });
+    agent.notifyAll(ConsoleModule.moduleId, { signal: msg.signal, blacklist: msg.args });
     process.nextTick(function () {
         cb(null, { status: "ok" });
     });
@@ -323,10 +323,10 @@ var parseArgs = function (msg, info, cb) {
 var sendCronInfo = function (cron, agent, msg, info, cb) {
     if (isReady(info) && (cron.serverId || cron.serverType)) {
         if (!!cron.serverId) {
-            agent.notifyById(cron.serverId, module.exports.moduleId, { signal: msg.signal, cron: cron });
+            agent.notifyById(cron.serverId, ConsoleModule.moduleId, { signal: msg.signal, cron: cron });
         }
         else {
-            agent.notifyByType(cron.serverType, module.exports.moduleId, { signal: msg.signal, cron: cron });
+            agent.notifyByType(cron.serverType, ConsoleModule.moduleId, { signal: msg.signal, cron: cron });
         }
         process.nextTick(function () {
             cb(null, { status: "ok" });

@@ -215,7 +215,7 @@ export function unicodeToUtf8(str)
  */
 export function ping(host, cb)
 {
-    if (!module.exports.isLocal(host))
+    if (!isLocal(host))
     {
         var cmd = 'ping -w 15 ' + host;
         exec(cmd, function (err, stdout, stderr)

@@ -1,6 +1,6 @@
 {
   "name": "pomelo",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "homepage": "https://github.com/NetEase/pomelo",
   "repository": {
     "type": "git",
@@ -29,11 +29,14 @@
   "main": "./dist/index",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "@types/cliff": "^0.1.4",
+    "@types/mkdirp": "^0.5.2",
     "async": "0.2.5",
-    "cliff": "0.1.8",
+    "cliff": "^0.1.10",
     "commander": "2.0.0",
     "crc": "0.2.0",
-    "mkdirp": "0.3.3",
+    "eyes": "^0.1.8",
+    "mkdirp": "^0.3.5",
     "mqtt": "0.3.9",
     "node-bignumber": "1.2.1",
     "pomelo-admin": "1.1.1",
@@ -48,7 +51,7 @@
     "ws": "1.1.1"
   },
   "bin": {
-    "pomelo": "./bin/pomelo"
+    "pomelo": "./dist/bin/pomelo.js"
   },
   "devDependencies": {
     "should": "3.3.1",

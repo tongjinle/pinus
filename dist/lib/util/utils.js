@@ -183,7 +183,7 @@ exports.unicodeToUtf8 = unicodeToUtf8;
  *
  */
 function ping(host, cb) {
-    if (!module.exports.isLocal(host)) {
+    if (!isLocal(host)) {
         var cmd = 'ping -w 15 ' + host;
         child_process_1.exec(cmd, function (err, stdout, stderr) {
             if (!!err) {
