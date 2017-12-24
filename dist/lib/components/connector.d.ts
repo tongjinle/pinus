@@ -1,5 +1,6 @@
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
+import { ConnectionService } from '../common/service/connectionService';
 /**
  * Connector component. Receive client requests and attach session with socket.
  *
@@ -16,6 +17,7 @@ export declare class ConnectorComponent implements IComponent {
     useHostFilter: boolean;
     useAsyncCoder: boolean;
     blacklistFun: Function;
+    connection: ConnectionService;
     keys: {};
     blacklist: any[];
     server: any;

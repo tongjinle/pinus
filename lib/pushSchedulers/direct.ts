@@ -4,6 +4,12 @@ import { IPushScheduler } from '../interfaces/IPushScheduler';
 
 export class DirectPushScheduler implements IPushScheduler
 {
+    async start()
+    {
+    }
+    async stop()
+    {
+    }
     app: Application;
     constructor(app, opts)
     {

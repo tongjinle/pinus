@@ -8,7 +8,6 @@ export class ChannelComponent implements IComponent
   {
     var service = new ChannelService(app, opts);
     app.set('channelService', service);
-    return service;
   };
   name = '__channel__';
 }

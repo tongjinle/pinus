@@ -6,7 +6,6 @@ class ChannelComponent {
         this.name = '__channel__';
         var service = new channelService_1.ChannelService(app, opts);
         app.set('channelService', service);
-        return service;
     }
     ;
 }

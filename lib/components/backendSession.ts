@@ -11,7 +11,6 @@ export class BackendSessionComponent implements IComponent
     // export backend session service to the application context.
     app.set('backendSessionService', service);
 
-    return service;
   };
 
   name = '__backendSession__';

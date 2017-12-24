@@ -9,6 +9,7 @@ import { ConnectionComponent } from './connection';
 import { IComponent } from '../interfaces/Component';
 import { PushSchedulerComponent } from './pushScheduler';
 import { SIOConnector } from '../connectors/sioconnector';
+import { ConnectionService } from '../common/service/connectionService';
 
 
 /**
@@ -29,6 +30,7 @@ export class ConnectorComponent implements IComponent
     useHostFilter: boolean;
     useAsyncCoder: boolean;
     blacklistFun: Function;
+    connection : ConnectionService;
 
     keys = {};
     blacklist = [];
@@ -275,7 +277,7 @@ var hostFilter = function (cb, socket)
     }
 };
 
-var bindEvents = function (self, socket)
+var bindEvents = function (self : ConnectorComponent, socket)
 {
     var curServer = self.app.getCurServer();
     var maxConnections = curServer['max-connections'];
@@ -358,7 +360,7 @@ var bindEvents = function (self, socket)
     }); //on message end
 };
 
-var handleMessageAsync = function (self, msg, session, socket)
+var handleMessageAsync = function (self : ConnectorComponent, msg, session, socket)
 {
     if (self.decode)
     {
@@ -387,7 +389,7 @@ var handleMessageAsync = function (self, msg, session, socket)
     }
 }
 
-var doHandleMessage = function (self, dmsg, session)
+var doHandleMessage = function (self : ConnectorComponent, dmsg, session)
 {
     if (!dmsg)
     {
@@ -412,7 +414,7 @@ var doHandleMessage = function (self, dmsg, session)
 /**
  * get session for current connection
  */
-var getSession = function (self, socket)
+var getSession = function (self : ConnectorComponent, socket)
 {
     var app = self.app,
         sid = socket.id;
@@ -462,7 +464,7 @@ var onSessionClose = function (app, session, reason)
     app.event.emit(events.CLOSE_SESSION, session);
 };
 
-var handleMessage = function (self, session, msg)
+var handleMessage = function (self : ConnectorComponent, session, msg)
 {
     //logger.debug('[%s] handleMessage session id: %s, msg: %j', self.app.serverId, session.id, msg);
     var type = checkServerType(msg.route);
@@ -513,7 +515,7 @@ var checkServerType = function (route)
     return route.substring(0, idx);
 };
 
-var verifyMessage = function (self, session, msg)
+var verifyMessage = function (self : ConnectorComponent, session, msg)
 {
     var sig = msg.body.__crypto__;
     if (!sig)

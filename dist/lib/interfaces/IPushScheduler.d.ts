@@ -5,7 +5,7 @@ export interface IPushScheduler {
      * @param {Function} cb
      * @return {Void}
      */
-    start?: () => Promise<void>;
+    start(): Promise<void>;
     /**
      * Component lifecycle function
      *
@@ -13,7 +13,7 @@ export interface IPushScheduler {
      * @param {Function}  cb
      * @return {Void}
      */
-    stop?: () => Promise<void>;
+    stop(): Promise<void>;
     /**
      * 调度发生时调用
      */

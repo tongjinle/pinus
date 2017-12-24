@@ -7,9 +7,8 @@ import { IComponent } from '../interfaces/Component';
  * @param {Object} app  current application context
  * @param {Object} opts attach parameters
  */
-export declare class SessionComponent implements IComponent {
+export declare class SessionComponent extends SessionService implements IComponent {
     app: Application;
-    service: SessionService;
     constructor(app: Application, opts: any);
     name: string;
 }
