@@ -1,8 +1,16 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils = require("../util/utils");
 var DEFAULT_FLUSH_INTERVAL = 20;
-class BufferService {
+class BufferPushScheduler {
     constructor(app, opts) {
         this.sessions = {}; // sid -> msg queue
         this.tid = null;
@@ -11,20 +19,18 @@ class BufferService {
         this.flushInterval = opts.flushInterval || DEFAULT_FLUSH_INTERVAL;
     }
     ;
-    start(cb) {
-        this.tid = setInterval(flush.bind(null, this), this.flushInterval);
-        process.nextTick(function () {
-            utils.invokeCallback(cb);
+    start() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.tid = setInterval(this.flush.bind(this), this.flushInterval);
         });
     }
     ;
-    stop(force, cb) {
-        if (this.tid) {
-            clearInterval(this.tid);
-            this.tid = null;
-        }
-        process.nextTick(function () {
-            utils.invokeCallback(cb);
+    stop() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.tid) {
+                clearInterval(this.tid);
+                this.tid = null;
+            }
         });
     }
     ;
@@ -41,8 +47,25 @@ class BufferService {
         });
     }
     ;
+    flush() {
+        var sessionService = this.app.get('sessionService');
+        var queue, session;
+        for (var sid in this.sessions) {
+            session = sessionService.get(sid);
+            if (!session) {
+                continue;
+            }
+            queue = this.sessions[sid];
+            if (!queue || queue.length === 0) {
+                continue;
+            }
+            session.sendBatch(queue);
+            this.sessions[sid] = [];
+        }
+    }
+    ;
 }
-exports.BufferService = BufferService;
+exports.BufferPushScheduler = BufferPushScheduler;
 var doBroadcast = function (self, msg, opts) {
     var channelService = self.app.get('channelService');
     var sessionService = self.app.get('sessionService');
@@ -85,21 +108,5 @@ var enqueue = function (self, session, msg) {
 };
 var onClose = function (self, session) {
     delete self.sessions[session.id];
-};
-var flush = function (self) {
-    var sessionService = self.app.get('sessionService');
-    var queue, session;
-    for (var sid in self.sessions) {
-        session = sessionService.get(sid);
-        if (!session) {
-            continue;
-        }
-        queue = self.sessions[sid];
-        if (!queue || queue.length === 0) {
-            continue;
-        }
-        session.sendBatch(queue);
-        self.sessions[sid] = [];
-    }
 };
 //# sourceMappingURL=buffer.js.map

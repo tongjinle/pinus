@@ -8,8 +8,8 @@ import { HybridConnector } from './connectors/hybridconnector';
 import { UDPConnector } from './connectors/udpconnector';
 import { MQTTConnector } from './connectors/mqttconnector';
 import { SIOConnector } from './connectors/sioconnector';
-import { DirectService } from './pushSchedulers/direct';
-import { BufferService } from './pushSchedulers/buffer';
+import { DirectPushScheduler } from './pushSchedulers/direct';
+import { BufferPushScheduler } from './pushSchedulers/buffer';
 import { ConnectionComponent } from './components/connection';
 import { ConnectorComponent } from './components/connector';
 import { DictionaryComponent } from './components/dictionary';
@@ -59,51 +59,51 @@ export declare class Pomelo {
      * auto loaded components
      */
     components: {
-        readonly backendSession: typeof BackendSessionComponent;
-        readonly channel: typeof ChannelComponent;
-        readonly connection: typeof ConnectionComponent;
-        readonly connector: typeof ConnectorComponent;
-        readonly dictionary: typeof DictionaryComponent;
-        readonly master: typeof MasterComponent;
-        readonly monitor: typeof MonitorComponent;
-        readonly protobuf: typeof ProtobufComponent;
-        readonly proxy: typeof ProxyComponent;
-        readonly pushScheduler: typeof PushSchedulerComponent;
-        readonly remote: typeof RemoteComponent;
-        readonly server: typeof ServerComponent;
-        readonly session: typeof SessionComponent;
+        backendSession: typeof BackendSessionComponent;
+        channel: typeof ChannelComponent;
+        connection: typeof ConnectionComponent;
+        connector: typeof ConnectorComponent;
+        dictionary: typeof DictionaryComponent;
+        master: typeof MasterComponent;
+        monitor: typeof MonitorComponent;
+        protobuf: typeof ProtobufComponent;
+        proxy: typeof ProxyComponent;
+        pushScheduler: typeof PushSchedulerComponent;
+        remote: typeof RemoteComponent;
+        server: typeof ServerComponent;
+        session: typeof SessionComponent;
     };
     /**
      * auto loaded filters
      */
     filters: {
-        readonly serial: typeof SerialFilter;
-        readonly time: typeof TimeFilter;
-        readonly timeout: typeof TimeoutFilter;
-        readonly toobusy: typeof ToobusyFilter;
+        serial: typeof SerialFilter;
+        time: typeof TimeFilter;
+        timeout: typeof TimeoutFilter;
+        toobusy: typeof ToobusyFilter;
     };
     /**
      * auto loaded rpc filters
      */
     rpcFilters: {
-        readonly rpcLog: typeof RpcLogFilter;
-        readonly toobusy: typeof RpcToobusyFilter;
+        rpcLog: typeof RpcLogFilter;
+        toobusy: typeof RpcToobusyFilter;
     };
     /**
      * connectors
      */
     connectors: {
-        readonly sioconnector: typeof SIOConnector;
-        readonly hybridconnector: typeof HybridConnector;
-        readonly udpconnector: typeof UDPConnector;
-        readonly mqttconnector: typeof MQTTConnector;
+        sioconnector: typeof SIOConnector;
+        hybridconnector: typeof HybridConnector;
+        udpconnector: typeof UDPConnector;
+        mqttconnector: typeof MQTTConnector;
     };
     /**
      * pushSchedulers
      */
     pushSchedulers: {
-        readonly direct: typeof DirectService;
-        readonly buffer: typeof BufferService;
+        direct: typeof DirectPushScheduler;
+        buffer: typeof BufferPushScheduler;
     };
     constructor();
     /**

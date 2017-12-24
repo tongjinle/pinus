@@ -1,25 +1,27 @@
-import { Application } from '../application';
-import { IComponent } from '../interfaces/Component';
-import { IPushScheduler } from '../interfaces/IPushScheduler';
-export declare class PushSchedulerComponent implements IComponent {
-    private app;
-    scheduler: IPushScheduler;
-    constructor(app: Application, opts: any);
-    name: string;
+import { IPushScheduler } from "../interfaces/IPushScheduler";
+import { Application } from "../application";
+export declare type IPushSelector = (reqId: number, route: string, msg: any, recvs: number[], opts: any) => number;
+export declare class MultiPushScheduler implements IPushScheduler {
+    app: Application;
+    selector: IPushSelector;
+    scheduler: {
+        [id: number]: IPushScheduler;
+    };
+    constructor(app: any, opts: any);
     /**
      * Component lifecycle callback
      *
      * @param {Function} cb
      * @return {Void}
      */
-    afterStart(cb: any): void;
+    start(): Promise<void>;
     /**
      * Component lifecycle callback
      *
      * @param {Function} cb
      * @return {Void}
      */
-    stop(force: any, cb: any): void;
+    stop(): Promise<void>;
     /**
      * Schedule how the message to send.
      *
@@ -28,7 +30,6 @@ export declare class PushSchedulerComponent implements IComponent {
      * @param  {Object}   msg   message content after encoded
      * @param  {Array}    recvs array of receiver's session id
      * @param  {Object}   opts  options
-     * @param  {Function} cb
      */
     schedule(reqId: any, route: any, msg: any, recvs: any, opts: any, cb: any): void;
 }

@@ -16,8 +16,8 @@ import { HybridConnector } from './connectors/hybridconnector';
 import { UDPConnector } from './connectors/udpconnector';
 import { MQTTConnector } from './connectors/mqttconnector';
 import { SIOConnector } from './connectors/sioconnector';
-import { DirectService } from './pushSchedulers/direct';
-import { BufferService } from './pushSchedulers/buffer';
+import { DirectPushScheduler } from './pushSchedulers/direct';
+import { BufferPushScheduler } from './pushSchedulers/buffer';
 import { ChannelService } from './common/service/channelService';
 
 import { ConnectionComponent } from './components/connection';
@@ -67,62 +67,62 @@ export class Pomelo
     /**
      * auto loaded components
      */
-    components = new class
+    components = 
     {
-        get backendSession() { return BackendSessionComponent; }
-        get channel() { return ChannelComponent; }
-        get connection() { return ConnectionComponent; }
-        get connector() { return ConnectorComponent; }
-        get dictionary() { return DictionaryComponent; }
-        get master() { return MasterComponent; }
-        get monitor() { return MonitorComponent; }
-        get protobuf() { return ProtobufComponent; }
-        get proxy() { return ProxyComponent; }
-        get pushScheduler() { return PushSchedulerComponent; }
-        get remote() { return RemoteComponent; }
-        get server() { return ServerComponent; }
-        get session() { return SessionComponent; }
+        backendSession : BackendSessionComponent,
+        channel : ChannelComponent,
+        connection : ConnectionComponent,
+        connector : ConnectorComponent,
+        dictionary : DictionaryComponent,
+        master : MasterComponent,
+        monitor : MonitorComponent,
+        protobuf : ProtobufComponent,
+        proxy : ProxyComponent,
+        pushScheduler : PushSchedulerComponent,
+        remote : RemoteComponent,
+        server : ServerComponent,
+        session : SessionComponent,
     };
 
     /**
      * auto loaded filters
      */
-    filters = new class
+    filters = 
     {
-        get serial() { return SerialFilter; }
-        get time() { return TimeFilter; }
-        get timeout() { return TimeoutFilter; }
-        get toobusy() { return ToobusyFilter; }
+        serial : SerialFilter,
+        time : TimeFilter,
+        timeout : TimeoutFilter,
+        toobusy : ToobusyFilter,
     };
 
     /**
      * auto loaded rpc filters
      */
-    rpcFilters = new class
-    {
-        get rpcLog() { return RpcLogFilter; }
-        get toobusy() { return RpcToobusyFilter; }
+    rpcFilters =
+     {
+        rpcLog : RpcLogFilter,
+        toobusy : RpcToobusyFilter,
     };
 
 
     /**
      * connectors
      */
-    connectors = new class
-    {
-        get sioconnector() { return SIOConnector; }
-        get hybridconnector() { return HybridConnector; }
-        get udpconnector() { return UDPConnector; }
-        get mqttconnector() { return MQTTConnector; }
+    connectors =
+     {
+        sioconnector : SIOConnector,
+        hybridconnector : HybridConnector,
+        udpconnector : UDPConnector,
+        mqttconnector : MQTTConnector,
     };
 
     /**
      * pushSchedulers
      */
-    pushSchedulers = new class
+    pushSchedulers = 
     {
-        get direct() { return DirectService; }
-        get buffer() { return BufferService; }
+        direct : DirectPushScheduler,
+        buffer : BufferPushScheduler,
     };
 
     constructor()

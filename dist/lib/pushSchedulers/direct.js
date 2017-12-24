@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils = require("../util/utils");
-class DirectService {
+class DirectPushScheduler {
     constructor(app, opts) {
         opts = opts || {};
         this.app = app;
@@ -23,7 +23,7 @@ class DirectService {
     }
     ;
 }
-exports.DirectService = DirectService;
+exports.DirectPushScheduler = DirectPushScheduler;
 var doBroadcast = function (self, msg, opts) {
     var channelService = self.app.get('channelService');
     var sessionService = self.app.get('sessionService');

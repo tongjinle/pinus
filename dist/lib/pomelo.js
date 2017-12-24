@@ -51,52 +51,52 @@ class Pomelo {
         /**
          * auto loaded components
          */
-        this.components = new class {
-            get backendSession() { return backendSession_1.BackendSessionComponent; }
-            get channel() { return channel_1.ChannelComponent; }
-            get connection() { return connection_1.ConnectionComponent; }
-            get connector() { return connector_1.ConnectorComponent; }
-            get dictionary() { return dictionary_1.DictionaryComponent; }
-            get master() { return master_1.MasterComponent; }
-            get monitor() { return monitor_1.MonitorComponent; }
-            get protobuf() { return protobuf_1.ProtobufComponent; }
-            get proxy() { return proxy_1.ProxyComponent; }
-            get pushScheduler() { return pushScheduler_1.PushSchedulerComponent; }
-            get remote() { return remote_1.RemoteComponent; }
-            get server() { return server_1.ServerComponent; }
-            get session() { return session_1.SessionComponent; }
+        this.components = {
+            backendSession: backendSession_1.BackendSessionComponent,
+            channel: channel_1.ChannelComponent,
+            connection: connection_1.ConnectionComponent,
+            connector: connector_1.ConnectorComponent,
+            dictionary: dictionary_1.DictionaryComponent,
+            master: master_1.MasterComponent,
+            monitor: monitor_1.MonitorComponent,
+            protobuf: protobuf_1.ProtobufComponent,
+            proxy: proxy_1.ProxyComponent,
+            pushScheduler: pushScheduler_1.PushSchedulerComponent,
+            remote: remote_1.RemoteComponent,
+            server: server_1.ServerComponent,
+            session: session_1.SessionComponent,
         };
         /**
          * auto loaded filters
          */
-        this.filters = new class {
-            get serial() { return serial_1.SerialFilter; }
-            get time() { return time_1.TimeFilter; }
-            get timeout() { return timeout_1.TimeoutFilter; }
-            get toobusy() { return toobusy_2.ToobusyFilter; }
+        this.filters = {
+            serial: serial_1.SerialFilter,
+            time: time_1.TimeFilter,
+            timeout: timeout_1.TimeoutFilter,
+            toobusy: toobusy_2.ToobusyFilter,
         };
         /**
          * auto loaded rpc filters
          */
-        this.rpcFilters = new class {
-            get rpcLog() { return rpcLog_1.RpcLogFilter; }
-            get toobusy() { return toobusy_1.RpcToobusyFilter; }
+        this.rpcFilters = {
+            rpcLog: rpcLog_1.RpcLogFilter,
+            toobusy: toobusy_1.RpcToobusyFilter,
         };
         /**
          * connectors
          */
-        this.connectors = new class {
-            get sioconnector() { return sioconnector_1.SIOConnector; }
-            get hybridconnector() { return hybridconnector_1.HybridConnector; }
-            get udpconnector() { return udpconnector_1.UDPConnector; }
-            get mqttconnector() { return mqttconnector_1.MQTTConnector; }
+        this.connectors = {
+            sioconnector: sioconnector_1.SIOConnector,
+            hybridconnector: hybridconnector_1.HybridConnector,
+            udpconnector: udpconnector_1.UDPConnector,
+            mqttconnector: mqttconnector_1.MQTTConnector,
         };
         /**
          * pushSchedulers
          */
-        this.pushSchedulers = new class {
-            get direct() { return direct_1.DirectService; }
-            get buffer() { return buffer_1.BufferService; }
+        this.pushSchedulers = {
+            direct: direct_1.DirectPushScheduler,
+            buffer: buffer_1.BufferPushScheduler,
         };
     }
     /**

@@ -1,7 +1,8 @@
 import * as utils from '../util/utils';
 import { Application } from '../application';
+import { IPushScheduler } from '../interfaces/IPushScheduler';
 
-export class DirectService
+export class DirectPushScheduler implements IPushScheduler
 {
     app: Application;
     constructor(app, opts)

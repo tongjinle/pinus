@@ -2,7 +2,7 @@ import * as utils from '../util/utils';
 import { Application } from '../application';
 var DEFAULT_FLUSH_INTERVAL = 20;
 
-export class BufferService
+export class BufferPushScheduler
 {
     app: Application;
     flushInterval: number;
@@ -17,26 +17,18 @@ export class BufferService
         this.flushInterval = opts.flushInterval || DEFAULT_FLUSH_INTERVAL;
     };
 
-    start(cb)
+    async start()
     {
-        this.tid = setInterval(flush.bind(null, this), this.flushInterval);
-        process.nextTick(function ()
-        {
-            utils.invokeCallback(cb);
-        });
+        this.tid = setInterval(this.flush.bind(this), this.flushInterval);
     };
 
-    stop(force, cb)
+    async stop()
     {
         if (this.tid)
         {
             clearInterval(this.tid);
             this.tid = null;
         }
-        process.nextTick(function ()
-        {
-            utils.invokeCallback(cb);
-        });
     };
 
     schedule(reqId, route, msg, recvs, opts, cb)
@@ -55,6 +47,30 @@ export class BufferService
             utils.invokeCallback(cb);
         });
     };
+
+    flush()
+    {
+        var sessionService = this.app.get('sessionService');
+        var queue, session;
+        for (var sid in this.sessions)
+        {
+            session = sessionService.get(sid);
+            if (!session)
+            {
+                continue;
+            }
+
+            queue = this.sessions[sid];
+            if (!queue || queue.length === 0)
+            {
+                continue;
+            }
+
+            session.sendBatch(queue);
+            this.sessions[sid] = [];
+        }
+    };
+
 }
 
 var doBroadcast = function (self, msg, opts)
@@ -118,27 +134,4 @@ var enqueue = function (self, session, msg)
 var onClose = function (self, session)
 {
     delete self.sessions[session.id];
-};
-
-var flush = function (self)
-{
-    var sessionService = self.app.get('sessionService');
-    var queue, session;
-    for (var sid in self.sessions)
-    {
-        session = sessionService.get(sid);
-        if (!session)
-        {
-            continue;
-        }
-
-        queue = self.sessions[sid];
-        if (!queue || queue.length === 0)
-        {
-            continue;
-        }
-
-        session.sendBatch(queue);
-        self.sessions[sid] = [];
-    }
 };
