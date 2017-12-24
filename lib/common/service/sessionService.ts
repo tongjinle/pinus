@@ -373,7 +373,7 @@ export class SessionService
      *
      * @memberOf SessionService
      */
-    getClientAddressBySessionId(sid)
+    getClientAddressBySessionId(sid : number)
     {
         var session = this.get(sid);
         if (session)
@@ -395,7 +395,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    sendMessage(sid, msg)
+    sendMessage(sid : number, msg : any)
     {
         var session = this.sessions[sid];
 
@@ -417,7 +417,7 @@ export class SessionService
      * @memberOf SessionService
      * @api private
      */
-    sendMessageByUid(uid, msg)
+    sendMessageByUid(uid : number, msg : any)
     {
         var sessions = this.uidMap[uid];
 
@@ -476,12 +476,13 @@ export class SessionService
         return utils.size(this.sessions);
     };
 
-    akick = utils.promisify(this.kick);
-    akickBySessionId = utils.promisify(this.kickBySessionId);
-    abind = utils.promisify(this.bind);
-    aunbind = utils.promisify(this.unbind);
-    aimport = utils.promisify(this.import);
-    aimportAll = utils.promisify(this.importAll);
+    
+    akick:(uid : string, reason ?: string)=>Promise<void> = utils.promisify(this.kick);
+    akickBySessionId:(sid : number, reason ?: string)=>Promise<void> = utils.promisify(this.kickBySessionId);
+    abind:(sid : number, uid : string)=>Promise<void> = utils.promisify(this.bind);
+    aunbind:(sid : number, uid : string)=>Promise<void> = utils.promisify(this.unbind);
+    aimport:(sid : number, key : string, value : any)=>Promise<void> = utils.promisify(this.import);
+    aimportAll:(sid : number, settings : any)=>Promise<void> = utils.promisify(this.importAll);
 }
 /**
  * Send message to the client that associated with the session.

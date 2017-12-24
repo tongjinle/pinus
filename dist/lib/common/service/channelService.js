@@ -81,17 +81,6 @@ class ChannelService {
         removeAllFromStore(this, genKey(this, name));
     }
     ;
-    /**
-     * Push message by uids.
-     * Group the uids by group. ignore any uid if sid not specified.
-     *
-     * @param {String} route message route
-     * @param {Object} msg message that would be sent to client
-     * @param {Array} uids the receiver info list, [{uid: userId, sid: frontendServerId}]
-     * @param {Object} opts user-defined push options, optional
-     * @param {Function} cb cb(err)
-     * @memberOf ChannelService
-     */
     pushMessageByUids(route, msg, uids, opts, cb) {
         if (typeof route !== 'string') {
             cb = opts;
@@ -116,18 +105,6 @@ class ChannelService {
         sendMessageByGroup(this, route, msg, groups, opts, cb);
     }
     ;
-    /**
-     * Broadcast message to all the connected clients.
-     *
-     * @param  {String}   stype      frontend server type string
-     * @param  {String}   route      route string
-     * @param  {Object}   msg        message
-     * @param  {Object}   opts       user-defined broadcast options, optional
-     *                               opts.binded: push to binded sessions or all the sessions
-     *                               opts.filterParam: parameters for broadcast filter.
-     * @param  {Function} cb         callback
-     * @memberOf ChannelService
-     */
     broadcast(stype, route, msg, opts, cb) {
         var app = this.app;
         var namespace = 'sys';

@@ -57,7 +57,10 @@ export declare class ChannelService implements IComponent {
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids(route: any, msg: any, uids: any, opts?: any, cb?: (err?: Error, result?: void) => void): void;
+    pushMessageByUids(route: string, msg: any, uids: {
+        uid: string;
+        sid: string;
+    }[], cb?: (err?: Error, result?: void) => void): any;
     /**
      * Broadcast message to all the connected clients.
      *
@@ -70,9 +73,12 @@ export declare class ChannelService implements IComponent {
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast(stype: any, route: any, msg: any, opts?: any, cb?: (err?: Error, result?: void) => void): void;
-    apushMessageByUids: (arg1: any, arg2: any) => Promise<{}>;
-    abroadcast: (arg1: any, arg2: any) => Promise<{}>;
+    broadcast(stype: string, route: string, msg: any, cb?: (err?: Error, result?: void) => void): any;
+    apushMessageByUids: (route: string, msg: any, uids: {
+        uid: string;
+        sid: string;
+    }[], opts?: Object) => Promise<void>;
+    abroadcast: (stype: string, route: string, msg: any, opts?: any) => Promise<void>;
 }
 /**
  * Channel maintains the receiver collection for a subject. You can
@@ -149,5 +155,5 @@ export declare class Channel {
      * @param {Function} cb callback function
      */
     pushMessage(route: any, msg: any, opts?: any, cb?: (err: Error | null, result?: void) => void): void;
-    apushMessage: (arg1: any) => Promise<{}>;
+    apushMessage: (route: string, msg: any, opts?: any) => Promise<void>;
 }

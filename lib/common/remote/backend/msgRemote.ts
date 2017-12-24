@@ -25,7 +25,7 @@ export class MsgRemote
      * @param session {Object} session object for current request
      * @param cb {Function} callback function
      */
-    forwardMessage = utils.promisify(function (msg, session, cb : (err : Error | null , result ?: any)=>void)
+    forwardMessage = utils.promisify( (msg, session, cb : (err : Error | null , result ?: any)=>void)=>
     {
         var server = this.app.components.__server__;
         var sessionService = this.app.components.__backendSession__;
@@ -58,7 +58,7 @@ export class MsgRemote
         });
     });
 
-    forwardMessage2 = utils.promisify(function (route, body, aesPassword, compressGzip, session, cb : (err : Error | null , result ?: any)=>void)
+    forwardMessage2 = utils.promisify( (route, body, aesPassword, compressGzip, session, cb : (err : Error | null , result ?: any)=>void)=>
     {
         var server = this.app.components.__server__;
         var sessionService = this.app.components.__backendSession__;

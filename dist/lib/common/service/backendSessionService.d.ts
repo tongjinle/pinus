@@ -28,7 +28,7 @@ export declare class BackendSessionService implements IComponent {
      *
      * @memberOf BackendSessionService
      */
-    get(frontendId: any, sid: any, cb: (err: Error | null, result?: BackendSession) => void): void;
+    get(frontendId: string, sid: number, cb: (err: Error | null, result?: BackendSession) => void): void;
     /**
      * Get backend sessions by frontend server id and user id.
      *
@@ -38,7 +38,7 @@ export declare class BackendSessionService implements IComponent {
      *
      * @memberOf BackendSessionService
      */
-    getByUid(frontendId: any, uid: any, cb: (err: Error | null, result?: BackendSession[]) => void): void;
+    getByUid(frontendId: string, uid: string, cb: (err: Error | null, result?: BackendSession[]) => void): void;
     /**
      * Kick a session by session id.
      *
@@ -48,7 +48,7 @@ export declare class BackendSessionService implements IComponent {
      *
      * @memberOf BackendSessionService
      */
-    kickBySid(frontendId: any, sid: any, reason: any, cb: (err: Error | null, result?: void) => void): void;
+    kickBySid(frontendId: string, sid: number, cb: (err: Error | null, result?: void) => void): any;
     /**
      * Kick sessions by user id.
      *
@@ -59,7 +59,7 @@ export declare class BackendSessionService implements IComponent {
      *
      * @memberOf BackendSessionService
      */
-    kickByUid(frontendId: any, uid: any, reason: any, cb: (err: Error | null, result?: void) => void): void;
+    kickByUid(frontendId: string, uid: string, reason: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Bind the session with the specified user id. It would finally invoke the
      * the sessionService.bind in the cooperating frontend server.
@@ -72,7 +72,7 @@ export declare class BackendSessionService implements IComponent {
      * @memberOf BackendSessionService
      * @api private
      */
-    bind(frontendId: any, sid: any, uid: any, cb: (err: Error | null, result?: void) => void): void;
+    bind(frontendId: string, sid: number, uid: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Unbind the session with the specified user id. It would finally invoke the
      * the sessionService.unbind in the cooperating frontend server.
@@ -85,7 +85,7 @@ export declare class BackendSessionService implements IComponent {
      * @memberOf BackendSessionService
      * @api private
      */
-    unbind(frontendId: any, sid: any, uid: any, cb: (err: Error | null, result?: void) => void): void;
+    unbind(frontendId: string, sid: number, uid: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Push the specified customized change to the frontend internal session.
      *
@@ -98,7 +98,7 @@ export declare class BackendSessionService implements IComponent {
      * @memberOf BackendSessionService
      * @api private
      */
-    push(frontendId: any, sid: any, key: any, value: any, cb: (err: Error | null, result?: void) => void): void;
+    push(frontendId: string, sid: number, key: string, value: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Push all the customized changes to the frontend internal session.
      *
@@ -110,15 +110,15 @@ export declare class BackendSessionService implements IComponent {
      * @memberOf BackendSessionService
      * @api private
      */
-    pushAll(frontendId: any, sid: any, settings: any, cb: (err: Error | null, result?: void) => void): void;
-    aget: (arg1: any, arg2: any) => Promise<BackendSession>;
-    agetByUid: (arg1: any, arg2: any) => Promise<BackendSession[]>;
-    akickBySid: (arg1: any, arg2: any, arg3: any) => Promise<void>;
-    akickByUid: (arg1: any, arg2: any, arg3: any) => Promise<void>;
-    abind: (arg1: any, arg2: any, arg3: any) => Promise<void>;
-    aunbind: (arg1: any, arg2: any, arg3: any) => Promise<void>;
-    apush: (arg1: any, arg2: any, arg3: any, arg4: any) => Promise<void>;
-    apushAll: (arg1: any, arg2: any, arg3: any) => Promise<void>;
+    pushAll(frontendId: string, sid: number, settings: Object, cb: (err: Error | null, result?: void) => void): void;
+    aget: (arg1: string, arg2: number) => Promise<BackendSession>;
+    agetByUid: (arg1: string, arg2: string) => Promise<BackendSession[]>;
+    akickBySid: (arg1: string, arg2: number) => Promise<void>;
+    akickByUid: (arg1: string, arg2: string, arg3: string) => Promise<void>;
+    abind: (arg1: string, arg2: number, arg3: string) => Promise<void>;
+    aunbind: (arg1: string, arg2: number, arg3: string) => Promise<void>;
+    apush: (arg1: string, arg2: number, arg3: string, arg4: string) => Promise<void>;
+    apushAll: (arg1: string, arg2: number, arg3: Object) => Promise<void>;
 }
 /**
  * BackendSession is the proxy for the frontend internal session passed to handlers and
@@ -153,7 +153,7 @@ export declare class BackendSession {
      *
      * @memberOf BackendSession
      */
-    bind(uid: any, cb: (err: Error | null, result?: void) => void): void;
+    bind(uid: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Unbind current session with the user id. It would push the uid to frontend
      * server and unbind uid from the frontend internal session.
@@ -163,37 +163,37 @@ export declare class BackendSession {
      *
      * @memberOf BackendSession
      */
-    unbind(uid: any, cb: (err: Error | null, result?: void) => void): void;
+    unbind(uid: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Set the key/value into backend session.
      *
      * @param {String} key   key
      * @param {Object} value value
      */
-    set(key: any, value: any): void;
+    set(key: string, value: any): void;
     /**
      * Get the value from backend session by key.
      *
      * @param  {String} key key
      * @return {Object}     value
      */
-    get(key: any): any;
+    get(key: string): any;
     /**
      * Push the key/value in backend session to the front internal session.
      *
      * @param  {String}   key key
      * @param  {Function} cb  callback function
      */
-    push(key: any, cb: (err: Error | null, result?: void) => void): void;
+    push(key: string, cb: (err: Error | null, result?: void) => void): void;
     /**
      * Push all the key/values in backend session to the frontend internal session.
      *
      * @param  {Function} cb callback function
      */
     pushAll(cb: (err: Error | null, result?: void) => void): void;
-    abind: (arg1: any) => Promise<void>;
-    aunbind: (arg1: any) => Promise<void>;
-    apush: (arg1: any) => Promise<void>;
+    abind: (arg1: string) => Promise<void>;
+    aunbind: (arg1: string) => Promise<void>;
+    apush: (arg1: string) => Promise<void>;
     apushAll: () => Promise<void>;
     /**
      * Export the key/values for serialization.

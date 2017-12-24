@@ -38,7 +38,9 @@ import { IModule, IModuleFactory } from 'pomelo-admin';
 
 
 export type ConfigureCallback =  ()=>void;
-
+export type AConfigureFunc1 = ()=>Promise<void> ;
+export type AConfigureFunc2 = (env : string)=>Promise<void> ;
+export type AConfigureFunc3 = (env : string, type : string)=>Promise<void>
 /**
  * Application states
  */
@@ -1149,7 +1151,7 @@ export class Application
     };
 
     astart = utils.promisify(this.start);
-    aconfigure = utils.promisify(this.configure);
+    aconfigure: AConfigureFunc1 | AConfigureFunc2 | AConfigureFunc3 = utils.promisify(this.configure) as any;
 
     rpc ?: any;
     sysrpc ?: any;

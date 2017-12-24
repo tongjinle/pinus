@@ -112,7 +112,8 @@ export class ChannelService implements IComponent
      * @param {Function} cb cb(err)
      * @memberOf ChannelService
      */
-    pushMessageByUids(route, msg, uids, opts ?: any, cb ? : (err ?: Error , result ?: void)=>void)
+    pushMessageByUids(route: string, msg: any, uids: {uid:string,sid:string}[], cb ? : (err ?: Error , result ?: void)=>void)
+    pushMessageByUids(route: string, msg: any, uids: {uid:string,sid:string}[], opts?: any, cb ? : (err ?: Error , result ?: void)=>void)
     {
         if (typeof route !== 'string')
         {
@@ -156,7 +157,8 @@ export class ChannelService implements IComponent
      * @param  {Function} cb         callback
      * @memberOf ChannelService
      */
-    broadcast(stype, route, msg, opts ?: any, cb ? : (err ?: Error , result ?: void)=>void)
+    broadcast(stype: string, route: string, msg: any, cb ? : (err ?: Error , result ?: void)=>void)
+    broadcast(stype: string, route: string, msg: any, opts?: any, cb ? : (err ?: Error , result ?: void)=>void)
     {
         var app = this.app;
         var namespace = 'sys';
@@ -233,8 +235,8 @@ export class ChannelService implements IComponent
         }
     };
 
-    apushMessageByUids = utils.promisify(this.pushMessageByUids);
-    abroadcast = utils.promisify(this.broadcast);
+    apushMessageByUids : (route: string, msg: any, uids: {uid:string,sid:string}[], opts?: Object)=>Promise<void> = utils.promisify(this.pushMessageByUids);
+    abroadcast : (stype: string, route: string, msg: any, opts?: any)=>Promise<void> = utils.promisify(this.broadcast);
 }
 /**
  * Channel maintains the receiver collection for a subject. You can
@@ -399,7 +401,7 @@ export class Channel
         sendMessageByGroup(this.__channelService__, route, msg, this.groups, opts, cb);
     };
 
-    apushMessage = utils.promisify(this.pushMessage);
+    apushMessage : (route : string, msg : any, opts ?: any)=>Promise<void> = utils.promisify(this.pushMessage);
 }
 /**
  * add uid and sid into group. ignore any uid that uid not specified.

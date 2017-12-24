@@ -73,15 +73,6 @@ class BackendSessionService {
         rpcInvoke(this.app, frontendId, namespace, service, method, args, BackendSessionCB.bind(null, this, cb));
     }
     ;
-    /**
-     * Kick a session by session id.
-     *
-     * @param  {String}   frontendId cooperating frontend server id
-     * @param  {Number}   sid        session id
-     * @param  {Function} cb         callback function
-     *
-     * @memberOf BackendSessionService
-     */
     kickBySid(frontendId, sid, reason, cb) {
         var namespace = 'sys';
         var service = 'sessionRemote';

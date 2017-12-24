@@ -23,6 +23,9 @@ import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
 import { IModule, IModuleFactory } from 'pomelo-admin';
 export declare type ConfigureCallback = () => void;
+export declare type AConfigureFunc1 = () => Promise<void>;
+export declare type AConfigureFunc2 = (env: string) => Promise<void>;
+export declare type AConfigureFunc3 = (env: string, type: string) => Promise<void>;
 export declare class Application {
     loaded: any[];
     components: {
@@ -495,7 +498,7 @@ export declare class Application {
      */
     removeCrons(crons: any): void;
     astart: () => Promise<void>;
-    aconfigure: (arg1: string, arg2: string, arg3: ConfigureCallback) => Promise<{}>;
+    aconfigure: AConfigureFunc1 | AConfigureFunc2 | AConfigureFunc3;
     rpc?: any;
     sysrpc?: any;
     /**

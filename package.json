@@ -1,6 +1,6 @@
 {
   "name": "pomelo",
-  "version": "3.2.6",
+  "version": "3.4.0",
   "homepage": "https://github.com/NetEase/pomelo",
   "repository": {
     "type": "git",
@@ -36,12 +36,12 @@
     "mkdirp": "0.3.3",
     "mqtt": "0.3.9",
     "node-bignumber": "1.2.1",
-    "pomelo-admin": "1.1.0",
-    "pomelo-loader": "1.0.1",
+    "pomelo-admin": "1.1.1",
+    "pomelo-loader": "1.0.2",
     "pomelo-logger": "1.0.3",
     "pomelo-protobuf": "1.0.0",
     "pomelo-protocol": "1.0.4",
-    "pomelo-rpc": "2.1.2",
+    "pomelo-rpc": "2.1.9",
     "pomelo-scheduler": "1.0.2",
     "seq-queue": "0.0.5",
     "socket.io": "1.7.2",

@@ -49,7 +49,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    get(frontendId, sid, cb : (err : Error | null , result ?: BackendSession)=>void)
+    get(frontendId : string, sid : number, cb : (err : Error | null , result ?: BackendSession)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -68,7 +68,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    getByUid(frontendId, uid, cb : (err : Error | null , result ?: BackendSession[])=>void)
+    getByUid(frontendId : string, uid : string, cb : (err : Error | null , result ?: BackendSession[])=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -87,7 +87,8 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    kickBySid(frontendId, sid, reason, cb : (err : Error | null , result ?: void)=>void)
+    kickBySid(frontendId : string, sid : number, cb : (err : Error | null , result ?: void)=>void)
+    kickBySid(frontendId : string, sid : number, reason : (err : Error | null , result ?: void)=>void | string, cb ?: (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -113,7 +114,7 @@ export class BackendSessionService implements IComponent
      *
      * @memberOf BackendSessionService
      */
-    kickByUid(frontendId, uid, reason, cb : (err : Error | null , result ?: void)=>void)
+    kickByUid(frontendId : string, uid : string, reason : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -141,7 +142,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    bind(frontendId, sid, uid, cb : (err : Error | null , result ?: void)=>void)
+    bind(frontendId : string, sid : number, uid : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -162,7 +163,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    unbind(frontendId, sid, uid, cb : (err : Error | null , result ?: void)=>void)
+    unbind(frontendId : string, sid : number, uid : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -183,7 +184,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    push(frontendId, sid, key, value, cb : (err : Error | null , result ?: void)=>void)
+    push(frontendId : string, sid : number, key : string, value : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -203,7 +204,7 @@ export class BackendSessionService implements IComponent
      * @memberOf BackendSessionService
      * @api private
      */
-    pushAll(frontendId, sid, settings, cb : (err : Error | null , result ?: void)=>void)
+    pushAll(frontendId : string, sid : number, settings : Object, cb : (err : Error | null , result ?: void)=>void)
     {
         var namespace = 'sys';
         var service = 'sessionRemote';
@@ -268,7 +269,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    bind(uid, cb : (err : Error | null , result ?: void)=>void)
+    bind(uid : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.bind(this.frontendId, this.id, uid, function (err)
@@ -290,7 +291,7 @@ export class BackendSession
      *
      * @memberOf BackendSession
      */
-    unbind(uid, cb : (err : Error | null , result ?: void)=>void)
+    unbind(uid : string, cb : (err : Error | null , result ?: void)=>void)
     {
         var self = this;
         this.__sessionService__.unbind(this.frontendId, this.id, uid, function (err)
@@ -309,7 +310,7 @@ export class BackendSession
      * @param {String} key   key
      * @param {Object} value value
      */
-    set(key, value)
+    set(key : string, value : any)
     {
         this.settings[key] = value;
     };
@@ -320,7 +321,7 @@ export class BackendSession
      * @param  {String} key key
      * @return {Object}     value
      */
-    get(key)
+    get(key : string)
     {
         return this.settings[key];
     };
@@ -331,7 +332,7 @@ export class BackendSession
      * @param  {String}   key key
      * @param  {Function} cb  callback function
      */
-    push(key, cb : (err : Error | null , result ?: void)=>void)
+    push(key : string, cb : (err : Error | null , result ?: void)=>void)
     {
         this.__sessionService__.push(this.frontendId, this.id, key, this.get(key), cb);
     };

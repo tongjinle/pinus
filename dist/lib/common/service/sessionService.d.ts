@@ -115,7 +115,7 @@ export declare class SessionService {
      *
      * @memberOf SessionService
      */
-    getClientAddressBySessionId(sid: any): any;
+    getClientAddressBySessionId(sid: number): any;
     /**
      * Send message to the client by session id.
      *
@@ -125,7 +125,7 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    sendMessage(sid: any, msg: any): boolean;
+    sendMessage(sid: number, msg: any): boolean;
     /**
      * Send message to the client by user id.
      *
@@ -135,7 +135,7 @@ export declare class SessionService {
      * @memberOf SessionService
      * @api private
      */
-    sendMessageByUid(uid: any, msg: any): boolean;
+    sendMessageByUid(uid: number, msg: any): boolean;
     /**
      * Iterate all the session in the session service.
      *
@@ -155,12 +155,12 @@ export declare class SessionService {
      *
      */
     getSessionsCount(): number;
-    akick: (arg1: string, arg2: string) => Promise<void>;
-    akickBySessionId: (arg1: number, arg2: string) => Promise<void>;
-    abind: (arg1: any, arg2: any) => Promise<void>;
-    aunbind: (arg1: any, arg2: any) => Promise<void>;
-    aimport: (arg1: any, arg2: any, arg3: any) => Promise<void>;
-    aimportAll: (arg1: any, arg2: any) => Promise<void>;
+    akick: (uid: string, reason?: string) => Promise<void>;
+    akickBySessionId: (sid: number, reason?: string) => Promise<void>;
+    abind: (sid: number, uid: string) => Promise<void>;
+    aunbind: (sid: number, uid: string) => Promise<void>;
+    aimport: (sid: number, key: string, value: any) => Promise<void>;
+    aimportAll: (sid: number, settings: any) => Promise<void>;
 }
 /**
  * Session maintains the relationship between client connection and user information.

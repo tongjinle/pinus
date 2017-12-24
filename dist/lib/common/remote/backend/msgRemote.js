@@ -21,7 +21,7 @@ class MsgRemote {
          * @param session {Object} session object for current request
          * @param cb {Function} callback function
          */
-        this.forwardMessage = utils.promisify(function (msg, session, cb) {
+        this.forwardMessage = utils.promisify((msg, session, cb) => {
             var server = this.app.components.__server__;
             var sessionService = this.app.components.__backendSession__;
             if (!server) {
@@ -43,7 +43,7 @@ class MsgRemote {
                 utils.invokeCallback(cb, err, resp, opts);
             });
         });
-        this.forwardMessage2 = utils.promisify(function (route, body, aesPassword, compressGzip, session, cb) {
+        this.forwardMessage2 = utils.promisify((route, body, aesPassword, compressGzip, session, cb) => {
             var server = this.app.components.__server__;
             var sessionService = this.app.components.__backendSession__;
             if (!server) {
