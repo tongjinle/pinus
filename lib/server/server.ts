@@ -15,6 +15,7 @@ import { FilterService } from '../common/service/filterService';
 import { HandlerService } from '../common/service/handlerService';
 import { Application } from '../application';
 import { EventEmitter } from 'events';
+import { FrontendSession } from '../common/service/sessionService';
 
 var ST_INITED = 0;    // server inited
 var ST_STARTED = 1;   // server started
@@ -336,7 +337,7 @@ var afterFilter = function (isGlobal, server, err, msg, session, resp, opts, cb)
 /**
  * pass err to the global error handler if specified
  */
-var handleError = function (isGlobal, server, err, msg, session, resp, opts, cb)
+var handleError = function (isGlobal, server : Server, err, msg, session : FrontendSession, resp, opts, cb)
 {
     var handler;
     if (isGlobal)
@@ -348,7 +349,7 @@ var handleError = function (isGlobal, server, err, msg, session, resp, opts, cb)
     }
     if (!handler)
     {
-        logger.debug('no default error handler to resolve unknown exception. ' + err.stack);
+        logger.error(`${server.app.serverId} no default error handler msg[${JSON.stringify(msg)}] to resolve unknown exception: sessionId:${JSON.stringify(session.export())} , error stack: ${err.stack}`);
         utils.invokeCallback(cb, err, resp, opts);
     } else
     {
@@ -427,14 +428,15 @@ var doForward = function (app, msg, session, routeRecord, cb)
                 utils.invokeCallback(cb, null, resp, opts);
             }).catch(function (err)
             {
-                logger.error('fail to process remote message:' + err.stack);
+                logger.error(app.serverId + ' fail to process remote message:' + err.stack);
+                utils.invokeCallback(cb, err);
             });
     }
     catch (err)
     {
         if (!finished)
         {
-            logger.error('fail to forward message:' + err.stack);
+            logger.error(app.serverId + ' fail to forward message:' + err.stack);
             utils.invokeCallback(cb, err);
         }
     }
@@ -482,7 +484,7 @@ var doHandle = function (server : Server, msg, session, routeRecord, cb)
 /**
  * Schedule crons
  */
-var scheduleCrons = function (server, crons)
+var scheduleCrons = function (server : Server, crons)
 {
     var handlers = server.cronHandlers;
     for (var i = 0; i < crons.length; i++)
@@ -494,13 +496,13 @@ var scheduleCrons = function (server, crons)
 
         if (!time || !action || !jobId)
         {
-            logger.error('cron miss necessary parameters: %j', cronInfo);
+            logger.error(server.app.serverId + ' cron miss necessary parameters: %j', cronInfo);
             continue;
         }
 
         if (action.indexOf('.') < 0)
         {
-            logger.error('cron action is error format: %j', cronInfo);
+            logger.error(server.app.serverId + ' cron action is error format: %j', cronInfo);
             continue;
         }
 

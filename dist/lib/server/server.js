@@ -278,7 +278,7 @@ var handleError = function (isGlobal, server, err, msg, session, resp, opts, cb)
         handler = server.app.get(Constants.RESERVED.ERROR_HANDLER);
     }
     if (!handler) {
-        logger.debug('no default error handler to resolve unknown exception. ' + err.stack);
+        logger.error(`${server.app.serverId} no default error handler msg[${JSON.stringify(msg)}] to resolve unknown exception: sessionId:${JSON.stringify(session.export())} , error stack: ${err.stack}`);
         utils.invokeCallback(cb, err, resp, opts);
     }
     else {
@@ -339,12 +339,13 @@ var doForward = function (app, msg, session, routeRecord, cb) {
             finished = true;
             utils.invokeCallback(cb, null, resp, opts);
         }).catch(function (err) {
-            logger.error('fail to process remote message:' + err.stack);
+            logger.error(app.serverId + ' fail to process remote message:' + err.stack);
+            utils.invokeCallback(cb, err);
         });
     }
     catch (err) {
         if (!finished) {
-            logger.error('fail to forward message:' + err.stack);
+            logger.error(app.serverId + ' fail to forward message:' + err.stack);
             utils.invokeCallback(cb, err);
         }
     }
@@ -386,11 +387,11 @@ var scheduleCrons = function (server, crons) {
         var action = cronInfo.action;
         var jobId = cronInfo.id;
         if (!time || !action || !jobId) {
-            logger.error('cron miss necessary parameters: %j', cronInfo);
+            logger.error(server.app.serverId + ' cron miss necessary parameters: %j', cronInfo);
             continue;
         }
         if (action.indexOf('.') < 0) {
-            logger.error('cron action is error format: %j', cronInfo);
+            logger.error(server.app.serverId + ' cron action is error format: %j', cronInfo);
             continue;
         }
         var cron = action.split('.')[0];

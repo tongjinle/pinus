@@ -10,6 +10,8 @@ import { IComponent } from '../interfaces/Component';
 import { PushSchedulerComponent } from './pushScheduler';
 import { SIOConnector } from '../connectors/sioconnector';
 import { ConnectionService } from '../common/service/connectionService';
+import { Server } from '../server/server';
+import { ServerComponent } from './server';
 
 
 /**
@@ -34,7 +36,7 @@ export class ConnectorComponent implements IComponent
 
     keys = {};
     blacklist = [];
-    server: any;
+    server: ServerComponent;
     session: any;
 
     constructor(app, opts)
