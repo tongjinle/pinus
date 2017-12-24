@@ -1,4 +1,4 @@
-import { Application, FrontendSession } fron 'pomelo';
+import { Application, FrontendSession } from 'pomelo';
 
 export default function (app: Application)
 {
