@@ -94,22 +94,22 @@ class Server extends events_2.EventEmitter {
         var dispatch = function (err, resp, opts) {
             if (err) {
                 handleError(true, self, err, msg, session, resp, opts, function (err, resp, opts) {
-                    response(true, self, err, msg, session, resp, opts, cb);
+                    response(true, self, err, routeRecord, msg, session, resp, opts, cb);
                 });
                 return;
             }
             if (self.app.getServerType() !== routeRecord.serverType) {
                 doForward(self.app, msg, session, routeRecord, function (err, resp, opts) {
-                    response(true, self, err, msg, session, resp, opts, cb);
+                    response(true, self, err, routeRecord, msg, session, resp, opts, cb);
                 });
             }
             else {
                 doHandle(self, msg, session, routeRecord, function (err, resp, opts) {
-                    response(true, self, err, msg, session, resp, opts, cb);
+                    response(true, self, err, routeRecord, msg, session, resp, opts, cb);
                 });
             }
         };
-        beforeFilter(true, self, msg, session, dispatch);
+        beforeFilter(true, self, routeRecord, msg, session, dispatch);
     }
     ;
     /**
@@ -227,7 +227,7 @@ var loadCrons = function (server, app) {
 /**
  * Fire before filter chain if any
  */
-var beforeFilter = function (isGlobal, server, msg, session, cb) {
+var beforeFilter = function (isGlobal, server, routeRecord, msg, session, cb) {
     var fm;
     if (isGlobal) {
         fm = server.globalFilterService;
@@ -236,7 +236,7 @@ var beforeFilter = function (isGlobal, server, msg, session, cb) {
         fm = server.filterService;
     }
     if (fm) {
-        fm.beforeFilter(msg, session, cb);
+        fm.beforeFilter(routeRecord, msg, session, cb);
     }
     else {
         utils.invokeCallback(cb);
@@ -245,7 +245,7 @@ var beforeFilter = function (isGlobal, server, msg, session, cb) {
 /**
  * Fire after filter chain if have
  */
-var afterFilter = function (isGlobal, server, err, msg, session, resp, opts, cb) {
+var afterFilter = function (isGlobal, server, err, routeRecord, msg, session, resp, opts, cb) {
     var fm;
     if (isGlobal) {
         fm = server.globalFilterService;
@@ -255,12 +255,12 @@ var afterFilter = function (isGlobal, server, err, msg, session, resp, opts, cb)
     }
     if (fm) {
         if (isGlobal) {
-            fm.afterFilter(err, msg, session, resp, function () {
+            fm.afterFilter(err, routeRecord, msg, session, resp, function () {
                 // do nothing
             });
         }
         else {
-            fm.afterFilter(err, msg, session, resp, function (err) {
+            fm.afterFilter(err, routeRecord, msg, session, resp, function (err) {
                 cb(err, resp, opts);
             });
         }
@@ -293,14 +293,14 @@ var handleError = function (isGlobal, server, err, msg, session, resp, opts, cb)
 /**
  * Send response to client and fire after filter chain if any.
  */
-var response = function (isGlobal, server, err, msg, session, resp, opts, cb) {
+var response = function (isGlobal, server, err, routeRecord, msg, session, resp, opts, cb) {
     if (isGlobal) {
         cb(err, resp, opts);
         // after filter should not interfere response
-        afterFilter(isGlobal, server, err, msg, session, resp, opts, cb);
+        afterFilter(isGlobal, server, err, routeRecord, msg, session, resp, opts, cb);
     }
     else {
-        afterFilter(isGlobal, server, err, msg, session, resp, opts, cb);
+        afterFilter(isGlobal, server, err, routeRecord, msg, session, resp, opts, cb);
     }
 };
 /**
@@ -351,15 +351,13 @@ var doForward = function (app, msg, session, routeRecord, cb) {
     }
 };
 var doHandle = function (server, msg, session, routeRecord, cb) {
-    var originMsg = msg;
     msg = msg.body || {};
-    msg.__route__ = originMsg.route;
     var self = server;
     var handle = function (err, resp, opts) {
         if (err) {
             // error from before filter
             handleError(false, self, err, msg, session, resp, opts, function (err, resp, opts) {
-                response(false, self, err, msg, session, resp, opts, cb);
+                response(false, self, err, routeRecord, msg, session, resp, opts, cb);
             });
             return;
         }
@@ -367,14 +365,14 @@ var doHandle = function (server, msg, session, routeRecord, cb) {
             if (err) {
                 //error from handler
                 handleError(false, self, err, msg, session, resp, opts, function (err, resp, opts) {
-                    response(false, self, err, msg, session, resp, opts, cb);
+                    response(false, self, err, routeRecord, msg, session, resp, opts, cb);
                 });
                 return;
             }
-            response(false, self, err, msg, session, resp, opts, cb);
+            response(false, self, err, routeRecord, msg, session, resp, opts, cb);
         });
     }; //end of handle
-    beforeFilter(false, server, msg, session, handle);
+    beforeFilter(false, server, routeRecord, msg, session, handle);
 };
 /**
  * Schedule crons

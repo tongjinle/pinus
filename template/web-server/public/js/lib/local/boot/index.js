@@ -7,5 +7,5 @@
   var protobuf = require('pinus-protobuf');
   window.protobuf = protobuf;
   
-  var pomelo = require('pinus-jsclient-websocket');
-  window.pomelo = pomelo;
+  var pinus = require('pinus-jsclient-websocket');
+  window.pinus = pinus;

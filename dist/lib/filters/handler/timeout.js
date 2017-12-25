@@ -24,7 +24,7 @@ class TimeoutFilter {
         this.maxSize = maxSize;
     }
     ;
-    before(msg, session, next) {
+    before(routeRecord, msg, session, next) {
         var count = utils.size(this.timeouts);
         if (count > this.maxSize) {
             logger.warn('timeout filter is out of range, current size is %s, max size is %s', count, this.maxSize);
@@ -33,13 +33,13 @@ class TimeoutFilter {
         }
         this.curId++;
         this.timeouts[this.curId] = setTimeout(function () {
-            logger.error('request %j timeout.', msg.__route__);
+            logger.error('request %j timeout.', routeRecord.route);
         }, this.timeout);
         session.__timeout__ = this.curId;
         next();
     }
     ;
-    after(err, msg, session, resp, next) {
+    after(err, routeRecord, msg, session, resp, next) {
         var timeout = this.timeouts[session.__timeout__];
         if (timeout) {
             clearTimeout(timeout);

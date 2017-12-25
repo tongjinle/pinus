@@ -19,7 +19,7 @@ class SerialFilter {
     /**
      * request serialization after filter
      */
-    before(msg, session, next) {
+    before(routeRecord, msg, session, next) {
         taskManager.addTask(session.id, function (task) {
             session.__serialTask__ = task;
             next();
@@ -31,7 +31,7 @@ class SerialFilter {
     /**
      * request serialization after filter
      */
-    after(err, msg, session, resp, next) {
+    after(err, routeRecord, msg, session, resp, next) {
         var task = session.__serialTask__;
         if (task) {
             if (!task.done() && !err) {

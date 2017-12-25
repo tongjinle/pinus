@@ -29,7 +29,7 @@ export declare class FilterService {
      * @param session {Object} a session object for current request
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    beforeFilter(msg: any, session: any, cb: any): void;
+    beforeFilter(routeRecord: any, msg: any, session: any, cb: any): void;
     /**
      * Do after filter chain.
      * Give server a chance to do clean up jobs after request responsed.
@@ -41,5 +41,5 @@ export declare class FilterService {
      * @param {Object} resp response object send to client
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    afterFilter(err: any, msg: any, session: any, resp: any, cb: any): void;
+    afterFilter(err: any, routeRecord: any, msg: any, session: any, resp: any, cb: any): void;
 }

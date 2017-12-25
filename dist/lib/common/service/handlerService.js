@@ -31,8 +31,8 @@ class HandlerService {
         // the request should be processed by current server
         var handler = this.getHandler(routeRecord);
         if (!handler) {
-            logger.error('[handleManager]: fail to find handler for %j', msg.__route__);
-            utils.invokeCallback(cb, new Error('fail to find handler for ' + msg.__route__));
+            logger.error('[handleManager]: fail to find handler for %j', routeRecord.route);
+            utils.invokeCallback(cb, new Error('fail to find handler for ' + routeRecord.route));
             return;
         }
         var start = Date.now();
@@ -40,7 +40,7 @@ class HandlerService {
         var callback = function (err, resp, opts) {
             if (self.enableForwardLog) {
                 var log = {
-                    route: msg.__route__,
+                    route: routeRecord.route,
                     args: msg,
                     time: utils.format(new Date(start)),
                     timeUsed: Date.now() - start

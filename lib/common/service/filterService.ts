@@ -44,7 +44,7 @@ export class FilterService
      * @param session {Object} a session object for current request
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    beforeFilter(msg, session, cb)
+    beforeFilter(routeRecord ,msg, session, cb)
     {
         var index = 0, self = this;
         var next = function (err?: any, resp?: any, opts?: any)
@@ -58,10 +58,10 @@ export class FilterService
             var handler = self.befores[index++];
             if (typeof handler === 'function')
             {
-                handler(msg, session, next);
+                handler(routeRecord , msg, session, next);
             } else if (typeof handler.before === 'function')
             {
-                handler.before(msg, session, next);
+                handler.before(routeRecord , msg, session, next);
             } else
             {
                 logger.error('meet invalid before filter, handler or handler.before should be function.');
@@ -83,7 +83,7 @@ export class FilterService
      * @param {Object} resp response object send to client
      * @param cb {Function} cb(err) callback function to invoke next chain node
      */
-    afterFilter(err, msg, session, resp, cb)
+    afterFilter(err, routeRecord ,msg, session, resp, cb)
     {
         var index = 0, self = this;
         function next(err)
@@ -98,10 +98,10 @@ export class FilterService
             var handler = self.afters[index++];
             if (typeof handler === 'function')
             {
-                handler(err, msg, session, resp, next);
+                handler(err, routeRecord , msg, session, resp, next);
             } else if (typeof handler.after === 'function')
             {
-                handler.after(err, msg, session, resp, next);
+                handler.after(err, routeRecord , msg, session, resp, next);
             } else
             {
                 logger.error('meet invalid after filter, handler or handler.after should be function.');

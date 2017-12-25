@@ -25,7 +25,7 @@ class ToobusyFilter {
         }
     }
     ;
-    before(msg, session, next) {
+    before(routeRecord, msg, session, next) {
         if (!!toobusy && toobusy()) {
             conLogger.warn('[toobusy] reject request msg: ' + msg);
             var err = new Error('Server toobusy!');
