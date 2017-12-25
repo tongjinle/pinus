@@ -189,8 +189,8 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.udp',
                     'web-server/app.js.https',
                     'web-server/public/index.html.sio',
-                    'web-server/public/js/lib/pomeloclient.js',
-                    'web-server/public/js/lib/pomeloclient.js.wss',
+                    'web-server/public/js/lib/pinusclient.js',
+                    'web-server/public/js/lib/pinusclient.js.wss',
                     'web-server/public/js/lib/build/build.js.wss',
                     'web-server/public/js/lib/socket.io.js'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
