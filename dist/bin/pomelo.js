@@ -158,7 +158,7 @@ function init(path) {
  */
 function createApplicationAt(ph, type) {
     var name = path.basename(path.resolve(CUR_DIR, ph));
-    copy(path.join(__dirname, '../template/'), ph);
+    copy(path.join(__dirname, '../../template/'), ph);
     mkdir(path.join(ph, 'game-server/logs'));
     mkdir(path.join(ph, 'shared'));
     // rmdir -r

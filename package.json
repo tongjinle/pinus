@@ -1,12 +1,13 @@
 {
   "name": "pomelo",
-  "version": "3.4.2",
+  "version": "1.0.0",
   "homepage": "https://github.com/NetEase/pomelo",
   "repository": {
     "type": "git",
     "url": "https://github.com/NetEase/pomelo.git"
   },
   "scripts": {
+    "build": "node_modules/.bin/tsc",
     "test": "grunt"
   },
   "bugs": {
@@ -48,6 +49,7 @@
     "pomelo-scheduler": "1.0.2",
     "seq-queue": "0.0.5",
     "socket.io": "1.7.2",
+    "typescript": "^2.6.2",
     "ws": "1.1.1"
   },
   "bin": {
