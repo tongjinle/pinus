@@ -1,5 +1,4 @@
-
-
+示例工程请参见：https://github.com/pinus-ts/pinus-example
 
 ## Pinus -- a fast, scalable game server framework for node.js
 
