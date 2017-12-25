@@ -1,5 +1,14 @@
 示例工程请参见：https://github.com/node-pinus/pinus-example
 
+手动安装：
+npm install pinus -g
+
+mkdir testProject
+cd testProject
+初始化项目
+pinus init
+
+
 ## Pinus -- a fast, scalable game server framework for node.js
 
 Pinus is a fast, scalable game server framework for [node.js](http://nodejs.org).
