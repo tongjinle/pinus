@@ -192,12 +192,6 @@ var loadMaster = function (app)
     app.master = app.get(Constants.RESERVED.MASTER);
 };
 
-function setHelp(app : Application , name : string , value : any)
-{
-    app.set(name , value);
-    (app as any)[name] = value;
-}
-
 /**
  * Process server start command
  */
@@ -210,26 +204,26 @@ var processArgs = function (app, args)
     var type = args.type || Constants.RESERVED.ALL;
     var startId = args.startId;
 
-    setHelp(app, Constants.RESERVED.MAIN, args.main);
-    setHelp(app, Constants.RESERVED.SERVER_TYPE, serverType);
-    setHelp(app, Constants.RESERVED.SERVER_ID, serverId);
-    setHelp(app, Constants.RESERVED.MODE, mode);
-    setHelp(app, Constants.RESERVED.TYPE, type);
+    app.set(Constants.RESERVED.MAIN, args.main, true);
+    app.set(Constants.RESERVED.SERVER_TYPE, serverType, true);
+    app.set(Constants.RESERVED.SERVER_ID, serverId, true);
+    app.set(Constants.RESERVED.MODE, mode, true);
+    app.set(Constants.RESERVED.TYPE, type, true);
     if (!!startId)
     {
-        setHelp(app, Constants.RESERVED.STARTID, startId);
+        app.set(Constants.RESERVED.STARTID, startId);
     }
 
     if (masterha === 'true')
     {
         app.master = args;
-        setHelp(app, Constants.RESERVED.CURRENT_SERVER, args);
+        app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
     } else if (serverType !== Constants.RESERVED.MASTER)
     {
-        setHelp(app, Constants.RESERVED.CURRENT_SERVER, args);
+        app.set(Constants.RESERVED.CURRENT_SERVER, args, true);
     } else
     {
-        setHelp(app, Constants.RESERVED.CURRENT_SERVER, app.getMaster());
+        app.set(Constants.RESERVED.CURRENT_SERVER, app.getMaster(), true);
     }
 };
 
@@ -238,7 +232,7 @@ var processArgs = function (app, args)
  */
 var setupEnv = function (app, args)
 {
-    setHelp(app, Constants.RESERVED.ENV, args.env || process.env.NODE_ENV || Constants.RESERVED.ENV_DEV);
+    app.set(Constants.RESERVED.ENV, args.env || process.env.NODE_ENV || Constants.RESERVED.ENV_DEV, true);
 };
 
 /**

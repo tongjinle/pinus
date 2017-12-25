@@ -80,12 +80,12 @@ export class ProtobufComponent implements IComponent
 
         if (type === Constants.RESERVED.SERVER)
         {
-            this.serverProtos = this.protobuf.parse(require(path));
+            this.serverProtos = Protobuf.parse(require(path));
         }
 
         if (type === Constants.RESERVED.CLIENT)
         {
-            this.clientProtos = this.protobuf.parse(require(path));
+            this.clientProtos = Protobuf.parse(require(path));
         }
 
         var protoStr = JSON.stringify(this.clientProtos) + JSON.stringify(this.serverProtos);

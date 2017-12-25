@@ -57,10 +57,10 @@ class ProtobufComponent {
             return;
         }
         if (type === Constants.RESERVED.SERVER) {
-            this.serverProtos = this.protobuf.parse(require(path));
+            this.serverProtos = pinus_protobuf_1.Protobuf.parse(require(path));
         }
         if (type === Constants.RESERVED.CLIENT) {
-            this.clientProtos = this.protobuf.parse(require(path));
+            this.clientProtos = pinus_protobuf_1.Protobuf.parse(require(path));
         }
         var protoStr = JSON.stringify(this.clientProtos) + JSON.stringify(this.serverProtos);
         this.version = crypto.createHash('md5').update(protoStr).digest('base64');

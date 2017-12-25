@@ -9,7 +9,7 @@ import { IComponent } from '../interfaces/Component';
  */
 export declare class RemoteComponent implements IComponent {
     private app;
-    private opts;
+    opts: any;
     constructor(app: Application, opts: any);
     name: string;
     remote: Gateway;

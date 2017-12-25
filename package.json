@@ -1,6 +1,6 @@
 {
   "name": "pinus",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "homepage": "https://github.com/mybios/pinus",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
     "pinus-admin": "1.0.1",
     "pinus-loader": "1.0.0",
     "pinus-logger": "1.0.0",
-    "pinus-protobuf": "1.0.0",
+    "pinus-protobuf": "1.0.1",
     "pinus-protocol": "1.0.0",
     "pinus-rpc": "1.0.0",
     "pinus-scheduler": "1.0.0",

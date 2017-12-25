@@ -17,10 +17,11 @@ import { getLogger } from 'pinus-logger';
  */
 export class RemoteComponent  implements IComponent
 {
-
-    constructor(private app: Application, private opts: any)
+    opts: any;
+    constructor(private app: Application, opts: any)
     {
         opts = opts || {};
+        this.opts = opts;
 
         // cacheMsg is deprecated, just for compatibility here.
         opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;

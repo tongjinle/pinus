@@ -17,9 +17,9 @@ const pinus_logger_1 = require("pinus-logger");
 class RemoteComponent {
     constructor(app, opts) {
         this.app = app;
-        this.opts = opts;
         this.name = '__remote__';
         opts = opts || {};
+        this.opts = opts;
         // cacheMsg is deprecated, just for compatibility here.
         opts.bufferMsg = opts.bufferMsg || opts.cacheMsg || false;
         opts.interval = opts.interval || 30;
