@@ -1,5 +1,5 @@
 import * as utils from '../../../util/utils';
-import { getLogger } from 'pomelo-logger'; import { Application } from '../../../application';
+import { getLogger } from 'pinus-logger'; import { Application } from '../../../application';
  var logger = getLogger('forward-log', __filename);
 /**
  * Remote service for backend servers.

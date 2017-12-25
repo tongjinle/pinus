@@ -1,5 +1,5 @@
 import { Application } from '../application';
-import { IModule } from 'pomelo-admin';
+import { IModule } from 'pinus-admin';
 export declare class MonitorWatcherModule implements IModule {
     app: Application;
     service: any;

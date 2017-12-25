@@ -1,4 +1,4 @@
-export * from './lib/pomelo';
+export * from './lib/pinus';
 
 export { Application } from './lib/application';
 export { BackendSession , BackendSessionService } from './lib/common/service/backendSessionService';
@@ -38,10 +38,10 @@ export * from './lib/interfaces/Component';
 export * from './lib/interfaces/IStore';
 
 
-export * from "pomelo-admin";
-export * from "pomelo-loader";
-export * from "pomelo-logger";
-export * from "pomelo-protobuf";
-export * from "pomelo-protocol";
-export * from "pomelo-rpc";
-export * from "pomelo-scheduler";
+export * from "pinus-admin";
+export * from "pinus-loader";
+export * from "pinus-logger";
+export * from "pinus-protobuf";
+export * from "pinus-protocol";
+export * from "pinus-rpc";
+export * from "pinus-scheduler";

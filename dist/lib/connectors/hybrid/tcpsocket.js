@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const stream_1 = require("stream");
-const pomelo_protocol_1 = require("pomelo-protocol");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_protocol_1 = require("pinus-protocol");
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * Work states
  */
@@ -167,6 +167,6 @@ var reset = function (socket) {
     socket.state = ST_HEAD;
 };
 var checkTypeData = function (data) {
-    return data === pomelo_protocol_1.Package.TYPE_HANDSHAKE || data === pomelo_protocol_1.Package.TYPE_HANDSHAKE_ACK || data === pomelo_protocol_1.Package.TYPE_HEARTBEAT || data === pomelo_protocol_1.Package.TYPE_DATA || data === pomelo_protocol_1.Package.TYPE_KICK;
+    return data === pinus_protocol_1.Package.TYPE_HANDSHAKE || data === pinus_protocol_1.Package.TYPE_HANDSHAKE_ACK || data === pinus_protocol_1.Package.TYPE_HEARTBEAT || data === pinus_protocol_1.Package.TYPE_DATA || data === pinus_protocol_1.Package.TYPE_KICK;
 };
 //# sourceMappingURL=tcpsocket.js.map

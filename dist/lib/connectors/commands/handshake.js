@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pomelo_1 = require("../../pomelo");
-const pomelo_protocol_1 = require("pomelo-protocol");
+const pinus_1 = require("../../pinus");
+const pinus_protocol_1 = require("pinus-protocol");
 var CODE_OK = 200;
 var CODE_USE_ERROR = 500;
 var CODE_OLD_CLIENT = 501;
@@ -42,28 +42,28 @@ class HandshakeCommand {
             heartbeat: setupHeartbeat(this)
         };
         if (this.useDict) {
-            var dictVersion = pomelo_1.pomelo.app.components.__dictionary__.getVersion();
+            var dictVersion = pinus_1.pinus.app.components.__dictionary__.getVersion();
             if (!msg.sys.dictVersion || msg.sys.dictVersion !== dictVersion) {
                 // may be deprecated in future
-                opts.dict = pomelo_1.pomelo.app.components.__dictionary__.getDict();
-                opts.routeToCode = pomelo_1.pomelo.app.components.__dictionary__.getDict();
-                opts.codeToRoute = pomelo_1.pomelo.app.components.__dictionary__.getAbbrs();
+                opts.dict = pinus_1.pinus.app.components.__dictionary__.getDict();
+                opts.routeToCode = pinus_1.pinus.app.components.__dictionary__.getDict();
+                opts.codeToRoute = pinus_1.pinus.app.components.__dictionary__.getAbbrs();
                 opts.dictVersion = dictVersion;
             }
             opts.useDict = true;
         }
         if (this.useProtobuf) {
-            var protoVersion = pomelo_1.pomelo.app.components.__protobuf__.getVersion();
+            var protoVersion = pinus_1.pinus.app.components.__protobuf__.getVersion();
             if (!msg.sys.protoVersion || msg.sys.protoVersion !== protoVersion) {
-                opts.protos = pomelo_1.pomelo.app.components.__protobuf__.getProtos();
+                opts.protos = pinus_1.pinus.app.components.__protobuf__.getProtos();
             }
             opts.useProto = true;
         }
-        if (!!pomelo_1.pomelo.app.components.__decodeIO__protobuf__) {
+        if (!!pinus_1.pinus.app.components.__decodeIO__protobuf__) {
             if (!!this.useProtobuf) {
                 throw new Error('protobuf can not be both used in the same project.');
             }
-            var component = pomelo_1.pomelo.app.components.__decodeIO__protobuf__;
+            var component = pinus_1.pinus.app.components.__decodeIO__protobuf__;
             var version = component.getVersion();
             if (!msg.sys.protoVersion || msg.sys.protoVersion < version) {
                 opts.protos = component.getProtos();
@@ -71,7 +71,7 @@ class HandshakeCommand {
             opts.useProto = true;
         }
         if (this.useCrypto) {
-            pomelo_1.pomelo.app.components.__connector__.setPubKey(socket.id, msg.sys.rsa);
+            pinus_1.pinus.app.components.__connector__.setPubKey(socket.id, msg.sys.rsa);
         }
         if (typeof this.userHandshake === 'function') {
             this.userHandshake(msg, function (err, resp) {
@@ -105,13 +105,13 @@ var response = function (socket, sys, resp) {
     if (resp) {
         res.user = resp;
     }
-    socket.handshakeResponse(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_HANDSHAKE, new Buffer(JSON.stringify(res))));
+    socket.handshakeResponse(pinus_protocol_1.Package.encode(pinus_protocol_1.Package.TYPE_HANDSHAKE, new Buffer(JSON.stringify(res))));
 };
 var processError = function (socket, code) {
     var res = {
         code: code
     };
-    socket.sendForce(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_HANDSHAKE, new Buffer(JSON.stringify(res))));
+    socket.sendForce(pinus_protocol_1.Package.encode(pinus_protocol_1.Package.TYPE_HANDSHAKE, new Buffer(JSON.stringify(res))));
     process.nextTick(function () {
         socket.disconnect();
     });

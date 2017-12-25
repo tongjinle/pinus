@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger = require("pomelo-logger");
+const logger = require("pinus-logger");
 /**
- * Configure pomelo logger
+ * Configure pinus logger
  */
 function configure(app, filename) {
     var serverId = app.getServerId();

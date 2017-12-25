@@ -1,6 +1,6 @@
-import { Package } from 'pomelo-protocol';
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { Package } from 'pinus-protocol';
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 
 /**
  * Process heartbeat request.

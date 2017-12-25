@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Filter for timeout.
  * Print a warn information when request timeout.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const utils = require("../../util/utils");
 var DEFAULT_TIMEOUT = 3000;
 var DEFAULT_SIZE = 500;

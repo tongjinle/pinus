@@ -2,7 +2,7 @@
  * Filter for toobusy.
  * if the process is toobusy, just skip the new request
  */
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 
 var conLogger = getLogger('con-log', __filename);
 var toobusy = null;

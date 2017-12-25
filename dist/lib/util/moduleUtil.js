@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const os = require("os");
-const admin = require("pomelo-admin");
+const admin = require("pinus-admin");
 const utils = require("./utils");
 const Constants = require("./constants");
 const pathUtil = require("./pathUtil");
 const starter = require("../master/starter");
-const pomelo_logger_1 = require("pomelo-logger");
+const pinus_logger_1 = require("pinus-logger");
 const masterwatcher_1 = require("../modules/masterwatcher");
 const monitorwatcher_1 = require("../modules/monitorwatcher");
 const console_1 = require("../modules/console");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * Load admin modules
  */

@@ -1,13 +1,13 @@
 import * as cp from 'child_process';
-import { getLogger } from 'pomelo-logger';
- var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+ var logger = getLogger('pinus', __filename);
 import * as util from 'util';
 import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
 var env = Constants.RESERVED.ENV_DEV;
 import * as os from 'os';
 var cpus = {};
-import {pomelo} from '../pomelo';
+import {pinus} from '../pinus';
 
 /**
  * Run all servers
@@ -184,7 +184,7 @@ export function sshrun(cmd, host, cb ?: Function)
 {
     var args = [];
     args.push(host);
-    var ssh_params = pomelo.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
+    var ssh_params = pinus.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
     if (!!ssh_params && Array.isArray(ssh_params))
     {
         args = args.concat(ssh_params);

@@ -1,6 +1,6 @@
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as taskManager from '../common/manager/taskManager';
-import { pomelo } from '../pomelo';
+import { pinus } from '../pinus';
 import * as rsa from "node-bignumber";
 import { default as events } from '../util/events';
 import * as utils from '../util/utils';
@@ -53,12 +53,12 @@ export class ConnectorComponent implements IComponent
 
         if (opts.useDict)
         {
-            app.load(pomelo.components.dictionary, app.get('dictionaryConfig'));
+            app.load(pinus.components.dictionary, app.get('dictionaryConfig'));
         }
 
         if (opts.useProtobuf)
         {
-            app.load(pomelo.components.protobuf, app.get('protobufConfig'));
+            app.load(pinus.components.protobuf, app.get('protobufConfig'));
         }
 
         // component dependencies

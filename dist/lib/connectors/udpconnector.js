@@ -10,8 +10,8 @@ const handshake_1 = require("./commands/handshake");
 const heartbeat_1 = require("./commands/heartbeat");
 const coder = require("./common/coder");
 const events_1 = require("events");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 var curId = 1;
 class UDPConnector extends events_1.EventEmitter {
     constructor(port, host, opts) {

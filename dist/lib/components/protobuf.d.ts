@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Protobuf } from 'pomelo-protobuf';
+import { Protobuf } from 'pinus-protobuf';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 export declare class ProtobufComponent implements IComponent {

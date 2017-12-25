@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Protobuf} from 'pomelo-protobuf';
+import { Protobuf} from 'pinus-protobuf';
 import * as Constants from '../util/constants';
 import * as crypto from 'crypto';
-import { getLogger } from 'pomelo-logger'; import { Application } from '../application';
+import { getLogger } from 'pinus-logger'; import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
- var logger = getLogger('pomelo', __filename);
+ var logger = getLogger('pinus', __filename);
 
 export class ProtobufComponent implements IComponent
 {

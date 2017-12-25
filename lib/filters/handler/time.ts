@@ -2,7 +2,7 @@
  * Filter for statistics.
  * Record used time for each request.
  */
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 var conLogger = getLogger('con-log', __filename);
 import * as utils from '../../util/utils';
 

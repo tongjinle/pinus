@@ -1,7 +1,7 @@
 /**
  * Filter to keep request sequence.
  */
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as taskManager from '../../common/manager/taskManager';
 
 export default function(timeout) {

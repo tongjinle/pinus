@@ -3,13 +3,23 @@
  * Copyright(c) 2012 xiechengchao <xiecc@163.com>
  * MIT Licensed
  */
+
+/**
+ * Module dependencies.
+ */
+import * as fs from 'fs';
+import * as path from 'path';
 import { Application } from './application';
+import { isFunction } from 'util';
+import { BackendSession } from './common/service/backendSessionService';
 import { HybridConnector } from './connectors/hybridconnector';
 import { UDPConnector } from './connectors/udpconnector';
 import { MQTTConnector } from './connectors/mqttconnector';
 import { SIOConnector } from './connectors/sioconnector';
 import { DirectPushScheduler } from './pushSchedulers/direct';
 import { BufferPushScheduler } from './pushSchedulers/buffer';
+import { ChannelService } from './common/service/channelService';
+
 import { ConnectionComponent } from './components/connection';
 import { ConnectorComponent } from './components/connector';
 import { DictionaryComponent } from './components/dictionary';
@@ -20,13 +30,18 @@ import { ProxyComponent } from './components/proxy';
 import { PushSchedulerComponent } from './components/pushScheduler';
 import { RemoteComponent } from './components/remote';
 import { ServerComponent } from './components/server';
-import { SessionComponent } from './components/session';
+import {SessionComponent } from './components/session';
+
+
 import { RpcToobusyFilter } from './filters/rpc/toobusy';
 import { RpcLogFilter } from './filters/rpc/rpcLog';
 import { ToobusyFilter } from './filters/handler/toobusy';
 import { TimeFilter } from './filters/handler/time';
 import { SerialFilter } from './filters/handler/serial';
 import { TimeoutFilter } from './filters/handler/timeout';
+var Package = require('../../package');
+
+import {default as events} from './util/events';
 import { BackendSessionComponent } from './components/backendSession';
 import { ChannelComponent } from './components/channel';
 /**
@@ -34,89 +49,108 @@ import { ChannelComponent } from './components/channel';
  *
  * @module
  */
-export declare class Pomelo {
-    private _app;
+
+export class Pomelo
+{
+    private _app: Application;
     /**
      * Framework version.
      */
-    version: any;
+
+    version = Package.version;
+
     /**
      * Event definitions that would be emitted by app.event
      */
-    events: {
-        ADD_SERVERS: string;
-        REMOVE_SERVERS: string;
-        REPLACE_SERVERS: string;
-        BIND_SESSION: string;
-        UNBIND_SESSION: string;
-        CLOSE_SESSION: string;
-        ADD_CRONS: string;
-        REMOVE_CRONS: string;
-        START_SERVER: string;
-        START_ALL: string;
-    };
+    events = events;
+
     /**
      * auto loaded components
      */
-    components: {
-        backendSession: typeof BackendSessionComponent;
-        channel: typeof ChannelComponent;
-        connection: typeof ConnectionComponent;
-        connector: typeof ConnectorComponent;
-        dictionary: typeof DictionaryComponent;
-        master: typeof MasterComponent;
-        monitor: typeof MonitorComponent;
-        protobuf: typeof ProtobufComponent;
-        proxy: typeof ProxyComponent;
-        pushScheduler: typeof PushSchedulerComponent;
-        remote: typeof RemoteComponent;
-        server: typeof ServerComponent;
-        session: typeof SessionComponent;
+    components = 
+    {
+        backendSession : BackendSessionComponent,
+        channel : ChannelComponent,
+        connection : ConnectionComponent,
+        connector : ConnectorComponent,
+        dictionary : DictionaryComponent,
+        master : MasterComponent,
+        monitor : MonitorComponent,
+        protobuf : ProtobufComponent,
+        proxy : ProxyComponent,
+        pushScheduler : PushSchedulerComponent,
+        remote : RemoteComponent,
+        server : ServerComponent,
+        session : SessionComponent,
     };
+
     /**
      * auto loaded filters
      */
-    filters: {
-        serial: typeof SerialFilter;
-        time: typeof TimeFilter;
-        timeout: typeof TimeoutFilter;
-        toobusy: typeof ToobusyFilter;
+    filters = 
+    {
+        serial : SerialFilter,
+        time : TimeFilter,
+        timeout : TimeoutFilter,
+        toobusy : ToobusyFilter,
     };
+
     /**
      * auto loaded rpc filters
      */
-    rpcFilters: {
-        rpcLog: typeof RpcLogFilter;
-        toobusy: typeof RpcToobusyFilter;
+    rpcFilters =
+     {
+        rpcLog : RpcLogFilter,
+        toobusy : RpcToobusyFilter,
     };
+
+
     /**
      * connectors
      */
-    connectors: {
-        sioconnector: typeof SIOConnector;
-        hybridconnector: typeof HybridConnector;
-        udpconnector: typeof UDPConnector;
-        mqttconnector: typeof MQTTConnector;
+    connectors =
+     {
+        sioconnector : SIOConnector,
+        hybridconnector : HybridConnector,
+        udpconnector : UDPConnector,
+        mqttconnector : MQTTConnector,
     };
+
     /**
      * pushSchedulers
      */
-    pushSchedulers: {
-        direct: typeof DirectPushScheduler;
-        buffer: typeof BufferPushScheduler;
+    pushSchedulers = 
+    {
+        direct : DirectPushScheduler,
+        buffer : BufferPushScheduler,
     };
-    constructor();
+
+    constructor()
+    {
+    }
+
     /**
-     * Create an pomelo application.
+     * Create an pinus application.
      *
      * @return {Application}
      * @memberOf Pomelo
      * @api public
      */
-    createApp(opts?: any): Application;
+    createApp(opts ?: any)
+    {
+        var app = new Application();
+        app.init(opts);
+        this._app = app;
+        return app;
+    };
+
     /**
      * Get application
      */
-    readonly app: Application;
+    get app()
+    {
+        return this._app;
+    }
 }
-export declare var pomelo: Pomelo;
+
+export var pinus = new Pomelo();

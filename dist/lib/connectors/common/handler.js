@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pomelo_protocol_1 = require("pomelo-protocol");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_protocol_1 = require("pinus-protocol");
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 var handlers = {};
 var ST_INITED = 0;
 var ST_WAIT_ACK = 1;
@@ -13,7 +13,7 @@ var handleHandshake = function (socket, pkg) {
         return;
     }
     try {
-        socket.emit('handshake', JSON.parse(pomelo_protocol_1.Protocol.strdecode(pkg.body)));
+        socket.emit('handshake', JSON.parse(pinus_protocol_1.Protocol.strdecode(pkg.body)));
     }
     catch (ex) {
         socket.emit('handshake', {});
@@ -38,10 +38,10 @@ var handleData = function (socket, pkg) {
     }
     socket.emit('message', pkg);
 };
-handlers[pomelo_protocol_1.Package.TYPE_HANDSHAKE] = handleHandshake;
-handlers[pomelo_protocol_1.Package.TYPE_HANDSHAKE_ACK] = handleHandshakeAck;
-handlers[pomelo_protocol_1.Package.TYPE_HEARTBEAT] = handleHeartbeat;
-handlers[pomelo_protocol_1.Package.TYPE_DATA] = handleData;
+handlers[pinus_protocol_1.Package.TYPE_HANDSHAKE] = handleHandshake;
+handlers[pinus_protocol_1.Package.TYPE_HANDSHAKE_ACK] = handleHandshakeAck;
+handlers[pinus_protocol_1.Package.TYPE_HEARTBEAT] = handleHeartbeat;
+handlers[pinus_protocol_1.Package.TYPE_DATA] = handleData;
 function default_1(socket, pkg) {
     var handler = handlers[pkg.type];
     if (!!handler) {

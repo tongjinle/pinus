@@ -2,13 +2,13 @@
  * Implementation of server component.
  * Init and start server instance.
  */
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as fs from 'fs';
 import * as path from 'path';
 import * as pathUtil from '../util/pathUtil';
-import * as Loader from 'pomelo-loader';
+import * as Loader from 'pinus-loader';
 import * as utils from '../util/utils';
-import * as schedule from 'pomelo-scheduler';
+import * as schedule from 'pinus-scheduler';
 import { default as events } from '../util/events';
 import * as Constants from '../util/constants';
 import { FilterService } from '../common/service/filterService';

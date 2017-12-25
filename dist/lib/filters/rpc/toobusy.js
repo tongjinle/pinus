@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Filter for rpc log.
  * Reject rpc request when toobusy
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var rpcLogger = pomelo_logger_1.getLogger('rpc-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var rpcLogger = pinus_logger_1.getLogger('rpc-log', __filename);
 var toobusy = null;
 var DEFAULT_MAXLAG = 70;
 function default_1(maxLag) {

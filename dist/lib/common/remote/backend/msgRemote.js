@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils = require("../../../util/utils");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('forward-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('forward-log', __filename);
 /**
  * Remote service for backend servers.
  * Receive and handle request message forwarded from frontend server.

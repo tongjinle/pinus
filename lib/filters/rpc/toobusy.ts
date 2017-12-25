@@ -2,7 +2,7 @@
  * Filter for rpc log.
  * Reject rpc request when toobusy
  */
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 var rpcLogger = getLogger('rpc-log', __filename);
 var toobusy = null;
 

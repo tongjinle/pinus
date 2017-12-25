@@ -9,8 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Module dependencies.
  */
 const utils = require("./util/utils");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const events_1 = require("events");
 const events_2 = require("./util/events");
 const appUtil = require("./util/appUtil");
@@ -66,7 +66,7 @@ class Application {
      * Get application base path
      *
      *  // cwd: /home/game/
-     *  pomelo start
+     *  pinus start
      *  // app.getBase() -> /home/game
      *
      * @return {String} application base path
@@ -91,7 +91,7 @@ class Application {
     /**
      * Configure logger with {$base}/config/log4js.json
      *
-     * @param {Object} logger pomelo-logger instance without configuration
+     * @param {Object} logger pinus-logger instance without configuration
      *
      * @memberOf Application
      */
@@ -328,7 +328,7 @@ class Application {
      * @memberOf Application
      */
     beforeStopHook(fun) {
-        logger.warn('this method was deprecated in pomelo 0.8');
+        logger.warn('this method was deprecated in pinus 0.8');
         if (!!fun && typeof fun === 'function') {
             this.set(Constants.KEYWORDS.BEFORE_STOP_HOOK, fun);
         }
@@ -411,7 +411,7 @@ class Application {
      */
     stop(force) {
         if (this.state > STATE_STARTED) {
-            logger.warn('[pomelo application] application is not running now.');
+            logger.warn('[pinus application] application is not running now.');
             return;
         }
         this.state = STATE_STOPED;

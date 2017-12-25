@@ -1,7 +1,7 @@
-import { Message } from 'pomelo-protocol';
+import { Message } from 'pinus-protocol';
 import * as  Constants from '../../util/constants';
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 
 var encode = function (reqId, route, msg)
 {

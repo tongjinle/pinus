@@ -5,7 +5,7 @@ import * as constants from '../util/constants';
 import { MQTTSocket } from './mqttsocket';
 import { MqttAdaptor } from './mqtt/mqttadaptor';
 import * as generate from './mqtt/generate';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 
 var curId = 1;
 /**

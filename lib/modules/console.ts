@@ -3,15 +3,15 @@
  * Copyright(c) 2012 fantasyni <fantasyni@163.com>
  * MIT Licensed
  */
-import { getLogger } from 'pomelo-logger';
- var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+ var logger = getLogger('pinus', __filename);
 import * as countDownLatch from '../util/countDownLatch';
 import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
 import * as starter from '../master/starter';
 import { exec } from 'child_process';
 import { Application } from '../application';
-import { IModule } from 'pomelo-admin';
+import { IModule } from 'pinus-admin';
 
 
 export class ConsoleModule implements IModule

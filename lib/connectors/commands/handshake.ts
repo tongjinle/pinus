@@ -1,5 +1,5 @@
-import { pomelo } from '../../pomelo';
-import { Package } from 'pomelo-protocol';
+import { pinus } from '../../pinus';
+import { Package } from 'pinus-protocol';
 
 var CODE_OK = 200;
 var CODE_USE_ERROR = 500;
@@ -64,15 +64,15 @@ export class HandshakeCommand
 
         if (this.useDict)
         {
-            var dictVersion = pomelo.app.components.__dictionary__.getVersion();
+            var dictVersion = pinus.app.components.__dictionary__.getVersion();
             if (!msg.sys.dictVersion || msg.sys.dictVersion !== dictVersion)
             {
 
                 // may be deprecated in future
-                opts.dict = pomelo.app.components.__dictionary__.getDict();
+                opts.dict = pinus.app.components.__dictionary__.getDict();
 
-                opts.routeToCode = pomelo.app.components.__dictionary__.getDict();
-                opts.codeToRoute = pomelo.app.components.__dictionary__.getAbbrs();
+                opts.routeToCode = pinus.app.components.__dictionary__.getDict();
+                opts.codeToRoute = pinus.app.components.__dictionary__.getAbbrs();
                 opts.dictVersion = dictVersion;
             }
             opts.useDict = true;
@@ -80,21 +80,21 @@ export class HandshakeCommand
 
         if (this.useProtobuf)
         {
-            var protoVersion = pomelo.app.components.__protobuf__.getVersion();
+            var protoVersion = pinus.app.components.__protobuf__.getVersion();
             if (!msg.sys.protoVersion || msg.sys.protoVersion !== protoVersion)
             {
-                opts.protos = pomelo.app.components.__protobuf__.getProtos();
+                opts.protos = pinus.app.components.__protobuf__.getProtos();
             }
             opts.useProto = true;
         }
 
-        if (!!pomelo.app.components.__decodeIO__protobuf__)
+        if (!!pinus.app.components.__decodeIO__protobuf__)
         {
             if (!!this.useProtobuf)
             {
                 throw new Error('protobuf can not be both used in the same project.');
             }
-            var component = pomelo.app.components.__decodeIO__protobuf__ as any;
+            var component = pinus.app.components.__decodeIO__protobuf__ as any;
             var version = component.getVersion();
             if (!msg.sys.protoVersion || msg.sys.protoVersion < version)
             {
@@ -105,7 +105,7 @@ export class HandshakeCommand
 
         if (this.useCrypto)
         {
-            pomelo.app.components.__connector__.setPubKey(socket.id, msg.sys.rsa);
+            pinus.app.components.__connector__.setPubKey(socket.id, msg.sys.rsa);
         }
 
         if (typeof this.userHandshake === 'function')

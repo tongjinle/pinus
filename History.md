@@ -5,7 +5,7 @@
 
 2.2.4 / 2017-1-20
 =================
-  * [NEW] upgrade pomelo-rpc to 1.0.7
+  * [NEW] upgrade pinus-rpc to 1.0.7
 
 2.2.3 / 2017-1-20
 =================
@@ -21,8 +21,8 @@
 
 2.2.0 / 2017-1-19
 =================
-  * [NEW] upgrade pomelo-rpc to 1.0.6, rpc protocol moved to MQTT
-  * [NEW] upgrade pomelo-admin to 1.0.0
+  * [NEW] upgrade pinus-rpc to 1.0.6, rpc protocol moved to MQTT
+  * [NEW] upgrade pinus-admin to 1.0.0
   * [NEW] pure javaScript without need to install c++ addons 
 
 1.2.1 / 2015-12-31
@@ -34,7 +34,7 @@
 
 1.2.0 / 2015-09-18
 =================
-  * [NEW] upgrade pomelo-admin to 0.4.5
+  * [NEW] upgrade pinus-admin to 0.4.5
   * [#751](https://github.com/NetEase/pomelo/pull/751)
   * [#741](https://github.com/NetEase/pomelo/pull/741)
   * [#740](https://github.com/NetEase/pomelo/pull/740)
@@ -42,15 +42,15 @@
 
 1.1.9 / 2015-06-05
 =================
-  * [NEW] upgrade pomelo-rpc to 0.4.10
-  * [NEW] upgrade pomelo-admin to 0.4.4
-  * [NEW] upgrade pomelo-logger to 0.1.7
+  * [NEW] upgrade pinus-rpc to 0.4.10
+  * [NEW] upgrade pinus-admin to 0.4.4
+  * [NEW] upgrade pinus-logger to 0.1.7
 
 1.1.8 / 2015-05-29
 =================
   * fix bug on verison calculating when update proto files
   * avoid modules loading error on windows
-  * [NEW] upgrade pomelo-protocol to 0.1.6
+  * [NEW] upgrade pinus-protocol to 0.1.6
 
 1.1.7 / 2015-05-12
 =================
@@ -59,18 +59,18 @@
   * [#443](https://github.com/NetEase/pomelo/pull/443)
   * [#444](https://github.com/NetEase/pomelo/pull/444)
   * [#713](https://github.com/NetEase/pomelo/pull/713)
-  * [NEW] upgrade pomelo-rpc to 0.4.9
-  * [NEW] upgrade pomelo-admin to 0.4.3
+  * [NEW] upgrade pinus-rpc to 0.4.9
+  * [NEW] upgrade pinus-admin to 0.4.3
 
 1.1.6 / 2015-03-12
 =================
   * [NEW] add configure file automatically reload feature
   * [NEW] add mqtt connector heartbeat timeout option
-  * [NEW] upgrade pomelo-rpc to 0.4.8
+  * [NEW] upgrade pinus-rpc to 0.4.8
 
 1.1.5 / 2015-02-26
 =================
-  * [NEW] upgrade pomelo-rpc to 0.4.7
+  * [NEW] upgrade pinus-rpc to 0.4.7
 
 1.1.4 / 2015-01-23
 =================
@@ -96,7 +96,7 @@
 
 1.1.1 / 2014-10-10
 =================
-* [NEW] upgrade pomelo-protocol to 0.1.4
+* [NEW] upgrade pinus-protocol to 0.1.4
   [#616](https://github.com/NetEase/pomelo/pull/616)
 * [FIX] incorrect this scope
   [#622](https://github.com/NetEase/pomelo/pull/622)
@@ -107,7 +107,7 @@
 1.1.0 / 2014-09-12
 =================
 * [NEW] fit for libpomelo2
-* [NEW] upgrade pomelo-rpc to 0.4.5
+* [NEW] upgrade pinus-rpc to 0.4.5
   [#612](https://github.com/NetEase/pomelo/pull/612)
 * [FIX] close http server after WebSocketServer.close
   [#613](https://github.com/NetEase/pomelo/pull/613)
@@ -117,18 +117,18 @@
 
 1.0.4 / 2014-08-26
 =================
-* [NEW] upgrade pomelo-rpc to 0.4.3
-* [NEW] upgrade pomelo-logger to 0.1.6
-* [FIX] pomelo-masterha-plugin reconnect bug miss parameter env
+* [NEW] upgrade pinus-rpc to 0.4.3
+* [NEW] upgrade pinus-logger to 0.1.6
+* [FIX] pinus-masterha-plugin reconnect bug miss parameter env
 * [#582](https://github.com/NetEase/pomelo/pull/582)
 
 1.0.3 / 2014-07-18
 =================
 * [NEW] dictVersion : Similar to `protoVersion`, add `dictVersion` and skip sending dict when handshaking if possible.
   [#572](https://github.com/NetEase/pomelo/pull/572)
-* [FIX] CRON : Upgrade pomelo-scheduler to v0.3.9. Fix a bug that will loss tasks if The number of days next month is greater than this month.
+* [FIX] CRON : Upgrade pinus-scheduler to v0.3.9. Fix a bug that will loss tasks if The number of days next month is greater than this month.
   [#560](https://github.com/NetEase/pomelo/pull/560)
-  [pomelo-scheduler#4](https://github.com/NetEase/pomelo-scheduler/pull/4)
+  [pinus-scheduler#4](https://github.com/NetEase/pinus-scheduler/pull/4)
 * [FIX] hot update : Remove the error logging if a server doesn't have any handler.
   [#562](https://github.com/NetEase/pomelo/pull/562)
 * [NEW] protobuf : Add `protobuf cache` into libpomelo, and add `useProto` handshake option to tell the client whether to use the protobuf.
@@ -144,7 +144,7 @@
 =================
 * merge pull request #538 #541 #545 #546 #547
 * update master watchdog notify method
-* upgrade pomelo-rpc to 0.4.2
+* upgrade pinus-rpc to 0.4.2
 
 1.0.0 / 2014-06-19
 =================
@@ -155,12 +155,12 @@
 1.0.0-pre / 2014-05-16
 =================
 * add udpconnector
-* pomelo-rpc load balancing and fault tolerance
+* pinus-rpc load balancing and fault tolerance
 * connector wss & tls support
-* pomelo-zookeeper-plugin
-* pomelo-scale-plugin
+* pinus-zookeeper-plugin
+* pinus-scale-plugin
 * environment directory configuration support
-* pomelo-cli dynamic script
+* pinus-cli dynamic script
 
 0.9.10 / 2014-05-15
 =================
@@ -174,7 +174,7 @@
 * merge pull request #495
 * merge pull request #499
 * merge pull request #501
-* upgrade pomelo-admin to 0.3.4
+* upgrade pinus-admin to 0.3.4
 
 0.9.8 / 2014-05-04
 =================
@@ -209,14 +209,14 @@
 
 0.9.3 / 2014-03-11
 =================
-* upgrade pomelo-admin to 0.3.2 for npm reason
+* upgrade pinus-admin to 0.3.2 for npm reason
 
 0.9.2 / 2014-03-10
 =================
 * merge pull request sshPort
 * merge pull request #438
 * fix hybridconnector dict bug
-* upgrade pomelo-rpc to 0.3.2
+* upgrade pinus-rpc to 0.3.2
 
 0.9.1 / 2014-03-03
 =================
@@ -249,13 +249,13 @@
 
 0.8.6 / 2014-01-22
 =================
-* upgrade pomelo-rpc 0.2.9
-* upgrade pomelo-admin 0.2.9
+* upgrade pinus-rpc 0.2.9
+* upgrade pinus-admin 0.2.9
 
 0.8.5 / 2014-01-22
 =================
-* upgrade pomelo-rpc 0.2.8
-* upgrade pomelo-scheduler 0.3.8
+* upgrade pinus-rpc 0.2.8
+* upgrade pinus-scheduler 0.3.8
 
 0.8.4 / 2014-01-20
 =================
@@ -264,9 +264,9 @@
 0.8.3 / 2014-01-16
 =================
 * add tcp socket close option
-* upgrade pomelo-rpc 0.2.7
-* upgrade pomelo-admin 0.2.8
-* upgrade pomelo-schedule 0.3.7
+* upgrade pinus-rpc 0.2.7
+* upgrade pinus-admin 0.2.8
+* upgrade pinus-schedule 0.3.7
 
 0.8.2 / 2014-01-03
 =================
@@ -275,7 +275,7 @@
 
 0.8.1 / 2013-12-31
 =================
-* upgrade pomelo-rpc to 0.2.6
+* upgrade pinus-rpc to 0.2.6
 * handle rpc filter error
 * add test cases
 
@@ -287,19 +287,19 @@
 * lifecycle callback feature
 * add rcp filter interface
 * simplify servers.json configuration
-* pomelo-logger dynamic log level
-* pomelo-rpc & pomelo-admin white list
-* pomelo-data-plugin
+* pinus-logger dynamic log level
+* pinus-rpc & pinus-admin white list
+* pinus-data-plugin
 
 0.7.7 / 2013-12-16
 =================
-* upgrade pomelo-loader to 0.0.6
-* upgrade pomelo-logger to 0.1.2(add dynamic change logger level feature)
+* upgrade pinus-loader to 0.0.6
+* upgrade pinus-logger to 0.1.2(add dynamic change logger level feature)
 
 0.7.6 / 2013-12-3
 =================
-* upgrade pomelo-rpc to 0.2.4
-* upgrade pomelo-admin to 0.2.6(fix reconnect bug)
+* upgrade pinus-rpc to 0.2.4
+* upgrade pinus-admin to 0.2.6(fix reconnect bug)
 
 0.7.5 / 2013-11-27
 =================
@@ -332,12 +332,12 @@
 * crontab
 * global filter
 * transaction
-* pomelo-cli auto-complete
+* pinus-cli auto-complete
 * some components rename
 
 0.6.8 / 2013-11-4
 =================
-* update pomelo-admin version
+* update pinus-admin version
 
 0.6.7 / 2013-10-14
 =================
@@ -346,14 +346,14 @@
 0.6.6 / 2013-10-12
 =================
 * merge pull request #303 replace tab & remove session get value argument
-* upgrade pomelo-admin to 0.2.4
-* upgrade pomelo-monitor to 0.3.7
-* upgrade pomelo-rpc to 0.2.2
+* upgrade pinus-admin to 0.2.4
+* upgrade pinus-monitor to 0.3.7
+* upgrade pinus-rpc to 0.2.2
 
 0.6.5 / 2013-9-30
 =================
 * fix server reconnect bug
-* upgrade pomelo-admin to 0.2.3
+* upgrade pinus-admin to 0.2.3
 
 0.6.4 / 2013-9-27
 =================
@@ -369,13 +369,13 @@
 
 0.6.2 / 2013-9-5
 =================
-* upgrade pomelo-admin to 0.2.2
+* upgrade pinus-admin to 0.2.2
 * update test cases
 * fix socket.on end bug
 
 0.6.1 / 2013-9-2
 =================
-* update pomelo-admin & pomelo-rpc to 0.2.1
+* update pinus-admin & pinus-rpc to 0.2.1
 * add rpcDebug module in master
 
 0.6.0 / 2013-8-26
@@ -398,7 +398,7 @@
 
 0.5.4 / 2013-7-25
 =================
-* update pomelo-protocol version
+* update pinus-protocol version
 
 0.5.3 / 2013-7-25
 =================
@@ -414,7 +414,7 @@
 
 0.5.1 / 2013-7-19
 =================
-* update pomelo-protobuf version
+* update pinus-protobuf version
 * receive servers console data event in production environment
 
 
@@ -430,7 +430,7 @@
 0.4.6 / 2013-7-15
 =================
 
-* fix pomelo-protocol bug, which will lose message when requestId is 128 multiple
+* fix pinus-protocol bug, which will lose message when requestId is 128 multiple
 
 0.4.5 / 2013-7-3
 =================
@@ -462,7 +462,7 @@
 0.3.10 / 2013-5-20
 ==================
 
-* `pomelo-protocol` upgrades to 0.3.4
+* `pinus-protocol` upgrades to 0.3.4
 * fix session bind bug in backend server
 * replace `childprocess.exec` with `spawn` in `starter.js`
 
@@ -544,7 +544,7 @@
 0.2.3 / 2012-12-25
 ==================
 
-* add mkdirp, update pomelo-admin version
+* add mkdirp, update pinus-admin version
 * solve windows comptaible problem
 
 0.2.2 / 2012-12-9

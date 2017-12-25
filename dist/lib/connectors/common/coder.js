@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pomelo_protocol_1 = require("pomelo-protocol");
+const pinus_protocol_1 = require("pinus-protocol");
 const Constants = require("../../util/constants");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 var encode = function (reqId, route, msg) {
     if (!!reqId) {
         return composeResponse(this, reqId, route, msg);
@@ -14,7 +14,7 @@ var encode = function (reqId, route, msg) {
 };
 exports.encode = encode;
 var decode = function (msg) {
-    msg = pomelo_protocol_1.Message.decode(msg.body);
+    msg = pinus_protocol_1.Message.decode(msg.body);
     var route = msg.route;
     // decode use dictionary
     if (!!msg.compressRoute) {
@@ -54,7 +54,7 @@ var composeResponse = function (server, msgId, route, msgBody) {
         return null;
     }
     msgBody = encodeBody(server, route, msgBody);
-    return pomelo_protocol_1.Message.encode(msgId, pomelo_protocol_1.Message.TYPE_RESPONSE, 0, null, msgBody);
+    return pinus_protocol_1.Message.encode(msgId, pinus_protocol_1.Message.TYPE_RESPONSE, 0, null, msgBody);
 };
 var composePush = function (server, route, msgBody) {
     if (!route || !msgBody) {
@@ -70,7 +70,7 @@ var composePush = function (server, route, msgBody) {
             compressRoute = 1;
         }
     }
-    return pomelo_protocol_1.Message.encode(0, pomelo_protocol_1.Message.TYPE_PUSH, compressRoute, route, msgBody);
+    return pinus_protocol_1.Message.encode(0, pinus_protocol_1.Message.TYPE_PUSH, compressRoute, route, msgBody);
 };
 var encodeBody = function (server, route, msgBody) {
     // encode use protobuf

@@ -7,9 +7,9 @@ const path = require("path");
 const fs = require("fs");
 const Constants = require("./constants");
 const starter = require("../master/starter");
-const pomelo_logger_1 = require("pomelo-logger");
-const pomelo_1 = require("../pomelo");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+const pinus_1 = require("../pinus");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * Initialize application configuration.
  */
@@ -53,30 +53,30 @@ exports.startByType = startByType;
 function loadDefaultComponents(app) {
     // load system default components
     if (app.serverType === Constants.RESERVED.MASTER) {
-        app.load(pomelo_1.pomelo.components.master, app.get('masterConfig'));
+        app.load(pinus_1.pinus.components.master, app.get('masterConfig'));
     }
     else {
-        app.load(pomelo_1.pomelo.components.proxy, app.get('proxyConfig'));
+        app.load(pinus_1.pinus.components.proxy, app.get('proxyConfig'));
         if (app.getCurServer().port) {
-            app.load(pomelo_1.pomelo.components.remote, app.get('remoteConfig'));
+            app.load(pinus_1.pinus.components.remote, app.get('remoteConfig'));
         }
         if (app.isFrontend()) {
-            app.load(pomelo_1.pomelo.components.connection, app.get('connectionConfig'));
-            app.load(pomelo_1.pomelo.components.connector, app.get('connectorConfig'));
-            app.load(pomelo_1.pomelo.components.session, app.get('sessionConfig'));
+            app.load(pinus_1.pinus.components.connection, app.get('connectionConfig'));
+            app.load(pinus_1.pinus.components.connector, app.get('connectorConfig'));
+            app.load(pinus_1.pinus.components.session, app.get('sessionConfig'));
             // compatible for schedulerConfig
             if (app.get('schedulerConfig')) {
-                app.load(pomelo_1.pomelo.components.pushScheduler, app.get('schedulerConfig'));
+                app.load(pinus_1.pinus.components.pushScheduler, app.get('schedulerConfig'));
             }
             else {
-                app.load(pomelo_1.pomelo.components.pushScheduler, app.get('pushSchedulerConfig'));
+                app.load(pinus_1.pinus.components.pushScheduler, app.get('pushSchedulerConfig'));
             }
         }
-        app.load(pomelo_1.pomelo.components.backendSession, app.get('backendSessionConfig'));
-        app.load(pomelo_1.pomelo.components.channel, app.get('channelConfig'));
-        app.load(pomelo_1.pomelo.components.server, app.get('serverConfig'));
+        app.load(pinus_1.pinus.components.backendSession, app.get('backendSessionConfig'));
+        app.load(pinus_1.pinus.components.channel, app.get('channelConfig'));
+        app.load(pinus_1.pinus.components.server, app.get('serverConfig'));
     }
-    app.load(pomelo_1.pomelo.components.monitor, app.get('monitorConfig'));
+    app.load(pinus_1.pinus.components.monitor, app.get('monitorConfig'));
 }
 exports.loadDefaultComponents = loadDefaultComponents;
 ;

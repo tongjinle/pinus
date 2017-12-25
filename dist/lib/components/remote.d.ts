@@ -1,4 +1,4 @@
-import { Gateway } from 'pomelo-rpc';
+import { Gateway } from 'pinus-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 /**

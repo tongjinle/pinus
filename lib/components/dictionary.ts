@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as utils from '../util/utils';
-import * as Loader from 'pomelo-loader';
+import * as Loader from 'pinus-loader';
 import * as pathUtil from '../util/pathUtil';
 import * as crypto from 'crypto';
 import { Application } from '../application';

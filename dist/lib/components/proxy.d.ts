@@ -1,4 +1,4 @@
-import { RpcClient } from 'pomelo-rpc';
+import { RpcClient } from 'pinus-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 /**

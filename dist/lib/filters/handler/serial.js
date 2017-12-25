@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Filter to keep request sequence.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const taskManager = require("../../common/manager/taskManager");
 function default_1(timeout) {
     return new SerialFilter(timeout);

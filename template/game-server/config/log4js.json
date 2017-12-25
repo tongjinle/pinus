@@ -60,25 +60,25 @@
         },
         "pomelo": {
             "type": "file",
-            "filename": "${opts:base}/logs/pomelo-${opts:serverId}.log",
+            "filename": "${opts:base}/logs/pinus-${opts:serverId}.log",
             "maxLogSize": 1048576,
             "layout": {
                 "type": "basic"
             },
             "backups": 5
         },
-        "pomelo-admin": {
+        "pinus-admin": {
             "type": "file",
-            "filename": "${opts:base}/logs/pomelo-admin.log",
+            "filename": "${opts:base}/logs/pinus-admin.log",
             "maxLogSize": 1048576,
             "layout": {
                 "type": "basic"
             },
             "backups": 5
         },
-        "pomelo-rpc": {
+        "pinus-rpc": {
             "type": "file",
-            "filename": "${opts:base}/logs/pomelo-rpc-${opts:serverId}.log",
+            "filename": "${opts:base}/logs/pinus-rpc-${opts:serverId}.log",
             "maxLogSize": 1048576,
             "layout": {
                 "type": "basic"
@@ -89,7 +89,7 @@
 
     "categories": {
         "default": {
-            "appenders": [ "console", "con-log", "rpc-log", "forward-log", "rpc-debug", "crash-log", "admin-log", "pomelo", "pomelo-admin", "pomelo-rpc" ],
+            "appenders": [ "console", "con-log", "rpc-log", "forward-log", "rpc-debug", "crash-log", "admin-log", "pomelo", "pinus-admin", "pinus-rpc" ],
             "level": "debug"
         }
     },

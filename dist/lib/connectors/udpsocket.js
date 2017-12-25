@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const handler_1 = require("./common/handler");
-const pomelo_protocol_1 = require("pomelo-protocol");
+const pinus_protocol_1 = require("pinus-protocol");
 const EventEmitter = require("events");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 var ST_INITED = 0;
 var ST_WAIT_ACK = 1;
 var ST_WORKING = 2;
@@ -24,7 +24,7 @@ class UdpSocket extends EventEmitter {
         var self = this;
         this.on('package', function (pkg) {
             if (!!pkg) {
-                pkg = pomelo_protocol_1.Package.decode(pkg);
+                pkg = pinus_protocol_1.Package.decode(pkg);
                 handler_1.default(self, pkg);
             }
         });
@@ -46,7 +46,7 @@ class UdpSocket extends EventEmitter {
         else if (!(msg instanceof Buffer)) {
             msg = new Buffer(JSON.stringify(msg));
         }
-        this.sendRaw(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msg));
+        this.sendRaw(pinus_protocol_1.Package.encode(pinus_protocol_1.Package.TYPE_DATA, msg));
     }
     ;
     sendRaw(msg) {
@@ -79,7 +79,7 @@ class UdpSocket extends EventEmitter {
         }
         var rs = [];
         for (var i = 0; i < msgs.length; i++) {
-            var src = pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_DATA, msgs[i]);
+            var src = pinus_protocol_1.Package.encode(pinus_protocol_1.Package.TYPE_DATA, msgs[i]);
             rs.push(src);
         }
         this.sendRaw(Buffer.concat(rs));

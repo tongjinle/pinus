@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Filter for rpc log.
  * Record used time for remote process call.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var rpcLogger = pomelo_logger_1.getLogger('rpc-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var rpcLogger = pinus_logger_1.getLogger('rpc-log', __filename);
 const utils = require("../../util/utils");
 function default_1() {
     return new RpcLogFilter();

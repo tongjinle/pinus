@@ -100,7 +100,7 @@ class Pomelo {
         };
     }
     /**
-     * Create an pomelo application.
+     * Create an pinus application.
      *
      * @return {Application}
      * @memberOf Pomelo
@@ -121,5 +121,5 @@ class Pomelo {
     }
 }
 exports.Pomelo = Pomelo;
-exports.pomelo = new Pomelo();
-//# sourceMappingURL=pomelo.js.map
+exports.pinus = new Pomelo();
+//# sourceMappingURL=pinus.js.map

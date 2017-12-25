@@ -9,7 +9,7 @@ const handshake_1 = require("./commands/handshake");
 const heartbeat_1 = require("./commands/heartbeat");
 const Kick = require("./commands/kick");
 const coder = require("./common/coder");
-const pomelo_1 = require("../pomelo");
+const pinus_1 = require("../pinus");
 var curId = 1;
 /**
  * Connector that manager low level connection and protocol bewteen server and client.
@@ -36,7 +36,7 @@ class HybridConnector extends events_1.EventEmitter {
      * Start connector to listen the specified port
      */
     start(cb) {
-        var app = pomelo_1.pomelo.app;
+        var app = pinus_1.pinus.app;
         var self = this;
         var gensocket = function (socket) {
             var hybridsocket = new hybridsocket_1.HybridSocket(curId++, socket);

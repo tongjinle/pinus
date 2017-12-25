@@ -383,7 +383,7 @@ Emitter.prototype.hasListeners = function(event){
 };
 
 });
-require.register("NetEase-pomelo-protocol/lib/protocol.js", function(exports, require, module){
+require.register("NetEase-pinus-protocol/lib/protocol.js", function(exports, require, module){
 (function (exports, ByteArray, global) {
   var Protocol = exports;
 
@@ -720,11 +720,11 @@ require.register("NetEase-pomelo-protocol/lib/protocol.js", function(exports, re
 })('object' === typeof module ? module.exports : (this.Protocol = {}),'object' === typeof module ? Buffer : Uint8Array, this);
 
 });
-require.register("pomelonode-pomelo-protobuf/lib/client/protobuf.js", function(exports, require, module){
+require.register("pomelonode-pinus-protobuf/lib/client/protobuf.js", function(exports, require, module){
 /* ProtocolBuffer client 0.1.0*/
 
 /**
- * pomelo-protobuf
+ * pinus-protobuf
  * @author <zhang0935@gmail.com>
  */
 
@@ -1335,7 +1335,7 @@ require.register("pomelonode-pomelo-protobuf/lib/client/protobuf.js", function(e
 
 
 });
-require.register("pomelonode-pomelo-jsclient-websocket/lib/pomelo-client.js", function(exports, require, module){
+require.register("pomelonode-pinus-jsclient-websocket/lib/pinus-client.js", function(exports, require, module){
 (function() {
   var JS_WS_CLIENT_TYPE = 'js-websocket';
   var JS_WS_CLIENT_VERSION = '0.0.1';
@@ -1694,28 +1694,28 @@ require.register("boot/index.js", function(exports, require, module){
   var Emitter = require('emitter');
   window.EventEmitter = Emitter;
 
-  var protocol = require('pomelo-protocol');
+  var protocol = require('pinus-protocol');
   window.Protocol = protocol;
 
-  var protobuf = require('pomelo-protobuf');
+  var protobuf = require('pinus-protobuf');
   window.protobuf = protobuf;
 
-  var pomelo = require('pomelo-jsclient-websocket');
+  var pomelo = require('pinus-jsclient-websocket');
   window.pomelo = pomelo;
 
 });
-require.alias("boot/index.js", "pomelo-client/deps/boot/index.js");
+require.alias("boot/index.js", "pinus-client/deps/boot/index.js");
 require.alias("component-emitter/index.js", "boot/deps/emitter/index.js");
 require.alias("component-indexof/index.js", "component-emitter/deps/indexof/index.js");
 
-require.alias("NetEase-pomelo-protocol/lib/protocol.js", "boot/deps/pomelo-protocol/lib/protocol.js");
-require.alias("NetEase-pomelo-protocol/lib/protocol.js", "boot/deps/pomelo-protocol/index.js");
-require.alias("NetEase-pomelo-protocol/lib/protocol.js", "NetEase-pomelo-protocol/index.js");
+require.alias("NetEase-pinus-protocol/lib/protocol.js", "boot/deps/pinus-protocol/lib/protocol.js");
+require.alias("NetEase-pinus-protocol/lib/protocol.js", "boot/deps/pinus-protocol/index.js");
+require.alias("NetEase-pinus-protocol/lib/protocol.js", "NetEase-pinus-protocol/index.js");
 
-require.alias("pomelonode-pomelo-protobuf/lib/client/protobuf.js", "boot/deps/pomelo-protobuf/lib/client/protobuf.js");
-require.alias("pomelonode-pomelo-protobuf/lib/client/protobuf.js", "boot/deps/pomelo-protobuf/index.js");
-require.alias("pomelonode-pomelo-protobuf/lib/client/protobuf.js", "pomelonode-pomelo-protobuf/index.js");
+require.alias("pomelonode-pinus-protobuf/lib/client/protobuf.js", "boot/deps/pinus-protobuf/lib/client/protobuf.js");
+require.alias("pomelonode-pinus-protobuf/lib/client/protobuf.js", "boot/deps/pinus-protobuf/index.js");
+require.alias("pomelonode-pinus-protobuf/lib/client/protobuf.js", "pomelonode-pinus-protobuf/index.js");
 
-require.alias("pomelonode-pomelo-jsclient-websocket/lib/pomelo-client.js", "boot/deps/pomelo-jsclient-websocket/lib/pomelo-client.js");
-require.alias("pomelonode-pomelo-jsclient-websocket/lib/pomelo-client.js", "boot/deps/pomelo-jsclient-websocket/index.js");
-require.alias("pomelonode-pomelo-jsclient-websocket/lib/pomelo-client.js", "pomelonode-pomelo-jsclient-websocket/index.js");
+require.alias("pomelonode-pinus-jsclient-websocket/lib/pinus-client.js", "boot/deps/pinus-jsclient-websocket/lib/pinus-client.js");
+require.alias("pomelonode-pinus-jsclient-websocket/lib/pinus-client.js", "boot/deps/pinus-jsclient-websocket/index.js");
+require.alias("pomelonode-pinus-jsclient-websocket/lib/pinus-client.js", "pomelonode-pinus-jsclient-websocket/index.js");

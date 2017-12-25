@@ -1,7 +1,7 @@
-import * as logger from 'pomelo-logger';
+import * as logger from 'pinus-logger';
 
 /**
- * Configure pomelo logger
+ * Configure pinus logger
  */
 export function configure(app, filename) {
   var serverId = app.getServerId();

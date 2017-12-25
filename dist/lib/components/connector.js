@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const taskManager = require("../common/manager/taskManager");
-const pomelo_1 = require("../pomelo");
+const pinus_1 = require("../pinus");
 const rsa = require("node-bignumber");
 const events_1 = require("../util/events");
 const utils = require("../util/utils");
@@ -30,10 +30,10 @@ class ConnectorComponent {
         this.useAsyncCoder = opts.useAsyncCoder;
         this.blacklistFun = opts.blacklistFun;
         if (opts.useDict) {
-            app.load(pomelo_1.pomelo.components.dictionary, app.get('dictionaryConfig'));
+            app.load(pinus_1.pinus.components.dictionary, app.get('dictionaryConfig'));
         }
         if (opts.useProtobuf) {
-            app.load(pomelo_1.pomelo.components.protobuf, app.get('protobufConfig'));
+            app.load(pinus_1.pinus.components.protobuf, app.get('protobufConfig'));
         }
         // component dependencies
         this.server = null;

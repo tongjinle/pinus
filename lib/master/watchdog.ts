@@ -1,4 +1,4 @@
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
 import * as countDownLatch from '../util/countDownLatch';

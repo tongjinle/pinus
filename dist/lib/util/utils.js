@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const os = require("os");
 const util = require("util");
 const child_process_1 = require("child_process");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const Constants = require("./constants");
-const pomelo_1 = require("../pomelo");
+const pinus_1 = require("../pinus");
 /**
  * Invoke callback with check
  */
@@ -213,7 +213,7 @@ function checkPort(server, cb) {
     var host = server.host;
     var generateCommand = function (self, host, port) {
         var cmd;
-        var ssh_params = pomelo_1.pomelo.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
+        var ssh_params = pinus_1.pinus.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
         if (!!ssh_params && Array.isArray(ssh_params)) {
             ssh_params = ssh_params.join(' ');
         }
@@ -258,7 +258,7 @@ function checkPort(server, cb) {
 exports.checkPort = checkPort;
 ;
 function isLocal(host) {
-    var app = pomelo_1.pomelo.app;
+    var app = pinus_1.pinus.app;
     if (!app) {
         return host === '127.0.0.1' || host === 'localhost' || host === '0.0.0.0' || inLocal(host);
     }

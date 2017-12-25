@@ -1,4 +1,4 @@
-import { Application, FrontendSession } from 'pomelo';
+import { Application, FrontendSession } from 'pinus';
 
 export default function (app: Application)
 {

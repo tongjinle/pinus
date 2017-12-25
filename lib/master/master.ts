@@ -1,14 +1,14 @@
 import * as starter from './starter';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 var crashLogger = getLogger('crash-log', __filename);
 var adminLogger = getLogger('admin-log', __filename);
-import * as admin from 'pomelo-admin';
+import * as admin from 'pinus-admin';
 import * as util from 'util';
 import * as utils from '../util/utils';
 import * as moduleUtil from '../util/moduleUtil';
 import * as Constants from '../util/constants';
 import { Application } from '../application';
-import { ConsoleService } from 'pomelo-admin';
+import { ConsoleService } from 'pinus-admin';
 
 export class MasterServer
 {

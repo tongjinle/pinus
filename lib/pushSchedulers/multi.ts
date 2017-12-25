@@ -1,8 +1,8 @@
 import { IPushScheduler } from "../interfaces/IPushScheduler";
 import { Application } from "../application";
 import { isFunction } from "util";
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 
 export type IPushSelector = (reqId : number, route : string, msg : any, recvs : number[], opts : any)=>number
 

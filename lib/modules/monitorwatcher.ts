@@ -1,10 +1,10 @@
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as utils from '../util/utils';
 import { default as events } from '../util/events';
 import * as Constants from '../util/constants';
 import * as util from 'util';
 import { Application } from '../application';
-import { IModule } from 'pomelo-admin';
+import { IModule } from 'pinus-admin';
 
 
 export class MonitorWatcherModule implements IModule

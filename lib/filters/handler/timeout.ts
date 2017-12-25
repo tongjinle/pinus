@@ -2,7 +2,7 @@
  * Filter for timeout.
  * Print a warn information when request timeout.
  */
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as  utils from '../../util/utils';
 
 var DEFAULT_TIMEOUT = 3000;

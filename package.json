@@ -1,26 +1,26 @@
 {
-  "name": "pomelo",
-  "version": "1.0.0",
-  "homepage": "https://github.com/NetEase/pomelo",
+  "name": "pinus",
+  "version": "1.0.3",
+  "homepage": "https://github.com/mybios/pinus",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NetEase/pomelo.git"
+    "url": "https://github.com/mybios/pinus.git"
   },
   "scripts": {
-    "build": "node_modules/.bin/tsc",
-    "test": "grunt"
+    "build": "node_modules/.bin/tsc"
   },
   "bugs": {
-    "url": "https://github.com/NetEase/pomelo/issues"
+    "url": "https://github.com/mybios/pinus/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/NetEase/pomelo#license"
+      "url": "https://github.com/mybios/pinus#license"
     }
   ],
   "keywords": [
-    "pomelo",
+    "pinus",
+    "pinus",
     "framework",
     "game",
     "web",
@@ -40,20 +40,19 @@
     "mkdirp": "^0.3.5",
     "mqtt": "0.3.9",
     "node-bignumber": "1.2.1",
-    "pomelo-admin": "1.1.1",
-    "pomelo-loader": "1.0.2",
-    "pomelo-logger": "1.0.3",
-    "pomelo-protobuf": "1.0.0",
-    "pomelo-protocol": "1.0.4",
-    "pomelo-rpc": "2.1.9",
-    "pomelo-scheduler": "1.0.2",
+    "pinus-admin": "1.0.1",
+    "pinus-loader": "1.0.0",
+    "pinus-logger": "1.0.0",
+    "pinus-protobuf": "1.0.0",
+    "pinus-protocol": "1.0.0",
+    "pinus-rpc": "1.0.0",
+    "pinus-scheduler": "1.0.0",
     "seq-queue": "0.0.5",
     "socket.io": "1.7.2",
-    "typescript": "^2.6.2",
     "ws": "1.1.1"
   },
   "bin": {
-    "pomelo": "./dist/bin/pomelo.js"
+    "pinus": "./dist/bin/pinus.js"
   },
   "devDependencies": {
     "should": "3.3.1",
@@ -63,6 +62,7 @@
     "grunt-mocha-test": "0.8.x",
     "grunt-contrib-clean": "0.5.x",
     "grunt-contrib-jshint": "~0.8.0",
+    "typescript": "^2.6.2",
     "blanket": "~1.1.6"
   }
 }

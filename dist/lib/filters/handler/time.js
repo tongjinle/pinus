@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Filter for statistics.
  * Record used time for each request.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var conLogger = pomelo_logger_1.getLogger('con-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var conLogger = pinus_logger_1.getLogger('con-log', __filename);
 const utils = require("../../util/utils");
 function default_1() {
     return new TimeFilter();

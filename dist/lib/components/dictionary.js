@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const path = require("path");
 const utils = require("../util/utils");
-const Loader = require("pomelo-loader");
+const Loader = require("pinus-loader");
 const pathUtil = require("../util/pathUtil");
 const crypto = require("crypto");
 class DictionaryComponent {

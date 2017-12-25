@@ -1,9 +1,9 @@
 import * as os from 'os';
 import * as util from 'util';
 import { exec } from 'child_process';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as Constants from './constants';
-import { pomelo } from '../pomelo';
+import { pinus } from '../pinus';
 
 
 /**
@@ -249,7 +249,7 @@ export function checkPort(server, cb)
     var host = server.host;
     var generateCommand = function (self, host, port) {
         var cmd;
-        var ssh_params = pomelo.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
+        var ssh_params = pinus.app.get(Constants.RESERVED.SSH_CONFIG_PARAMS);
         if (!!ssh_params && Array.isArray(ssh_params))
         {
             ssh_params = ssh_params.join(' ');
@@ -301,7 +301,7 @@ export function checkPort(server, cb)
 
 export function isLocal(host)
 {
-    var app = pomelo.app;
+    var app = pinus.app;
     if (!app)
     {
         return host === '127.0.0.1' || host === 'localhost' || host === '0.0.0.0' || inLocal(host);

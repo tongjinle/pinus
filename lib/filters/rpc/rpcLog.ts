@@ -2,7 +2,7 @@
  * Filter for rpc log.
  * Record used time for remote process call.
  */
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 var rpcLogger = getLogger('rpc-log', __filename);
 
 import * as utils from '../../util/utils';

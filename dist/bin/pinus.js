@@ -13,7 +13,7 @@ const starter = require("../lib/master/starter");
 const child_process_1 = require("child_process");
 const child_process_2 = require("child_process");
 var version = require('../../package.json').version;
-const pomelo_admin_1 = require("pomelo-admin");
+const pinus_admin_1 = require("pinus-admin");
 const constants = require("../lib/util/constants");
 const program = require("commander");
 /**
@@ -38,7 +38,7 @@ var RESTART_SERVER_INFO = 'Successfully restart server.';
 var INIT_PROJ_NOTICE = ('\nThe default admin user is: \n\n' + '  username').green + ': admin\n  ' + 'password'.green + ': admin\n\nYou can configure admin users by editing adminUser.json later.\n ';
 var SCRIPT_NOT_FOUND = 'Fail to find an appropriate script to run,\nplease check the current work directory or the directory specified by option `--directory`.\n'.red;
 var MASTER_HA_NOT_FOUND = 'Fail to find an appropriate masterha config file, \nplease check the current work directory or the arguments passed to.\n'.red;
-var COMMAND_ERROR = 'Illegal command format. Use `pomelo --help` to get more info.\n'.red;
+var COMMAND_ERROR = 'Illegal command format. Use `pinus --help` to get more info.\n'.red;
 var DAEMON_INFO = 'The application is running in the background now.\n';
 program.version(version);
 program.command('init [path]')
@@ -78,7 +78,7 @@ program.command('add')
     add(opts);
 });
 program.command('stop')
-    .description('stop the servers, for multiple servers, use `pomelo stop server-id-1 server-id-2`')
+    .description('stop the servers, for multiple servers, use `pinus stop server-id-1 server-id-2`')
     .option('-u, --username <username>', 'administration user name', DEFAULT_USERNAME)
     .option('-p, --password <password>', 'administration password', DEFAULT_PWD)
     .option('-h, --host <master-host>', 'master server host', DEFAULT_MASTER_HOST)
@@ -103,7 +103,7 @@ program.command('kill')
     terminal('kill', opts);
 });
 program.command('restart')
-    .description('restart the servers, for multiple servers, use `pomelo restart server-id-1 server-id-2`')
+    .description('restart the servers, for multiple servers, use `pinus restart server-id-1 server-id-2`')
     .option('-u, --username <username>', 'administration user name', DEFAULT_USERNAME)
     .option('-p, --password <password>', 'administration password', DEFAULT_PWD)
     .option('-h, --host <master-host>', 'master server host', DEFAULT_MASTER_HOST)
@@ -187,12 +187,12 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.mqtt',
                     'game-server/app.ts.sio.wss',
                     'game-server/app.ts.udp',
-                    'web-server/app.ts.https',
+                    'web-server/app.js.https',
                     'web-server/public/index.html.sio',
-                    'web-server/public/js/lib/pomeloclient.ts',
-                    'web-server/public/js/lib/pomeloclient.ts.wss',
-                    'web-server/public/js/lib/build/build.ts.wss',
-                    'web-server/public/js/lib/socket.io.ts'];
+                    'web-server/public/js/lib/pomeloclient.js',
+                    'web-server/public/js/lib/pomeloclient.js.wss',
+                    'web-server/public/js/lib/build/build.js.wss',
+                    'web-server/public/js/lib/socket.io.js'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
@@ -204,10 +204,10 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.udp',
                     'game-server/app.ts.mqtt',
                     'game-server/app.ts.sio.wss',
-                    'web-server/app.ts.https',
+                    'web-server/app.js.https',
                     'web-server/public/index.html',
                     'web-server/public/js/lib/component.tson',
-                    'web-server/public/js/lib/pomeloclient.ts.wss'];
+                    'web-server/public/js/lib/pomeloclient.js.wss'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
@@ -225,16 +225,16 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.mqtt',
                     'web-server/app.ts',
                     'web-server/public/index.html.sio',
-                    'web-server/public/js/lib/pomeloclient.ts',
-                    'web-server/public/js/lib/pomeloclient.ts.wss',
-                    'web-server/public/js/lib/build/build.ts',
-                    'web-server/public/js/lib/socket.io.ts'];
+                    'web-server/public/js/lib/pomeloclient.js',
+                    'web-server/public/js/lib/pomeloclient.js.wss',
+                    'web-server/public/js/lib/build/build.js',
+                    'web-server/public/js/lib/socket.io.js'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
                 fs.renameSync(path.resolve(ph, 'game-server/app.ts.wss'), path.resolve(ph, 'game-server/app.ts'));
-                fs.renameSync(path.resolve(ph, 'web-server/app.ts.https'), path.resolve(ph, 'web-server/app.ts'));
-                fs.renameSync(path.resolve(ph, 'web-server/public/js/lib/build/build.ts.wss'), path.resolve(ph, 'web-server/public/js/lib/build/build.ts'));
+                fs.renameSync(path.resolve(ph, 'web-server/app.js.https'), path.resolve(ph, 'web-server/app.js'));
+                fs.renameSync(path.resolve(ph, 'web-server/public/js/lib/build/build.js.wss'), path.resolve(ph, 'web-server/public/js/lib/build/build.js'));
                 break;
             case '4':
                 // use socket.io wss
@@ -243,16 +243,16 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.udp',
                     'game-server/app.ts.wss',
                     'game-server/app.ts.mqtt',
-                    'web-server/app.ts',
+                    'web-server/app.js',
                     'web-server/public/index.html',
-                    'web-server/public/js/lib/pomeloclient.ts'];
+                    'web-server/public/js/lib/pomeloclient.js'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
                 fs.renameSync(path.resolve(ph, 'game-server/app.ts.sio.wss'), path.resolve(ph, 'game-server/app.ts'));
-                fs.renameSync(path.resolve(ph, 'web-server/app.ts.https'), path.resolve(ph, 'web-server/app.ts'));
+                fs.renameSync(path.resolve(ph, 'web-server/app.js.https'), path.resolve(ph, 'web-server/app.js'));
                 fs.renameSync(path.resolve(ph, 'web-server/public/index.html.sio'), path.resolve(ph, 'web-server/public/index.html'));
-                fs.renameSync(path.resolve(ph, 'web-server/public/js/lib/pomeloclient.ts.wss'), path.resolve(ph, 'web-server/public/js/lib/pomeloclient.ts'));
+                fs.renameSync(path.resolve(ph, 'web-server/public/js/lib/pomeloclient.js.wss'), path.resolve(ph, 'web-server/public/js/lib/pomeloclient.js'));
                 rmdir(path.resolve(ph, 'web-server/public/js/lib/build'));
                 rmdir(path.resolve(ph, 'web-server/public/js/lib/local'));
                 fs.unlinkSync(path.resolve(ph, 'web-server/public/js/lib/component.tson'));
@@ -264,10 +264,10 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.wss',
                     'game-server/app.ts.mqtt',
                     'game-server/app.ts.sio.wss',
-                    'web-server/app.ts.https',
+                    'web-server/app.js.https',
                     'web-server/public/index.html',
                     'web-server/public/js/lib/component.tson',
-                    'web-server/public/js/lib/pomeloclient.ts.wss'];
+                    'web-server/public/js/lib/pomeloclient.js.wss'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
@@ -282,10 +282,10 @@ function createApplicationAt(ph, type) {
                     'game-server/app.ts.udp',
                     'game-server/app.ts.sio',
                     'game-server/app.ts.sio.wss',
-                    'web-server/app.ts.https',
+                    'web-server/app.js.https',
                     'web-server/public/index.html',
                     'web-server/public/js/lib/component.tson',
-                    'web-server/public/js/lib/pomeloclient.ts.wss'];
+                    'web-server/public/js/lib/pomeloclient.js.wss'];
                 for (var i = 0; i < unlinkFiles.length; ++i) {
                     fs.unlinkSync(path.resolve(ph, unlinkFiles[i]));
                 }
@@ -344,7 +344,7 @@ function start(opts) {
     }
 }
 /**
- * List pomelo processes.
+ * List pinus processes.
  *
  * @param {Object} opts options for `list` operation
  */
@@ -471,7 +471,7 @@ function restart(opts) {
     });
 }
 function connectToMaster(id, opts, cb) {
-    var client = new pomelo_admin_1.AdminClient({ username: opts.username, password: opts.password, md5: true });
+    var client = new pinus_admin_1.AdminClient({ username: opts.username, password: opts.password, md5: true });
     client.connect(id, opts.host, opts.port, function (err) {
         if (err) {
             abort(CONNECT_ERROR + err.red);
@@ -651,4 +651,4 @@ function runServer(server) {
         starter.sshrun(cmd, server.host);
     }
 }
-//# sourceMappingURL=pomelo.js.map
+//# sourceMappingURL=pinus.js.map

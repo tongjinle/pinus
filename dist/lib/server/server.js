@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Implementation of server component.
  * Init and start server instance.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const fs = require("fs");
 const path = require("path");
 const pathUtil = require("../util/pathUtil");
-const Loader = require("pomelo-loader");
+const Loader = require("pinus-loader");
 const utils = require("../util/utils");
-const schedule = require("pomelo-scheduler");
+const schedule = require("pinus-scheduler");
 const events_1 = require("../util/events");
 const Constants = require("../util/constants");
 const filterService_1 = require("../common/service/filterService");

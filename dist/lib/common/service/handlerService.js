@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const utils = require("../../util/utils");
-const Loader = require("pomelo-loader");
+const Loader = require("pinus-loader");
 const pathUtil = require("../../util/pathUtil");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-var forwardLogger = pomelo_logger_1.getLogger('forward-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
+var forwardLogger = pinus_logger_1.getLogger('forward-log', __filename);
 /**
  * Handler service.
  * Dispatch request to the relactive handler.

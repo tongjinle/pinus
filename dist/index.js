@@ -3,7 +3,7 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./lib/pomelo"));
+__export(require("./lib/pinus"));
 var application_1 = require("./lib/application");
 exports.Application = application_1.Application;
 var backendSessionService_1 = require("./lib/common/service/backendSessionService");
@@ -68,11 +68,11 @@ var serial_1 = require("./lib/filters/handler/serial");
 exports.SerialFilter = serial_1.SerialFilter;
 var timeout_1 = require("./lib/filters/handler/timeout");
 exports.TimeoutFilter = timeout_1.TimeoutFilter;
-__export(require("pomelo-admin"));
-__export(require("pomelo-loader"));
-__export(require("pomelo-logger"));
-__export(require("pomelo-protobuf"));
-__export(require("pomelo-protocol"));
-__export(require("pomelo-rpc"));
-__export(require("pomelo-scheduler"));
+__export(require("pinus-admin"));
+__export(require("pinus-loader"));
+__export(require("pinus-logger"));
+__export(require("pinus-protobuf"));
+__export(require("pinus-protocol"));
+__export(require("pinus-rpc"));
+__export(require("pinus-scheduler"));
 //# sourceMappingURL=index.js.map

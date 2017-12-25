@@ -4,9 +4,9 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const direct_1 = require("../pushSchedulers/direct");
-const pomelo_logger_1 = require("pomelo-logger");
+const pinus_logger_1 = require("pinus-logger");
 const multi_1 = require("../pushSchedulers/multi");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 class PushSchedulerComponent {
     constructor(app, opts) {
         this.app = app;

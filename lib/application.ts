@@ -8,7 +8,7 @@
  * Module dependencies.
  */
 import * as utils from './util/utils';
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import { EventEmitter } from 'events';
 import { default as events } from './util/events';
 import * as appUtil from './util/appUtil';
@@ -34,7 +34,7 @@ import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
 import { isFunction } from 'util';
-import { IModule, IModuleFactory } from 'pomelo-admin';
+import { IModule, IModuleFactory } from 'pinus-admin';
 import { ChannelComponent } from './components/channel';
 import { BackendSessionComponent } from './components/backendSession';
 
@@ -121,7 +121,7 @@ export class Application
      * Get application base path
      *
      *  // cwd: /home/game/
-     *  pomelo start
+     *  pinus start
      *  // app.getBase() -> /home/game
      *
      * @return {String} application base path
@@ -148,7 +148,7 @@ export class Application
     /**
      * Configure logger with {$base}/config/log4js.json
      * 
-     * @param {Object} logger pomelo-logger instance without configuration
+     * @param {Object} logger pinus-logger instance without configuration
      *
      * @memberOf Application
      */
@@ -435,7 +435,7 @@ export class Application
      */
     beforeStopHook(fun)
     {
-        logger.warn('this method was deprecated in pomelo 0.8');
+        logger.warn('this method was deprecated in pinus 0.8');
         if (!!fun && typeof fun === 'function')
         {
             this.set(Constants.KEYWORDS.BEFORE_STOP_HOOK, fun);
@@ -536,7 +536,7 @@ export class Application
     {
         if (this.state > STATE_STARTED)
         {
-            logger.warn('[pomelo application] application is not running now.');
+            logger.warn('[pinus application] application is not running now.');
             return;
         }
         this.state = STATE_STOPED;

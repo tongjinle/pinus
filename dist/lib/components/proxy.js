@@ -7,11 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crc = require("crc");
 const utils = require("../util/utils");
 const events_1 = require("../util/events");
-const pomelo_rpc_1 = require("pomelo-rpc");
+const pinus_rpc_1 = require("pinus-rpc");
 const pathUtil = require("../util/pathUtil");
 const Constants = require("../util/constants");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * Proxy component class
  *
@@ -31,7 +31,7 @@ class ProxyComponent {
         opts.routeContext = app;
         if (app.enabled('rpcDebugLog')) {
             opts.rpcDebugLog = true;
-            opts.rpcLogger = pomelo_logger_1.getLogger('rpc-debug', __filename);
+            opts.rpcLogger = pinus_logger_1.getLogger('rpc-debug', __filename);
         }
         this.app = app;
         this.opts = opts;
@@ -49,7 +49,7 @@ class ProxyComponent {
      */
     start(cb) {
         if (this.opts.enableRpcLog) {
-            logger.warn('enableRpcLog is deprecated in 0.8.0, please use app.rpcFilter(pomelo.rpcFilters.rpcLog())');
+            logger.warn('enableRpcLog is deprecated in 0.8.0, please use app.rpcFilter(pinus.rpcFilters.rpcLog())');
         }
         var rpcBefores = this.app.get(Constants.KEYWORDS.RPC_BEFORE_FILTER);
         var rpcAfters = this.app.get(Constants.KEYWORDS.RPC_AFTER_FILTER);
@@ -152,7 +152,7 @@ var genRpcClient = function (app, opts) {
         return opts.rpcClient.create(opts);
     }
     else {
-        return pomelo_rpc_1.createClient(opts);
+        return pinus_rpc_1.createClient(opts);
     }
 };
 /**

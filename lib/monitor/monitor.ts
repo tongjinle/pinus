@@ -2,13 +2,13 @@
  * Component for monitor.
  * Load and start monitor client.
  */
-import { getLogger } from 'pomelo-logger'; var logger = getLogger('pomelo', __filename);
-import * as admin from 'pomelo-admin';
+import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
+import * as admin from 'pinus-admin';
 import * as moduleUtil from '../util/moduleUtil';
 import * as utils from '../util/utils';
 import * as Constants from '../util/constants';
 import { Application } from '../application';
-import { ConsoleService } from 'pomelo-admin';
+import { ConsoleService } from 'pinus-admin';
 
 export class Monitor
 {

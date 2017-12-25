@@ -1,6 +1,6 @@
 import { Watchdog } from '../master/watchdog';
 import { Application } from '../application';
-import { IModule } from 'pomelo-admin';
+import { IModule } from 'pinus-admin';
 export declare class MasterWatcherModule implements IModule {
     app: Application;
     service: any;

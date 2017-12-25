@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const fs = require("fs");
 const pathUtil = require("../util/pathUtil");
-const pomelo_rpc_1 = require("pomelo-rpc");
-const pomelo_logger_1 = require("pomelo-logger");
+const pinus_rpc_1 = require("pinus-rpc");
+const pinus_logger_1 = require("pinus-logger");
 /**
  * Remote component class
  *
@@ -25,7 +25,7 @@ class RemoteComponent {
         opts.interval = opts.interval || 30;
         if (app.enabled('rpcDebugLog')) {
             opts.rpcDebugLog = true;
-            opts.rpcLogger = pomelo_logger_1.getLogger('rpc-debug', __filename);
+            opts.rpcLogger = pinus_logger_1.getLogger('rpc-debug', __filename);
         }
     }
     ;
@@ -97,7 +97,7 @@ var genRemote = function (app, opts) {
         return opts.rpcServer.create(opts);
     }
     else {
-        return pomelo_rpc_1.createServer(opts);
+        return pinus_rpc_1.createServer(opts);
     }
 };
 //# sourceMappingURL=remote.js.map

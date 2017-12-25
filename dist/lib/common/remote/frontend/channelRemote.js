@@ -5,8 +5,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Receive push request from backend servers and push it to clients.
  */
 const utils = require("../../../util/utils");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 function default_1(app) {
     return new ChannelRemote(app);
 }

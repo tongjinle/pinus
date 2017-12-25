@@ -7,12 +7,12 @@ import {UdpSocket} from './udpsocket';
 import * as Kick from './commands/kick';
 import { HandshakeCommand } from './commands/handshake';
 import { HeartbeatCommand } from './commands/heartbeat';
-import { Package, Message } from 'pomelo-protocol';
+import { Package, Message } from 'pinus-protocol';
 import * as coder from './common/coder';
 import { EventEmitter } from 'events';
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 import { SocketType } from 'dgram';
-var logger = getLogger('pomelo', __filename);
+var logger = getLogger('pinus', __filename);
 
 var curId = 1;
 

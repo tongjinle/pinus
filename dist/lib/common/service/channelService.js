@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const countDownLatch = require("../../util/countDownLatch");
 const utils = require("../../util/utils");
 const channelRemote_1 = require("../remote/frontend/channelRemote");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * constant
  */
@@ -14,7 +14,7 @@ var ST_DESTROYED = 1;
  * Create and maintain channels for server local.
  *
  * ChannelService is created by channel component which is a default loaded
- * component of pomelo and channel service would be accessed by `app.get('channelService')`.
+ * component of pinus and channel service would be accessed by `app.get('channelService')`.
  *
  * @class
  * @constructor

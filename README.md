@@ -1,24 +1,8 @@
-## 支持Promise异步机制的pomelo版本
+## Pinus -- a fast, scalable game server framework for node.js
 
-安装办法：
-npm install async-pomelo --save
-
-
-## Pomelo -- a fast, scalable game server framework for node.js
-
-Pomelo is a fast, scalable game server framework for [node.js](http://nodejs.org).
+Pinus is a fast, scalable game server framework for [node.js](http://nodejs.org).
 It provides the basic development framework and many related components, including libraries and tools.
-Pomelo is also suitable for real-time web applications; its distributed architecture makes pomelo scale better than other real-time web frameworks.
-
-[![Build Status](https://travis-ci.org/NetEase/pomelo.svg?branch=master)](https://travis-ci.org/NetEase/pomelo)
-
- * Homepage: <http://pomelo.netease.com/>
- * Mailing list: <https://groups.google.com/group/pomelo>
- * Documentation: <http://github.com/NetEase/pomelo>
- * Wiki: <https://github.com/NetEase/pomelo/wiki/>
- * Issues: <https://github.com/NetEase/pomelo/issues/>
- * Tags: game, nodejs
-
+Pinus is also suitable for real-time web applications; its distributed architecture makes pinus scale better than other real-time web frameworks.
 
 ## Features
 
@@ -43,30 +27,31 @@ Pomelo is also suitable for real-time web applications; its distributed architec
 
 * Many clients support, including javascript, flash, android, iOS, cocos2d-x, C
 * Many libraries and tools, including command line tool, admin tool, performance test tool, AI, path finding etc.
-* Good reference materials: full docs, many examples and [an open-source MMO RPG demo](https://github.com/NetEase/pomelo/wiki/Introduction-to--Lord-of-Pomelo)
+* Good reference materials: full docs, many examples and [an open-source MMO RPG demo](https://github.com/NetEase/pinus/wiki/Introduction-to--Lord-of-Pinus)
 
 ### Extensible
 
 * Support plugin architecture, easy to add new features through plugins. We also provide many plugins like online status, master high availability.
 * Custom features, users can define their own network protocol, custom components very easy.
 
-## Why should I use pomelo?
+## Why should I use pinus?
 Fast, scalable, real-time game server development is not an easy job, and a good container or framework can reduce its complexity.
-Unfortunately, unlike web, finding a game server framework solution is difficult, especially an open source solution. Pomelo fills this gap, providing a full solution for building game server frameworks.
-Pomelo has the following advantages:
+Unfortunately, unlike web, finding a game server framework solution is difficult, especially an open source solution. Pinus fills this gap, providing a full solution for building game server frameworks.
+Pinus has the following advantages:
 * The architecture is scalable. It uses a multi-process, single thread runtime architecture, which has been proven in the industry and is especially suited to the node.js thread model.
-* Easy to use, the development model is quite similar to web, using convention over configuration, with almost zero config. The [API](http://pomelo.netease.com/api.html) is also easy to use.
-* The framework is extensible. Based on the node.js micro module principle, the core of pomelo is small. All of the components, libraries and tools are individual npm modules, and anyone can create their own module to extend the framework.
-* The reference materials and documentation are quite complete. In addition to the documentation, we also provide [an open-source MMO RPG demo](https://github.com/NetEase/pomelo/wiki/Introduction-to--Lord-of-Pomelo) (HTML5 client), which is a far better reference material than any book.
+* Easy to use, the development model is quite similar to web, using convention over configuration, with almost zero config. The [API](http://pinus.netease.com/api.html) is also easy to use.
+* The framework is extensible. Based on the node.js micro module principle, the core of pinus is small. All of the components, libraries and tools are individual npm modules, and anyone can create their own module to extend the framework.
+* The reference materials and documentation are quite complete. In addition to the documentation, we also provide [an open-source MMO RPG demo](https://github.com/NetEase/pinus/wiki/Introduction-to--Lord-of-Pinus) (HTML5 client), which is a far better reference material than any book.
 
-## How can I develop with pomelo?
-With the following references, you can quickly familiarize yourself with the pomelo development process:
-* [Pomelo documents](https://github.com/NetEase/pomelo/wiki)
-* [Getting started](https://github.com/NetEase/pomelo/wiki/Welcome-to-Pomelo)
-* [Tutorial](https://github.com/NetEase/pomelo/wiki/Preface)
+## How can I develop with pinus?
+With the following references, you can quickly familiarize yourself with the pinus development process:
+* [Pinus documents](https://github.com/NetEase/pinus/wiki)
+* [Getting started](https://github.com/NetEase/pinus/wiki/Welcome-to-Pinus)
+* [Tutorial](https://github.com/NetEase/pinus/wiki/Preface)
 
 
 ## Contributors
+* mybios(mybios@qq.com)
 * NetEase, Inc. (@NetEase)
 * Peter Johnson(@missinglink)
 * Aaron Yoshitake 

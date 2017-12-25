@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as utils from '../../util/utils';
-import * as Loader from 'pomelo-loader';
+import * as Loader from 'pinus-loader';
 import * as pathUtil from '../../util/pathUtil';
-import { getLogger } from 'pomelo-logger'; import { Application } from '../../application';
- var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger'; import { Application } from '../../application';
+ var logger = getLogger('pinus', __filename);
 var forwardLogger = getLogger('forward-log', __filename);
 /**
  * Handler service.

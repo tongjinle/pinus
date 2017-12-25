@@ -3,9 +3,9 @@
  * Receive push request from backend servers and push it to clients.
  */
 import * as utils from '../../../util/utils';
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 import { Application } from '../../../application';
- var logger = getLogger('pomelo', __filename);
+ var logger = getLogger('pinus', __filename);
 
 export default function(app) {
   return new ChannelRemote(app);

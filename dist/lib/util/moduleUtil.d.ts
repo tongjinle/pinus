@@ -1,5 +1,5 @@
 import { Application } from '../application';
-import { ConsoleService } from 'pomelo-admin';
+import { ConsoleService } from 'pinus-admin';
 /**
  * Load admin modules
  */

@@ -1,4 +1,4 @@
-import { Package } from 'pomelo-protocol';
+import { Package } from 'pinus-protocol';
 
 export function handle(socket, reason)
 {

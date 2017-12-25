@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
 const wsprocessor_1 = require("./wsprocessor");
 const tcpprocessor_1 = require("./tcpprocessor");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 var HTTP_METHODS = [
     'GET', 'POST', 'DELETE', 'PUT', 'HEAD'
 ];

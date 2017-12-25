@@ -1,7 +1,7 @@
 import * as async from 'async';
 import * as utils from '../../util/utils';
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 var transactionLogger = getLogger('transaction-log', __filename);
 var transactionErrorLogger = getLogger('transaction-error-log', __filename);
 

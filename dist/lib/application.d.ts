@@ -21,7 +21,7 @@ import { ConnectorComponent } from './components/connector';
 import { ConnectionComponent } from './components/connection';
 import { SessionService } from './common/service/sessionService';
 import { ObjectType } from './interfaces/define';
-import { IModule, IModuleFactory } from 'pomelo-admin';
+import { IModule, IModuleFactory } from 'pinus-admin';
 import { ChannelComponent } from './components/channel';
 import { BackendSessionComponent } from './components/backendSession';
 export declare type ConfigureCallback = () => void;
@@ -76,7 +76,7 @@ export declare class Application {
      * Get application base path
      *
      *  // cwd: /home/game/
-     *  pomelo start
+     *  pinus start
      *  // app.getBase() -> /home/game
      *
      * @return {String} application base path
@@ -95,7 +95,7 @@ export declare class Application {
     /**
      * Configure logger with {$base}/config/log4js.json
      *
-     * @param {Object} logger pomelo-logger instance without configuration
+     * @param {Object} logger pinus-logger instance without configuration
      *
      * @memberOf Application
      */

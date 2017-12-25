@@ -1,10 +1,10 @@
 import * as countDownLatch from '../../util/countDownLatch';
 import * as utils from '../../util/utils';
 import { ChannelRemote } from '../remote/frontend/channelRemote';
-import { getLogger } from 'pomelo-logger'; import { Application } from '../../application';
+import { getLogger } from 'pinus-logger'; import { Application } from '../../application';
 import { IComponent } from '../../interfaces/Component';
 import { IStore } from '../../interfaces/IStore';
- var logger = getLogger('pomelo', __filename);
+ var logger = getLogger('pinus', __filename);
 
 /**
  * constant
@@ -16,7 +16,7 @@ var ST_DESTROYED = 1;
  * Create and maintain channels for server local.
  *
  * ChannelService is created by channel component which is a default loaded
- * component of pomelo and channel service would be accessed by `app.get('channelService')`.
+ * component of pinus and channel service would be accessed by `app.get('channelService')`.
  *
  * @class
  * @constructor

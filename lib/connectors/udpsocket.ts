@@ -1,9 +1,9 @@
 import * as util from 'util';
 import { default as handler } from './common/handler';
-import { Package } from 'pomelo-protocol';
+import { Package } from 'pinus-protocol';
 import * as EventEmitter from 'events';
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 
 var ST_INITED = 0;
 var ST_WAIT_ACK = 1;

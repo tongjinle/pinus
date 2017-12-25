@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const path = require("path");
-const pomelo_protobuf_1 = require("pomelo-protobuf");
+const pinus_protobuf_1 = require("pinus-protobuf");
 const Constants = require("../util/constants");
 const crypto = require("crypto");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 class ProtobufComponent {
     constructor(app, opts) {
         this.watchers = {};
@@ -25,7 +25,7 @@ class ProtobufComponent {
         this.clientProtosPath = opts.clientProtos || (fs.existsSync(originClientPath) ? Constants.FILEPATH.CLIENT_PROTOS : presentClientPath);
         this.setProtos(Constants.RESERVED.SERVER, path.join(app.getBase(), this.serverProtosPath));
         this.setProtos(Constants.RESERVED.CLIENT, path.join(app.getBase(), this.clientProtosPath));
-        this.protobuf = new pomelo_protobuf_1.Protobuf({ encoderProtos: this.serverProtos, decoderProtos: this.clientProtos });
+        this.protobuf = new pinus_protobuf_1.Protobuf({ encoderProtos: this.serverProtos, decoderProtos: this.clientProtos });
     }
     ;
     encode(key, msg) {

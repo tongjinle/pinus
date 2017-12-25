@@ -5,8 +5,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Copyright(c) 2012 fantasyni <fantasyni@163.com>
  * MIT Licensed
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 const countDownLatch = require("../util/countDownLatch");
 const utils = require("../util/utils");
 const Constants = require("../util/constants");

@@ -6,7 +6,7 @@ import { IStore } from '../../interfaces/IStore';
  * Create and maintain channels for server local.
  *
  * ChannelService is created by channel component which is a default loaded
- * component of pomelo and channel service would be accessed by `app.get('channelService')`.
+ * component of pinus and channel service would be accessed by `app.get('channelService')`.
  *
  * @class
  * @constructor

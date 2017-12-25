@@ -13,7 +13,7 @@ import { ConnectorComponent } from '../components/connector';
 import { DictionaryComponent } from '../components/dictionary';
 import { ProtobufComponent } from '../components/protobuf';
 import { IComponent } from '../interfaces/Component';
-import { pomelo } from '../pomelo';
+import { pinus } from '../pinus';
 
 var curId = 1;
 
@@ -63,7 +63,7 @@ export class HybridConnector extends EventEmitter
      */
     start(cb)
     {
-        var app = pomelo.app;
+        var app = pinus.app;
         var self = this;
 
         var gensocket = function (socket)

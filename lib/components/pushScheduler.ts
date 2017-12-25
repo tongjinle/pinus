@@ -3,12 +3,12 @@
  */
 
 import {DirectPushScheduler as DefaultScheduler} from '../pushSchedulers/direct';
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
 import { IPushScheduler } from '../interfaces/IPushScheduler';
 import { MultiPushScheduler } from '../pushSchedulers/multi';
-var logger = getLogger('pomelo', __filename);
+var logger = getLogger('pinus', __filename);
 
 
 

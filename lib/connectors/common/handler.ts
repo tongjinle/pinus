@@ -1,6 +1,6 @@
-import { Package , Protocol } from 'pomelo-protocol';
-import { getLogger } from 'pomelo-logger';
-var logger = getLogger('pomelo', __filename);
+import { Package , Protocol } from 'pinus-protocol';
+import { getLogger } from 'pinus-logger';
+var logger = getLogger('pinus', __filename);
 
 var handlers = {};
 

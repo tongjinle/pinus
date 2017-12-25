@@ -4,10 +4,10 @@
  */
 import * as fs from 'fs';
 import * as pathUtil from '../util/pathUtil';
-import { createServer , Gateway } from 'pomelo-rpc';
+import { createServer , Gateway } from 'pinus-rpc';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 
 /**
  * Remote component class

@@ -1,15 +1,15 @@
 import * as os from 'os';
-import * as admin from 'pomelo-admin';
+import * as admin from 'pinus-admin';
 import * as utils from './utils';
 import * as Constants from './constants';
 import * as pathUtil from './pathUtil';
 import * as starter from '../master/starter';
-import { getLogger } from 'pomelo-logger';import { Application } from '../application';
-import { ConsoleService, IModule } from 'pomelo-admin';
+import { getLogger } from 'pinus-logger';import { Application } from '../application';
+import { ConsoleService, IModule } from 'pinus-admin';
 import { MasterWatcherModule } from '../modules/masterwatcher';
 import { MonitorWatcherModule } from '../modules/monitorwatcher';
 import { ConsoleModule } from '../modules/console';
- var logger = getLogger('pomelo', __filename);
+ var logger = getLogger('pinus', __filename);
 
 /**
  * Load admin modules

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const async = require("async");
 const utils = require("../../util/utils");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-var transactionLogger = pomelo_logger_1.getLogger('transaction-log', __filename);
-var transactionErrorLogger = pomelo_logger_1.getLogger('transaction-error-log', __filename);
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
+var transactionLogger = pinus_logger_1.getLogger('transaction-log', __filename);
+var transactionErrorLogger = pinus_logger_1.getLogger('transaction-error-log', __filename);
 function transaction(name, conditions, handlers, retry) {
     if (!retry) {
         retry = 1;

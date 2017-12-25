@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pomelo_protocol_1 = require("pomelo-protocol");
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
+const pinus_protocol_1 = require("pinus-protocol");
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
 /**
  * Process heartbeat request.
  *
@@ -40,7 +40,7 @@ class HeartbeatCommand {
         if (self.disconnectOnTimeout) {
             this.clear(socket.id);
         }
-        socket.sendRaw(pomelo_protocol_1.Package.encode(pomelo_protocol_1.Package.TYPE_HEARTBEAT));
+        socket.sendRaw(pinus_protocol_1.Package.encode(pinus_protocol_1.Package.TYPE_HEARTBEAT));
         if (self.disconnectOnTimeout) {
             self.timeouts[socket.id] = setTimeout(function () {
                 logger.info('client %j heartbeat timeout.', socket.id);

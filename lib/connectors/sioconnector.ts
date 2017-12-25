@@ -46,7 +46,7 @@ export class SIOConnector extends EventEmitter
     start(cb)
     {
         var self = this;
-        // issue https://github.com/NetEase/pomelo-cn/issues/174
+        // issue https://github.com/NetEase/pinus-cn/issues/174
         var opts = {}
         if (!!this.opts)
         {

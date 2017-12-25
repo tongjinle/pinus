@@ -2,9 +2,9 @@ import { EventEmitter } from 'events';
 import * as util from 'util';
 import { WSProcessor } from './wsprocessor';
 import { TCPProcessor } from './tcpprocessor';
-import { getLogger } from 'pomelo-logger';
+import { getLogger } from 'pinus-logger';
 import { Server } from '../../server/server';
-var logger = getLogger('pomelo', __filename);
+var logger = getLogger('pinus', __filename);
 
 var HTTP_METHODS = [
     'GET', 'POST', 'DELETE', 'PUT', 'HEAD'

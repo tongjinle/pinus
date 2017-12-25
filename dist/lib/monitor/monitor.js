@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Component for monitor.
  * Load and start monitor client.
  */
-const pomelo_logger_1 = require("pomelo-logger");
-var logger = pomelo_logger_1.getLogger('pomelo', __filename);
-const admin = require("pomelo-admin");
+const pinus_logger_1 = require("pinus-logger");
+var logger = pinus_logger_1.getLogger('pinus', __filename);
+const admin = require("pinus-admin");
 const moduleUtil = require("../util/moduleUtil");
 const utils = require("../util/utils");
 const Constants = require("../util/constants");
