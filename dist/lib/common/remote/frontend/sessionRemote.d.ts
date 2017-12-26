@@ -3,7 +3,7 @@ export default function (app: any): SessionRemote;
 export declare class SessionRemote {
     app: Application;
     constructor(app: any);
-    bind: (arg1: any, arg2: any) => Promise<void>;
+    bind(sid: any, uid: any): Promise<void>;
     unbind: (arg1: any, arg2: any) => Promise<void>;
     push: (arg1: any, arg2: any, arg3: any) => Promise<void>;
     pushAll: (arg1: any, arg2: any) => Promise<void>;

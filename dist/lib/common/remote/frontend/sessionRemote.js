@@ -12,9 +12,6 @@ exports.default = default_1;
 ;
 class SessionRemote {
     constructor(app) {
-        this.bind = utils.promisify((sid, uid, cb) => {
-            this.app.sessionService.bind(sid, uid, cb);
-        });
         this.unbind = utils.promisify((sid, uid, cb) => {
             this.app.get('sessionService').unbind(sid, uid, cb);
         });
@@ -79,6 +76,9 @@ class SessionRemote {
         this.app = app;
     }
     ;
+    bind(sid, uid) {
+        return this.app.sessionService.abind(sid, uid);
+    }
 }
 exports.SessionRemote = SessionRemote;
 //# sourceMappingURL=sessionRemote.js.map

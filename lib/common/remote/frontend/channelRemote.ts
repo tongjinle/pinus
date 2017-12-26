@@ -28,40 +28,50 @@ export class ChannelRemote
      * @param  {Object}   opts  push options
      * @param  {Function} cb    callback function
      */
-    pushMessage = utils.promisify(function (route, msg, uids, opts, cb : (err : Error | null , result ?: any)=>void)
+    async pushMessage(route, msg, uids, opts)
     {
-        if (!msg)
+        return new Promise<any>((resolve, reject) =>
         {
-            logger.error('Can not send empty message! route : %j, compressed msg : %j',
-                route, msg);
-            utils.invokeCallback(cb, new Error('can not send empty message.'));
-            return;
-        }
-
-        var connector = this.app.components.__connector__;
-
-        var sessionService = this.app.get('sessionService');
-        var fails = [], sids = [], sessions, j, k;
-        for (var i = 0, l = uids.length; i < l; i++)
-        {
-            sessions = sessionService.getByUid(uids[i]);
-            if (!sessions)
+            if (!msg)
             {
-                fails.push(uids[i]);
-            } else
+                logger.error('Can not send empty message! route : %j, compressed msg : %j',
+                    route, msg);
+                reject(new Error('can not send empty message.'));
+                return;
+            }
+
+            var connector = this.app.components.__connector__;
+
+            var sessionService = this.app.get('sessionService');
+            var fails = [], sids = [], sessions, j, k;
+            for (var i = 0, l = uids.length; i < l; i++)
             {
-                for (j = 0, k = sessions.length; j < k; j++)
+                sessions = sessionService.getByUid(uids[i]);
+                if (!sessions)
                 {
-                    sids.push(sessions[j].id);
+                    fails.push(uids[i]);
+                } else
+                {
+                    for (j = 0, k = sessions.length; j < k; j++)
+                    {
+                        sids.push(sessions[j].id);
+                    }
                 }
             }
-        }
-        logger.debug('[%s] pushMessage uids: %j, msg: %j, sids: %j', this.app.serverId, uids, msg, sids);
-        connector.send(null, route, msg, sids, opts, function (err)
-        {
-            utils.invokeCallback(cb, err, fails);
+            logger.debug('[%s] pushMessage uids: %j, msg: %j, sids: %j', this.app.serverId, uids, msg, sids);
+            connector.send(null, route, msg, sids, opts, function (err)
+            {
+                if (err)
+                {
+                    reject(err);
+                }
+                else
+                {
+                    resolve(fails);
+                }
+            });
         });
-    });
+    }
 
     /**
      * Broadcast to all the client connectd with current frontend server.
@@ -71,10 +81,23 @@ export class ChannelRemote
      * @param  {Boolean}   opts   broadcast options. 
      * @param  {Function}  cb     callback function
      */
-    broadcast = utils.promisify(function (route, msg, opts, cb : (err : Error | null , result ?: any)=>void)
+    async broadcast(route, msg, opts)
     {
-        var connector = this.app.components.__connector__;
+        return new Promise<any>((resolve, reject) =>
+        {
+            var connector = this.app.components.__connector__;
 
-        connector.send(null, route, msg, null, opts, cb);
-    });
+            connector.send(null, route, msg, null, opts, function (err , resp)
+            {
+                if (err)
+                {
+                    reject(err);
+                }
+                else
+                {
+                    resolve(resp);
+                }
+            });
+        });    
+    }
 }

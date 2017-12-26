@@ -6,6 +6,7 @@ import * as pathUtil from '../util/pathUtil';
 import * as crypto from 'crypto';
 import { Application } from '../application';
 import { IComponent } from '../interfaces/Component';
+import { listEs6ClassMethods } from 'pinus-rpc';
 
 export class DictionaryComponent implements IComponent
 {
@@ -51,12 +52,11 @@ export class DictionaryComponent implements IComponent
             for (var name in handlers)
             {
                 var handler = handlers[name];
-                for (var key in handler)
+                
+                var proto = listEs6ClassMethods(handler);
+                for (var key of proto)
                 {
-                    if (typeof (handler[key]) === 'function')
-                    {
-                        routes.push(serverType + '.' + name + '.' + key);
-                    }
+                    routes.push(serverType + '.' + name + '.' + key);
                 }
             }
         }

@@ -25,87 +25,106 @@ export class MsgRemote
      * @param session {Object} session object for current request
      * @param cb {Function} callback function
      */
-    forwardMessage = utils.promisify( (msg, session, cb : (err : Error | null , result ?: any)=>void)=>
+    async forwardMessage(msg, session)
     {
-        var server = this.app.components.__server__;
-        var sessionService = this.app.components.__backendSession__;
-
-        if (!server)
+        return new Promise<any>((resolve, reject) =>
         {
-            logger.error('server component not enable on %s', this.app.serverId);
-            utils.invokeCallback(cb, new Error('server component not enable'));
-            return;
-        }
+            var server = this.app.components.__server__;
+            var sessionService = this.app.components.__backendSession__;
 
-        if (!sessionService)
-        {
-            logger.error('backend session component not enable on %s', this.app.serverId);
-            utils.invokeCallback(cb, new Error('backend sesssion component not enable'));
-            return;
-        }
-
-        // generate backend session for current request
-        var backendSession = sessionService.create(session);
-
-        // handle the request
-
-        logger.debug('backend server [%s] handle message: %j', this.app.serverId, msg);
-
-        server.handle(msg, backendSession, function (err, resp, opts)
-        {
-            // cb && cb(err, resp, opts);
-            utils.invokeCallback(cb, err, resp, opts);
-        });
-    });
-
-    forwardMessage2 = utils.promisify( (route, body, aesPassword, compressGzip, session, cb : (err : Error | null , result ?: any)=>void)=>
-    {
-        var server = this.app.components.__server__;
-        var sessionService = this.app.components.__backendSession__;
-
-        if (!server)
-        {
-            logger.error('server component not enable on %s', this.app.serverId);
-            utils.invokeCallback(cb, new Error('server component not enable'));
-            return;
-        }
-
-        if (!sessionService)
-        {
-            logger.error('backend session component not enable on %s', this.app.serverId);
-            utils.invokeCallback(cb, new Error('backend sesssion component not enable'));
-            return;
-        }
-
-        // generate backend session for current request
-        var backendSession = sessionService.create(session);
-
-        // handle the request
-
-        // logger.debug('backend server [%s] handle message: %j', this.app.serverId, msg);
-
-        var dmsg = {
-            route: route,
-            body: body,
-            compressGzip: compressGzip
-        }
-
-        var socket = {
-            aesPassword: aesPassword
-        }
-
-        var connector = this.app.components.__connector__.connector;
-        connector.runDecode(dmsg, socket, function (err, msg)
-        {
-            if (err)
+            if (!server)
             {
-                return cb(err);
+                logger.error('server component not enable on %s', this.app.serverId);
+                reject(new Error('server component not enable'));
+                return;
             }
+
+            if (!sessionService)
+            {
+                logger.error('backend session component not enable on %s', this.app.serverId);
+                reject(new Error('backend sesssion component not enable'));
+                return;
+            }
+
+            // generate backend session for current request
+            var backendSession = sessionService.create(session);
+
+            // handle the request
+
+            logger.debug('backend server [%s] handle message: %j', this.app.serverId, msg);
 
             server.handle(msg, backendSession, function (err, resp, opts)
             {
-                utils.invokeCallback(cb, err, resp, opts);
+                if (err)
+                {
+                    reject(err);
+                }    
+                else
+                {
+                    resolve(resp);
+                }
             });
         });
-    });
+    }
+
+    forwardMessage2(route, body, aesPassword, compressGzip, session)
+    {
+        return new Promise<any>((resolve, reject) =>
+        {
+            var server = this.app.components.__server__;
+            var sessionService = this.app.components.__backendSession__;
+
+            if (!server)
+            {
+                logger.error('server component not enable on %s', this.app.serverId);
+                reject(new Error('server component not enable'));
+                return;
+            }
+
+            if (!sessionService)
+            {
+                logger.error('backend session component not enable on %s', this.app.serverId);
+                reject(new Error('backend sesssion component not enable'));
+                return;
+            }
+
+            // generate backend session for current request
+            var backendSession = sessionService.create(session);
+
+            // handle the request
+
+            // logger.debug('backend server [%s] handle message: %j', this.app.serverId, msg);
+
+            var dmsg = {
+                route: route,
+                body: body,
+                compressGzip: compressGzip
+            }
+
+            var socket = {
+                aesPassword: aesPassword
+            }
+
+            var connector = this.app.components.__connector__.connector;
+            connector.runDecode(dmsg, socket, function (err, msg)
+            {
+                if (err)
+                {
+                    return reject(err);
+                }
+
+                server.handle(msg, backendSession, function (err, resp, opts)
+                {
+                    if (err)
+                    {
+                        reject(err);
+                    }    
+                    else
+                    {
+                        resolve(resp);
+                    }
+                });
+            });
+        });    
+    }
 }

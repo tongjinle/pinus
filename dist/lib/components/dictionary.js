@@ -6,6 +6,7 @@ const utils = require("../util/utils");
 const Loader = require("pinus-loader");
 const pathUtil = require("../util/pathUtil");
 const crypto = require("crypto");
+const pinus_rpc_1 = require("pinus-rpc");
 class DictionaryComponent {
     constructor(app, opts) {
         this.dict = {};
@@ -36,10 +37,9 @@ class DictionaryComponent {
             var handlers = Loader.load(p, this.app);
             for (var name in handlers) {
                 var handler = handlers[name];
-                for (var key in handler) {
-                    if (typeof (handler[key]) === 'function') {
-                        routes.push(serverType + '.' + name + '.' + key);
-                    }
+                var proto = pinus_rpc_1.listEs6ClassMethods(handler);
+                for (var key of proto) {
+                    routes.push(serverType + '.' + name + '.' + key);
                 }
             }
         }

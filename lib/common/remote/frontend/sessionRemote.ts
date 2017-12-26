@@ -17,10 +17,10 @@ export class SessionRemote
     {
         this.app = app;
     };
-    bind = utils.promisify( (sid, uid, cb : (err : Error | null , result ?: void)=>void)=>
+    bind(sid, uid)
     {
-        this.app.sessionService.bind(sid, uid, cb);
-    });
+        return this.app.sessionService.abind(sid, uid);
+    }
 
     unbind = utils.promisify( (sid, uid, cb : (err : Error | null , result ?: void)=>void)=>
     {
