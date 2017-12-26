@@ -308,7 +308,7 @@ class BackendSession {
      */
     export() {
         var res = {};
-        EXPORTED_FIELDS.forEach(function (field) {
+        EXPORTED_FIELDS.forEach((field) => {
             res[field] = this[field];
         });
         return res;
