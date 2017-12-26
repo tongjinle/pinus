@@ -7,11 +7,6 @@ var rpcLogger = getLogger('rpc-log', __filename);
 
 import * as utils from '../../util/utils';
 
-export default function ()
-{
-    return new RpcLogFilter();
-};
-
 export class RpcLogFilter
 {
     name = 'rpcLog';

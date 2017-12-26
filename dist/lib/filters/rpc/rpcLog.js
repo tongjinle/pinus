@@ -7,11 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pinus_logger_1 = require("pinus-logger");
 var rpcLogger = pinus_logger_1.getLogger('rpc-log', __filename);
 const utils = require("../../util/utils");
-function default_1() {
-    return new RpcLogFilter();
-}
-exports.default = default_1;
-;
 class RpcLogFilter {
     constructor() {
         this.name = 'rpcLog';

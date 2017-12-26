@@ -1,4 +1,3 @@
-export default function (): RpcLogFilter;
 export declare class RpcLogFilter {
     name: string;
     /**

@@ -1,4 +1,3 @@
-export default function (timeout: any): SerialFilter;
 export declare class SerialFilter {
     private timeout;
     constructor(timeout: number);

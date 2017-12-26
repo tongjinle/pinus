@@ -6,9 +6,6 @@ import { getLogger } from 'pinus-logger';
 var conLogger = getLogger('con-log', __filename);
 import * as utils from '../../util/utils';
 
-export default function() {
-  return new TimeFilter();
-};
 
 export class TimeFilter
 {

@@ -1,6 +1,5 @@
-export default function (maxLag: any): RpcToobusyFilter;
 export declare class RpcToobusyFilter {
-    constructor(maxLag: any);
+    constructor(maxLag?: number);
     name: string;
     /**
      * Before filter for rpc

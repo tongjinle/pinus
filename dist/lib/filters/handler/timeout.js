@@ -9,19 +9,12 @@ var logger = pinus_logger_1.getLogger('pinus', __filename);
 const utils = require("../../util/utils");
 var DEFAULT_TIMEOUT = 3000;
 var DEFAULT_SIZE = 500;
-function default_1(timeout, maxSize) {
-    return new TimeoutFilter(timeout || DEFAULT_TIMEOUT, maxSize || DEFAULT_SIZE);
-}
-exports.default = default_1;
-;
 class TimeoutFilter {
-    constructor(timeout, maxSize) {
+    constructor(timeout = DEFAULT_TIMEOUT, maxSize = DEFAULT_SIZE) {
         this.timeout = timeout;
         this.maxSize = maxSize;
         this.timeouts = {};
         this.curId = 0;
-        this.timeout = timeout;
-        this.maxSize = maxSize;
     }
     ;
     before(routeRecord, msg, session, next) {

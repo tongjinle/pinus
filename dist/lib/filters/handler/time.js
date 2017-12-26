@@ -7,11 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pinus_logger_1 = require("pinus-logger");
 var conLogger = pinus_logger_1.getLogger('con-log', __filename);
 const utils = require("../../util/utils");
-function default_1() {
-    return new TimeFilter();
-}
-exports.default = default_1;
-;
 class TimeFilter {
     before(routeRecord, msg, session, next) {
         session.__startTime__ = Date.now();

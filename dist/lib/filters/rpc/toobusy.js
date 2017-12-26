@@ -8,13 +8,8 @@ const pinus_logger_1 = require("pinus-logger");
 var rpcLogger = pinus_logger_1.getLogger('rpc-log', __filename);
 var toobusy = null;
 var DEFAULT_MAXLAG = 70;
-function default_1(maxLag) {
-    return new RpcToobusyFilter(maxLag || DEFAULT_MAXLAG);
-}
-exports.default = default_1;
-;
 class RpcToobusyFilter {
-    constructor(maxLag) {
+    constructor(maxLag = DEFAULT_MAXLAG) {
         this.name = 'toobusy';
         try {
             toobusy = require('toobusy');

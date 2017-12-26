@@ -8,13 +8,8 @@ const pinus_logger_1 = require("pinus-logger");
 var conLogger = pinus_logger_1.getLogger('con-log', __filename);
 var toobusy = null;
 var DEFAULT_MAXLAG = 70;
-function default_1(maxLag) {
-    return new ToobusyFilter(maxLag || DEFAULT_MAXLAG);
-}
-exports.default = default_1;
-;
 class ToobusyFilter {
-    constructor(maxLag) {
+    constructor(maxLag = DEFAULT_MAXLAG) {
         try {
             toobusy = require('toobusy');
         }

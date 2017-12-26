@@ -6,11 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pinus_logger_1 = require("pinus-logger");
 var logger = pinus_logger_1.getLogger('pinus', __filename);
 const taskManager = require("../../common/manager/taskManager");
-function default_1(timeout) {
-    return new SerialFilter(timeout);
-}
-exports.default = default_1;
-;
 class SerialFilter {
     constructor(timeout) {
         this.timeout = timeout;

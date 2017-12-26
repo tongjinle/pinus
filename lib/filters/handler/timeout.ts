@@ -8,19 +8,12 @@ import * as  utils from '../../util/utils';
 var DEFAULT_TIMEOUT = 3000;
 var DEFAULT_SIZE = 500;
 
-export default function (timeout, maxSize)
-{
-    return new TimeoutFilter(timeout || DEFAULT_TIMEOUT, maxSize || DEFAULT_SIZE);
-};
-
 export class TimeoutFilter
 {
     timeouts = {};
     curId = 0;
-    constructor(private timeout: number, private maxSize: number)
+    constructor(private timeout = DEFAULT_TIMEOUT, private maxSize = DEFAULT_SIZE)
     {
-        this.timeout = timeout;
-        this.maxSize = maxSize;
     };
 
     before(routeRecord , msg, session, next)

@@ -4,9 +4,6 @@
 import { getLogger } from 'pinus-logger'; var logger = getLogger('pinus', __filename);
 import * as taskManager from '../../common/manager/taskManager';
 
-export default function(timeout) {
-  return new SerialFilter(timeout);
-};
 
 export class SerialFilter
 {
